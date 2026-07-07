@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { BookOpen, Facebook, Youtube, Send } from "lucide-react";
+import { BookOpen, Mail, Phone, Send } from "lucide-react";
 
 export function SiteFooter() {
   return (
@@ -44,7 +44,7 @@ export function SiteFooter() {
             <p className="mt-4 text-sm text-muted-foreground">support@uniteacademy.com</p>
             <p className="mt-1 text-sm text-muted-foreground">+৮৮ ০১XXX XXXXXX</p>
             <div className="mt-4 flex gap-2">
-              {[Facebook, Youtube, Send].map((Icon, i) => (
+              {[Mail, Phone, Send].map((Icon, i) => (
                 <a key={i} href="#" className="grid h-9 w-9 place-items-center rounded-lg border border-border text-muted-foreground transition-colors hover:bg-primary hover:text-primary-foreground">
                   <Icon className="h-4 w-4" />
                 </a>
