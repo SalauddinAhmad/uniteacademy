@@ -267,19 +267,22 @@ function Field({
   icon: Icon,
   type,
   placeholder,
+  value,
+  onChange,
+  required,
 }: {
   id: string;
   label: string;
   icon: React.ComponentType<{ className?: string }>;
   type: string;
   placeholder: string;
+  value?: string;
+  onChange?: (v: string) => void;
+  required?: boolean;
 }) {
   return (
     <div>
-      <label
-        htmlFor={id}
-        className="mb-1.5 block text-xs font-semibold text-foreground/80"
-      >
+      <label htmlFor={id} className="mb-1.5 block text-xs font-semibold text-foreground/80">
         {label}
       </label>
       <div className="relative">
@@ -287,6 +290,9 @@ function Field({
         <input
           id={id}
           type={type}
+          required={required}
+          value={value ?? ""}
+          onChange={onChange ? (e) => onChange(e.target.value) : undefined}
           placeholder={placeholder}
           className="w-full rounded-xl border border-border bg-background/60 py-2.5 pl-10 pr-3 text-sm text-foreground placeholder:text-muted-foreground/70 backdrop-blur transition-all focus:border-primary/50 focus:bg-background/80 focus:outline-none focus:ring-4 focus:ring-primary/15"
         />
@@ -294,6 +300,7 @@ function Field({
     </div>
   );
 }
+
 
 function GoogleIcon({ className }: { className?: string }) {
   return (
