@@ -270,23 +270,23 @@ function StatsStrip() {
     { n: "৪০০",    suf: "+",  l: "শিক্ষার উপকরণ" },
   ];
   return (
-    <section className="border-y border-border bg-secondary/40 py-8">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-2 divide-y divide-border sm:grid-cols-4 sm:divide-x sm:divide-y-0">
+    <section className="border-y border-border bg-secondary/40 py-4">
+      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-2 sm:grid-cols-4 sm:divide-x sm:divide-border">
           {stats.map((s, i) => (
             <div
               key={s.l}
-              className={`px-4 py-4 text-center ${i >= 2 ? "border-t border-border sm:border-t-0" : ""}`}
+              className={`px-3 py-2 text-center ${i >= 2 ? "border-t border-border sm:border-t-0" : ""}`}
             >
               <div className="flex items-baseline justify-center gap-0.5">
-                <span className="bg-gradient-to-br from-primary to-accent bg-clip-text text-3xl font-extrabold leading-none tracking-tight text-transparent md:text-4xl">
+                <span className="bg-gradient-to-br from-primary to-accent bg-clip-text text-2xl font-extrabold leading-none tracking-tight text-transparent md:text-3xl">
                   {s.n}
                 </span>
-                <span className="text-xl font-bold text-primary/70 md:text-2xl">
+                <span className="text-base font-bold text-primary/70 md:text-lg">
                   {s.suf}
                 </span>
               </div>
-              <div className="mt-1.5 text-xs font-medium text-muted-foreground md:text-sm">
+              <div className="mt-1 text-[11px] font-medium text-muted-foreground md:text-xs">
                 {s.l}
               </div>
             </div>
