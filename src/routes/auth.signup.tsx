@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import {
   BookOpen,
@@ -8,11 +8,14 @@ import {
   Eye,
   EyeOff,
   ArrowRight,
-  CheckCircle2,
-  Sparkles,
   ShieldCheck,
   GraduationCap,
+  Loader2,
 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { lovable } from "@/integrations/lovable";
+import { toast } from "sonner";
+
 
 export const Route = createFileRoute("/auth/signup")({
   head: () => ({
@@ -36,11 +39,51 @@ export const Route = createFileRoute("/auth/signup")({
 });
 
 function SignupPage() {
+  const navigate = useNavigate();
   const [showPw, setShowPw] = useState(false);
   const [agree, setAgree] = useState(false);
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
+
+  const handleGoogle = async () => {
+    setGoogleLoading(true);
+    const res = await lovable.auth.signInWithOAuth("google", { redirect_uri: window.location.origin });
+    if (res.error) {
+      toast.error(res.error.message || "Google sign-in failed");
+      setGoogleLoading(false);
+      return;
+    }
+    if (res.redirected) return;
+    navigate({ to: "/dashboard" });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!agree) return;
+    setLoading(true);
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        emailRedirectTo: `${window.location.origin}/dashboard`,
+        data: { full_name: fullName },
+      },
+    });
+    setLoading(false);
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+    toast.success("অ্যাকাউন্ট তৈরি হয়েছে");
+    navigate({ to: "/dashboard" });
+  };
 
   return (
     <main className="relative min-h-screen overflow-hidden">
+
       {/* Ambient premium glow layer */}
       <div
         aria-hidden
@@ -107,12 +150,15 @@ function SignupPage() {
                   <div className="mt-7">
                     <button
                       type="button"
-                      className="group inline-flex w-full items-center justify-center gap-2.5 rounded-xl border border-border bg-background/60 px-4 py-3 text-sm font-semibold backdrop-blur transition-all hover:-translate-y-0.5 hover:bg-background/90 hover:shadow-lg"
+                      onClick={handleGoogle}
+                      disabled={googleLoading}
+                      className="group inline-flex w-full items-center justify-center gap-2.5 rounded-xl border border-border bg-background/60 px-4 py-3 text-sm font-semibold backdrop-blur transition-all hover:-translate-y-0.5 hover:bg-background/90 hover:shadow-lg disabled:opacity-60"
                     >
-                      <GoogleIcon className="h-4 w-4" />
+                      {googleLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <GoogleIcon className="h-4 w-4" />}
                       Google দিয়ে চালিয়ে যান
                     </button>
                   </div>
+
 
 
                   <div className="my-7 flex items-center gap-3">
@@ -123,10 +169,10 @@ function SignupPage() {
                     <div className="h-px flex-1 bg-border" />
                   </div>
 
-                  <form onSubmit={(e) => e.preventDefault()} className="space-y-5" autoComplete="off">
+                  <form onSubmit={handleSubmit} className="space-y-5" autoComplete="on">
                     <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-                      <Field id="name" label="পূর্ণ নাম" icon={User} type="text" placeholder="আপনার নাম" />
-                      <Field id="email" label="ইমেইল ঠিকানা" icon={Mail} type="email" placeholder="you@example.com" />
+                      <Field id="name" label="পূর্ণ নাম" icon={User} type="text" placeholder="আপনার নাম" value={fullName} onChange={setFullName} required />
+                      <Field id="email" label="ইমেইল ঠিকানা" icon={Mail} type="email" placeholder="you@example.com" value={email} onChange={setEmail} required />
                     </div>
 
                     <div>
@@ -138,6 +184,10 @@ function SignupPage() {
                         <input
                           id="password"
                           type={showPw ? "text" : "password"}
+                          required
+                          minLength={8}
+                          value={password}
+                          onChange={(e) => setPassword(e.target.value)}
                           placeholder="কমপক্ষে ৮ অক্ষর"
                           className="w-full rounded-xl border border-border bg-background/60 py-3 pl-11 pr-12 text-sm text-foreground placeholder:text-muted-foreground/70 backdrop-blur transition-all focus:border-primary/50 focus:bg-background/85 focus:outline-none focus:ring-4 focus:ring-primary/15"
                         />
@@ -154,6 +204,7 @@ function SignupPage() {
                         বড় হাতের অক্ষর, সংখ্যা ও একটি বিশেষ চিহ্ন ব্যবহার করুন।
                       </p>
                     </div>
+
 
                     <label className="flex cursor-pointer items-start gap-2.5">
                       <input
@@ -174,13 +225,14 @@ function SignupPage() {
 
                     <button
                       type="submit"
-                      disabled={!agree}
+                      disabled={!agree || loading}
                       className="group relative inline-flex w-full items-center justify-center gap-2 overflow-hidden rounded-xl gradient-primary px-4 py-3.5 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/30 transition-all hover:-translate-y-0.5 hover:shadow-xl hover:shadow-primary/40 disabled:cursor-not-allowed disabled:opacity-50 disabled:shadow-none disabled:hover:translate-y-0"
                     >
                       <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
-                      <span className="relative">অ্যাকাউন্ট তৈরি করুন</span>
-                      <ArrowRight className="relative h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                      {loading ? <Loader2 className="relative h-4 w-4 animate-spin" /> : <span className="relative">অ্যাকাউন্ট তৈরি করুন</span>}
+                      {!loading && <ArrowRight className="relative h-4 w-4 transition-transform group-hover:translate-x-0.5" />}
                     </button>
+
                   </form>
 
                   <div className="mt-7 grid grid-cols-3 gap-3 border-t border-border pt-5">
@@ -215,19 +267,22 @@ function Field({
   icon: Icon,
   type,
   placeholder,
+  value,
+  onChange,
+  required,
 }: {
   id: string;
   label: string;
   icon: React.ComponentType<{ className?: string }>;
   type: string;
   placeholder: string;
+  value?: string;
+  onChange?: (v: string) => void;
+  required?: boolean;
 }) {
   return (
     <div>
-      <label
-        htmlFor={id}
-        className="mb-1.5 block text-xs font-semibold text-foreground/80"
-      >
+      <label htmlFor={id} className="mb-1.5 block text-xs font-semibold text-foreground/80">
         {label}
       </label>
       <div className="relative">
@@ -235,6 +290,9 @@ function Field({
         <input
           id={id}
           type={type}
+          required={required}
+          value={value ?? ""}
+          onChange={onChange ? (e) => onChange(e.target.value) : undefined}
           placeholder={placeholder}
           className="w-full rounded-xl border border-border bg-background/60 py-2.5 pl-10 pr-3 text-sm text-foreground placeholder:text-muted-foreground/70 backdrop-blur transition-all focus:border-primary/50 focus:bg-background/80 focus:outline-none focus:ring-4 focus:ring-primary/15"
         />
@@ -242,6 +300,7 @@ function Field({
     </div>
   );
 }
+
 
 function GoogleIcon({ className }: { className?: string }) {
   return (
