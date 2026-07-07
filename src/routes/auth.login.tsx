@@ -9,8 +9,8 @@ import {
   ArrowRight,
   ShieldCheck,
   GraduationCap,
-  Sparkles,
 } from "lucide-react";
+
 
 export const Route = createFileRoute("/auth/login")({
   head: () => ({
