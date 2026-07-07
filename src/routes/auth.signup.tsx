@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import {
   BookOpen,
@@ -8,11 +8,14 @@ import {
   Eye,
   EyeOff,
   ArrowRight,
-  CheckCircle2,
-  Sparkles,
   ShieldCheck,
   GraduationCap,
+  Loader2,
 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { lovable } from "@/integrations/lovable";
+import { toast } from "sonner";
+
 
 export const Route = createFileRoute("/auth/signup")({
   head: () => ({
@@ -36,11 +39,51 @@ export const Route = createFileRoute("/auth/signup")({
 });
 
 function SignupPage() {
+  const navigate = useNavigate();
   const [showPw, setShowPw] = useState(false);
   const [agree, setAgree] = useState(false);
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
+
+  const handleGoogle = async () => {
+    setGoogleLoading(true);
+    const res = await lovable.auth.signInWithOAuth("google", { redirect_uri: window.location.origin });
+    if (res.error) {
+      toast.error(res.error.message || "Google sign-in failed");
+      setGoogleLoading(false);
+      return;
+    }
+    if (res.redirected) return;
+    navigate({ to: "/dashboard" });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!agree) return;
+    setLoading(true);
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        emailRedirectTo: `${window.location.origin}/dashboard`,
+        data: { full_name: fullName },
+      },
+    });
+    setLoading(false);
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+    toast.success("অ্যাকাউন্ট তৈরি হয়েছে");
+    navigate({ to: "/dashboard" });
+  };
 
   return (
     <main className="relative min-h-screen overflow-hidden">
+
       {/* Ambient premium glow layer */}
       <div
         aria-hidden
