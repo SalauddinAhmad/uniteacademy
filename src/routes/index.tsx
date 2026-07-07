@@ -435,7 +435,7 @@ function PopularCourses({ courses: list }: { courses: typeof courses }) {
   );
 }
 
-/* ---------------- Benefits grid ---------------- */
+/* ---------------- Benefits — premium editorial ---------------- */
 function TelegramIcon({ className = "" }: { className?: string }) {
   return (
     <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className={className}>
@@ -445,74 +445,125 @@ function TelegramIcon({ className = "" }: { className?: string }) {
 }
 function BenefitsGrid() {
   const items = [
-    { i: Globe2, t: "যেকোনো স্থান থেকে", d: "ইন্টারনেট থাকলেই বাড়ি, অফিস বা যাত্রাপথে শিখুন।", brand: false },
-    { i: GraduationCap, t: "অভিজ্ঞ উস্তাদ", d: "দেশ-বিদেশের প্রখ্যাত ইসলামী স্কলার ও শিক্ষকমণ্ডলী।", brand: false },
-    { i: Radio, t: "লাইভ + রেকর্ডেড", d: "লাইভ ক্লাসের সাথে রেকর্ডিং — মিস হলেও পিছিয়ে পড়বেন না।", brand: false },
-    { i: FileCheck2, t: "কুইজ ও পরীক্ষা", d: "প্রতি মডিউলে মূল্যায়ন — আপনার শেখা যাচাই করুন।", brand: false },
-    {
-      i: TelegramIcon,
-      t: "টেলিগ্রাম সাপোর্ট",
-      d: "উস্তাদ ও সহপাঠীদের সাথে প্রশ্নোত্তরের ডেডিকেটেড গ্রুপ — ২৪/৭ চালু।",
-      brand: true,
-      href: "https://t.me/uniteacademy",
-      cta: "গ্রুপে যোগ দিন",
-    },
-    { i: Award, t: "যাচাইযোগ্য সনদ", d: "কোর্স সম্পন্ন হলে পাবেন ডিজিটাল ভেরিফাইড সার্টিফিকেট।", brand: false },
-  ] as const;
+    { i: Globe2,       t: "যেকোনো স্থান থেকে",    d: "ইন্টারনেট থাকলেই বাড়ি, অফিস বা যাত্রাপথে শিখুন।",             tag: "১০০% অনলাইন" },
+    { i: GraduationCap,t: "অভিজ্ঞ উস্তাদ",         d: "দেশ-বিদেশের প্রখ্যাত ইসলামী স্কলার ও শিক্ষকমণ্ডলী।",           tag: "৫০+ উস্তাদ" },
+    { i: Radio,        t: "লাইভ + রেকর্ডেড",       d: "লাইভ ক্লাসের সাথে রেকর্ডিং — মিস হলেও পিছিয়ে পড়বেন না।",       tag: "HD মানের" },
+    { i: FileCheck2,   t: "কুইজ ও পরীক্ষা",         d: "প্রতি মডিউলে মূল্যায়ন — আপনার শেখা যাচাই করুন।",              tag: "অটো গ্রেডিং" },
+    { i: TelegramIcon, t: "টেলিগ্রাম সাপোর্ট",      d: "উস্তাদ ও সহপাঠীদের সাথে প্রশ্নোত্তরের ডেডিকেটেড গ্রুপ।",         tag: "২৪/৭ চালু" },
+    { i: Award,        t: "যাচাইযোগ্য সনদ",         d: "কোর্স সম্পন্ন হলে পাবেন ডিজিটাল ভেরিফাইড সার্টিফিকেট।",         tag: "QR ভেরিফাই" },
+  ];
+
+  const stats = [
+    { n: "১৫,০০০+", l: "শিক্ষার্থী" },
+    { n: "৫০+",      l: "কোর্স" },
+    { n: "৯৮%",      l: "সন্তুষ্টি" },
+    { n: "৪.৯/৫",    l: "রেটিং" },
+  ];
+
   return (
-    <section className="py-16 sm:py-24">
+    <section className="relative py-20 sm:py-28">
+      {/* ambient washes */}
+      <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+        <div className="absolute left-1/2 top-0 h-72 w-[42rem] -translate-x-1/2 rounded-full bg-primary/10 blur-3xl" />
+        <div className="absolute -left-20 bottom-24 h-56 w-56 rounded-full bg-accent/20 blur-3xl" />
+        <div className="absolute -right-20 top-40 h-56 w-56 rounded-full bg-primary/15 blur-3xl" />
+      </div>
+
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <SectionHead
-          eyebrow="আমাদের কোর্সের সুবিধা"
-          title="কেন Uniteacademy?"
-          desc="ইসলামী শিক্ষার আধুনিক অভিজ্ঞতা — যেখানে ঐতিহ্য মিলেছে প্রযুক্তির সাথে।"
-        />
-        <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {items.map((f) => {
-            const Wrapper: any = f.brand && "href" in f ? "a" : "div";
-            const wrapperProps = f.brand && "href" in f
-              ? { href: (f as any).href, target: "_blank", rel: "noopener noreferrer" }
-              : {};
-            return (
-              <Wrapper
-                key={f.t}
-                {...wrapperProps}
-                className={`group relative block overflow-hidden rounded-2xl border p-6 transition-all hover:-translate-y-1 hover:shadow-xl ${
-                  f.brand
-                    ? "border-sky-500/30 bg-gradient-to-br from-sky-500/10 via-card to-card hover:border-sky-500/50 hover:shadow-sky-500/15"
-                    : "border-border bg-card hover:border-primary/40 hover:shadow-primary/10"
-                }`}
-              >
-                {f.brand && (
-                  <div className="pointer-events-none absolute -right-8 -top-8 h-28 w-28 rounded-full bg-sky-500/30 opacity-40 blur-3xl transition-opacity group-hover:opacity-70" />
-                )}
-                <div
-                  className={`grid h-12 w-12 place-items-center rounded-xl text-primary-foreground shadow-lg ${
-                    f.brand
-                      ? "bg-gradient-to-br from-sky-400 to-sky-600 shadow-sky-500/30"
-                      : "gradient-primary shadow-primary/25"
-                  }`}
-                >
-                  <f.i className="h-6 w-6" />
-                </div>
-                <h3 className="mt-5 flex items-center gap-2 text-lg font-semibold">
-                  {f.t}
-                  {f.brand && (
-                    <span className="rounded-full bg-sky-500/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-sky-600 dark:text-sky-400">
-                      Telegram
-                    </span>
-                  )}
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{f.d}</p>
-                {f.brand && "cta" in f && (
-                  <div className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-sky-600 transition-all group-hover:gap-2.5 dark:text-sky-400">
-                    {(f as any).cta}
-                    <ArrowRight className="h-4 w-4" />
+        {/* Header */}
+        <div className="mx-auto max-w-3xl text-center">
+          <div className="inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-accent-foreground/80 backdrop-blur">
+            <Sparkles className="h-3 w-3 text-accent" />
+            আমাদের কোর্সের সুবিধা
+          </div>
+          <h2 className="mt-4 text-3xl font-bold leading-tight tracking-tight sm:text-4xl md:text-5xl">
+            কেন <span className="text-gradient">Uniteacademy?</span>
+          </h2>
+          <p className="mx-auto mt-4 max-w-2xl text-base text-muted-foreground sm:text-lg">
+            ইসলামী শিক্ষার আধুনিক অভিজ্ঞতা — যেখানে ঐতিহ্য মিলেছে প্রযুক্তির সাথে।
+          </p>
+        </div>
+
+        {/* Editorial split — big showcase card + benefit list */}
+        <div className="mt-14 grid gap-6 lg:grid-cols-12">
+          {/* Showcase card */}
+          <div className="relative overflow-hidden rounded-3xl border border-border bg-gradient-to-br from-primary/15 via-card to-card p-8 backdrop-blur-xl sm:p-10 lg:col-span-5">
+            <div className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full bg-primary/40 opacity-40 blur-3xl" />
+            <div className="pointer-events-none absolute -bottom-20 -left-10 h-48 w-48 rounded-full bg-accent/40 opacity-40 blur-3xl" />
+
+            <div className="relative">
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-accent/40 bg-accent/15 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-accent-foreground">
+                <span className="h-1.5 w-1.5 rounded-full bg-accent" />
+                Trusted since 2020
+              </span>
+
+              <h3 className="mt-6 text-2xl font-bold leading-tight tracking-tight sm:text-3xl">
+                একটি প্ল্যাটফর্ম, <br />
+                <span className="text-gradient">পূর্ণাঙ্গ ইসলামী শিক্ষা।</span>
+              </h3>
+              <p className="mt-4 text-sm leading-relaxed text-muted-foreground sm:text-base">
+                কুরআন, হাদীস, ফিকহ, আরবী — সবকিছু একই জায়গায়। আধুনিক টুল, অভিজ্ঞ উস্তাদ এবং সহপাঠীদের সাথে আপনার শেখার যাত্রা এখানেই।
+              </p>
+
+              {/* stat rail */}
+              <div className="mt-8 grid grid-cols-2 gap-3">
+                {stats.map((s) => (
+                  <div
+                    key={s.l}
+                    className="rounded-2xl border border-border bg-card/60 p-4 backdrop-blur-md"
+                  >
+                    <div className="text-2xl font-bold tracking-tight text-foreground">{s.n}</div>
+                    <div className="mt-0.5 text-xs text-muted-foreground">{s.l}</div>
                   </div>
-                )}
-              </Wrapper>
-            );
-          })}
+                ))}
+              </div>
+
+              <Link
+                to="/courses"
+                className="group mt-8 inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/25 transition-all hover:gap-3 hover:shadow-primary/40"
+              >
+                কোর্স ব্রাউজ করুন
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+              </Link>
+            </div>
+          </div>
+
+          {/* Benefit tiles */}
+          <div className="grid gap-4 sm:grid-cols-2 lg:col-span-7 lg:grid-cols-2">
+            {items.map((f, idx) => (
+              <div
+                key={f.t}
+                className="group relative overflow-hidden rounded-2xl border border-border bg-card p-5 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-xl hover:shadow-primary/10"
+              >
+                {/* corner number */}
+                <span className="absolute right-4 top-3 select-none font-display text-xs font-bold tracking-widest text-foreground/20">
+                  0{idx + 1}
+                </span>
+                {/* hover glow */}
+                <div className="pointer-events-none absolute -right-8 -bottom-8 h-28 w-28 rounded-full bg-primary/20 opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-70" />
+
+                <div className="flex items-start gap-4">
+                  <div className="relative shrink-0">
+                    <div className="absolute inset-0 rounded-xl bg-primary/30 blur-md opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                    <div className="relative grid h-11 w-11 place-items-center rounded-xl border border-border bg-gradient-to-br from-primary to-primary-glow text-primary-foreground shadow-md shadow-primary/20 transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-6">
+                      <f.i className="h-5 w-5" />
+                    </div>
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <h4 className="text-base font-semibold tracking-tight">{f.t}</h4>
+                    <p className="mt-1 text-[13px] leading-relaxed text-muted-foreground">{f.d}</p>
+                    <div className="mt-3 inline-flex items-center gap-1.5 rounded-full border border-border bg-card/60 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-foreground/70 backdrop-blur">
+                      <span className="h-1 w-1 rounded-full bg-accent" />
+                      {f.tag}
+                    </div>
+                  </div>
+                </div>
+
+                {/* bottom accent line */}
+                <div className="pointer-events-none absolute inset-x-5 bottom-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
