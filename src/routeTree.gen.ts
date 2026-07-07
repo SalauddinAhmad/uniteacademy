@@ -14,12 +14,14 @@ import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as CoursesRouteImport } from './routes/courses'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as AdminRouteImport } from './routes/_admin'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthSignupRouteImport } from './routes/auth.signup'
 import { Route as AuthLoginRouteImport } from './routes/auth.login'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedDashboardIndexRouteImport } from './routes/_authenticated/dashboard.index'
+import { Route as AdminAdminIndexRouteImport } from './routes/_admin.admin.index'
 import { Route as AuthenticatedDashboardPaymentsRouteImport } from './routes/_authenticated/dashboard.payments'
 import { Route as AuthenticatedDashboardNotificationsRouteImport } from './routes/_authenticated/dashboard.notifications'
 import { Route as AuthenticatedDashboardNoticeRouteImport } from './routes/_authenticated/dashboard.notice'
@@ -28,6 +30,14 @@ import { Route as AuthenticatedDashboardEventsRouteImport } from './routes/_auth
 import { Route as AuthenticatedDashboardEnrollmentsRouteImport } from './routes/_authenticated/dashboard.enrollments'
 import { Route as AuthenticatedDashboardCalendarRouteImport } from './routes/_authenticated/dashboard.calendar'
 import { Route as AuthenticatedDashboardAssignmentsRouteImport } from './routes/_authenticated/dashboard.assignments'
+import { Route as AdminAdminUsersRouteImport } from './routes/_admin.admin.users'
+import { Route as AdminAdminSettingsRouteImport } from './routes/_admin.admin.settings'
+import { Route as AdminAdminProgramsRouteImport } from './routes/_admin.admin.programs'
+import { Route as AdminAdminPaymentsRouteImport } from './routes/_admin.admin.payments'
+import { Route as AdminAdminNotificationsRouteImport } from './routes/_admin.admin.notifications'
+import { Route as AdminAdminNoticesRouteImport } from './routes/_admin.admin.notices'
+import { Route as AdminAdminEnrollmentsRouteImport } from './routes/_admin.admin.enrollments'
+import { Route as AdminAdminCoursesRouteImport } from './routes/_admin.admin.courses'
 import { Route as AuthenticatedDashboardEnrollmentsIdRouteImport } from './routes/_authenticated/dashboard.enrollments.$id'
 
 const TermsRoute = TermsRouteImport.update({
@@ -53,6 +63,10 @@ const ContactRoute = ContactRouteImport.update({
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/_admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
@@ -85,6 +99,11 @@ const AuthenticatedDashboardIndexRoute =
     path: '/',
     getParentRoute: () => AuthenticatedDashboardRoute,
   } as any)
+const AdminAdminIndexRoute = AdminAdminIndexRouteImport.update({
+  id: '/admin/',
+  path: '/admin/',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AuthenticatedDashboardPaymentsRoute =
   AuthenticatedDashboardPaymentsRouteImport.update({
     id: '/payments',
@@ -133,6 +152,46 @@ const AuthenticatedDashboardAssignmentsRoute =
     path: '/assignments',
     getParentRoute: () => AuthenticatedDashboardRoute,
   } as any)
+const AdminAdminUsersRoute = AdminAdminUsersRouteImport.update({
+  id: '/admin/users',
+  path: '/admin/users',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminAdminSettingsRoute = AdminAdminSettingsRouteImport.update({
+  id: '/admin/settings',
+  path: '/admin/settings',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminAdminProgramsRoute = AdminAdminProgramsRouteImport.update({
+  id: '/admin/programs',
+  path: '/admin/programs',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminAdminPaymentsRoute = AdminAdminPaymentsRouteImport.update({
+  id: '/admin/payments',
+  path: '/admin/payments',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminAdminNotificationsRoute = AdminAdminNotificationsRouteImport.update({
+  id: '/admin/notifications',
+  path: '/admin/notifications',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminAdminNoticesRoute = AdminAdminNoticesRouteImport.update({
+  id: '/admin/notices',
+  path: '/admin/notices',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminAdminEnrollmentsRoute = AdminAdminEnrollmentsRouteImport.update({
+  id: '/admin/enrollments',
+  path: '/admin/enrollments',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminAdminCoursesRoute = AdminAdminCoursesRouteImport.update({
+  id: '/admin/courses',
+  path: '/admin/courses',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AuthenticatedDashboardEnrollmentsIdRoute =
   AuthenticatedDashboardEnrollmentsIdRouteImport.update({
     id: '/$id',
@@ -150,6 +209,14 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof AuthenticatedDashboardRouteWithChildren
   '/auth/login': typeof AuthLoginRoute
   '/auth/signup': typeof AuthSignupRoute
+  '/admin/courses': typeof AdminAdminCoursesRoute
+  '/admin/enrollments': typeof AdminAdminEnrollmentsRoute
+  '/admin/notices': typeof AdminAdminNoticesRoute
+  '/admin/notifications': typeof AdminAdminNotificationsRoute
+  '/admin/payments': typeof AdminAdminPaymentsRoute
+  '/admin/programs': typeof AdminAdminProgramsRoute
+  '/admin/settings': typeof AdminAdminSettingsRoute
+  '/admin/users': typeof AdminAdminUsersRoute
   '/dashboard/assignments': typeof AuthenticatedDashboardAssignmentsRoute
   '/dashboard/calendar': typeof AuthenticatedDashboardCalendarRoute
   '/dashboard/enrollments': typeof AuthenticatedDashboardEnrollmentsRouteWithChildren
@@ -158,6 +225,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/notice': typeof AuthenticatedDashboardNoticeRoute
   '/dashboard/notifications': typeof AuthenticatedDashboardNotificationsRoute
   '/dashboard/payments': typeof AuthenticatedDashboardPaymentsRoute
+  '/admin/': typeof AdminAdminIndexRoute
   '/dashboard/': typeof AuthenticatedDashboardIndexRoute
   '/dashboard/enrollments/$id': typeof AuthenticatedDashboardEnrollmentsIdRoute
 }
@@ -170,6 +238,14 @@ export interface FileRoutesByTo {
   '/terms': typeof TermsRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/signup': typeof AuthSignupRoute
+  '/admin/courses': typeof AdminAdminCoursesRoute
+  '/admin/enrollments': typeof AdminAdminEnrollmentsRoute
+  '/admin/notices': typeof AdminAdminNoticesRoute
+  '/admin/notifications': typeof AdminAdminNotificationsRoute
+  '/admin/payments': typeof AdminAdminPaymentsRoute
+  '/admin/programs': typeof AdminAdminProgramsRoute
+  '/admin/settings': typeof AdminAdminSettingsRoute
+  '/admin/users': typeof AdminAdminUsersRoute
   '/dashboard/assignments': typeof AuthenticatedDashboardAssignmentsRoute
   '/dashboard/calendar': typeof AuthenticatedDashboardCalendarRoute
   '/dashboard/enrollments': typeof AuthenticatedDashboardEnrollmentsRouteWithChildren
@@ -178,6 +254,7 @@ export interface FileRoutesByTo {
   '/dashboard/notice': typeof AuthenticatedDashboardNoticeRoute
   '/dashboard/notifications': typeof AuthenticatedDashboardNotificationsRoute
   '/dashboard/payments': typeof AuthenticatedDashboardPaymentsRoute
+  '/admin': typeof AdminAdminIndexRoute
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
   '/dashboard/enrollments/$id': typeof AuthenticatedDashboardEnrollmentsIdRoute
 }
@@ -185,6 +262,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/_admin': typeof AdminRouteWithChildren
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/courses': typeof CoursesRoute
@@ -193,6 +271,14 @@ export interface FileRoutesById {
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRouteWithChildren
   '/auth/login': typeof AuthLoginRoute
   '/auth/signup': typeof AuthSignupRoute
+  '/_admin/admin/courses': typeof AdminAdminCoursesRoute
+  '/_admin/admin/enrollments': typeof AdminAdminEnrollmentsRoute
+  '/_admin/admin/notices': typeof AdminAdminNoticesRoute
+  '/_admin/admin/notifications': typeof AdminAdminNotificationsRoute
+  '/_admin/admin/payments': typeof AdminAdminPaymentsRoute
+  '/_admin/admin/programs': typeof AdminAdminProgramsRoute
+  '/_admin/admin/settings': typeof AdminAdminSettingsRoute
+  '/_admin/admin/users': typeof AdminAdminUsersRoute
   '/_authenticated/dashboard/assignments': typeof AuthenticatedDashboardAssignmentsRoute
   '/_authenticated/dashboard/calendar': typeof AuthenticatedDashboardCalendarRoute
   '/_authenticated/dashboard/enrollments': typeof AuthenticatedDashboardEnrollmentsRouteWithChildren
@@ -201,6 +287,7 @@ export interface FileRoutesById {
   '/_authenticated/dashboard/notice': typeof AuthenticatedDashboardNoticeRoute
   '/_authenticated/dashboard/notifications': typeof AuthenticatedDashboardNotificationsRoute
   '/_authenticated/dashboard/payments': typeof AuthenticatedDashboardPaymentsRoute
+  '/_admin/admin/': typeof AdminAdminIndexRoute
   '/_authenticated/dashboard/': typeof AuthenticatedDashboardIndexRoute
   '/_authenticated/dashboard/enrollments/$id': typeof AuthenticatedDashboardEnrollmentsIdRoute
 }
@@ -216,6 +303,14 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/auth/login'
     | '/auth/signup'
+    | '/admin/courses'
+    | '/admin/enrollments'
+    | '/admin/notices'
+    | '/admin/notifications'
+    | '/admin/payments'
+    | '/admin/programs'
+    | '/admin/settings'
+    | '/admin/users'
     | '/dashboard/assignments'
     | '/dashboard/calendar'
     | '/dashboard/enrollments'
@@ -224,6 +319,7 @@ export interface FileRouteTypes {
     | '/dashboard/notice'
     | '/dashboard/notifications'
     | '/dashboard/payments'
+    | '/admin/'
     | '/dashboard/'
     | '/dashboard/enrollments/$id'
   fileRoutesByTo: FileRoutesByTo
@@ -236,6 +332,14 @@ export interface FileRouteTypes {
     | '/terms'
     | '/auth/login'
     | '/auth/signup'
+    | '/admin/courses'
+    | '/admin/enrollments'
+    | '/admin/notices'
+    | '/admin/notifications'
+    | '/admin/payments'
+    | '/admin/programs'
+    | '/admin/settings'
+    | '/admin/users'
     | '/dashboard/assignments'
     | '/dashboard/calendar'
     | '/dashboard/enrollments'
@@ -244,12 +348,14 @@ export interface FileRouteTypes {
     | '/dashboard/notice'
     | '/dashboard/notifications'
     | '/dashboard/payments'
+    | '/admin'
     | '/dashboard'
     | '/dashboard/enrollments/$id'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
+    | '/_admin'
     | '/about'
     | '/contact'
     | '/courses'
@@ -258,6 +364,14 @@ export interface FileRouteTypes {
     | '/_authenticated/dashboard'
     | '/auth/login'
     | '/auth/signup'
+    | '/_admin/admin/courses'
+    | '/_admin/admin/enrollments'
+    | '/_admin/admin/notices'
+    | '/_admin/admin/notifications'
+    | '/_admin/admin/payments'
+    | '/_admin/admin/programs'
+    | '/_admin/admin/settings'
+    | '/_admin/admin/users'
     | '/_authenticated/dashboard/assignments'
     | '/_authenticated/dashboard/calendar'
     | '/_authenticated/dashboard/enrollments'
@@ -266,6 +380,7 @@ export interface FileRouteTypes {
     | '/_authenticated/dashboard/notice'
     | '/_authenticated/dashboard/notifications'
     | '/_authenticated/dashboard/payments'
+    | '/_admin/admin/'
     | '/_authenticated/dashboard/'
     | '/_authenticated/dashboard/enrollments/$id'
   fileRoutesById: FileRoutesById
@@ -273,6 +388,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AdminRoute: typeof AdminRouteWithChildren
   AboutRoute: typeof AboutRoute
   ContactRoute: typeof ContactRoute
   CoursesRoute: typeof CoursesRoute
@@ -319,6 +435,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_admin': {
+      id: '/_admin'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authenticated': {
       id: '/_authenticated'
       path: ''
@@ -360,6 +483,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/dashboard/'
       preLoaderRoute: typeof AuthenticatedDashboardIndexRouteImport
       parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_admin/admin/': {
+      id: '/_admin/admin/'
+      path: '/admin'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminAdminIndexRouteImport
+      parentRoute: typeof AdminRoute
     }
     '/_authenticated/dashboard/payments': {
       id: '/_authenticated/dashboard/payments'
@@ -416,6 +546,62 @@ declare module '@tanstack/react-router' {
       fullPath: '/dashboard/assignments'
       preLoaderRoute: typeof AuthenticatedDashboardAssignmentsRouteImport
       parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_admin/admin/users': {
+      id: '/_admin/admin/users'
+      path: '/admin/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AdminAdminUsersRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/admin/settings': {
+      id: '/_admin/admin/settings'
+      path: '/admin/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof AdminAdminSettingsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/admin/programs': {
+      id: '/_admin/admin/programs'
+      path: '/admin/programs'
+      fullPath: '/admin/programs'
+      preLoaderRoute: typeof AdminAdminProgramsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/admin/payments': {
+      id: '/_admin/admin/payments'
+      path: '/admin/payments'
+      fullPath: '/admin/payments'
+      preLoaderRoute: typeof AdminAdminPaymentsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/admin/notifications': {
+      id: '/_admin/admin/notifications'
+      path: '/admin/notifications'
+      fullPath: '/admin/notifications'
+      preLoaderRoute: typeof AdminAdminNotificationsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/admin/notices': {
+      id: '/_admin/admin/notices'
+      path: '/admin/notices'
+      fullPath: '/admin/notices'
+      preLoaderRoute: typeof AdminAdminNoticesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/admin/enrollments': {
+      id: '/_admin/admin/enrollments'
+      path: '/admin/enrollments'
+      fullPath: '/admin/enrollments'
+      preLoaderRoute: typeof AdminAdminEnrollmentsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/admin/courses': {
+      id: '/_admin/admin/courses'
+      path: '/admin/courses'
+      fullPath: '/admin/courses'
+      preLoaderRoute: typeof AdminAdminCoursesRouteImport
+      parentRoute: typeof AdminRoute
     }
     '/_authenticated/dashboard/enrollments/$id': {
       id: '/_authenticated/dashboard/enrollments/$id'
@@ -486,9 +672,36 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
 const AuthenticatedRouteRouteWithChildren =
   AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
+interface AdminRouteChildren {
+  AdminAdminCoursesRoute: typeof AdminAdminCoursesRoute
+  AdminAdminEnrollmentsRoute: typeof AdminAdminEnrollmentsRoute
+  AdminAdminNoticesRoute: typeof AdminAdminNoticesRoute
+  AdminAdminNotificationsRoute: typeof AdminAdminNotificationsRoute
+  AdminAdminPaymentsRoute: typeof AdminAdminPaymentsRoute
+  AdminAdminProgramsRoute: typeof AdminAdminProgramsRoute
+  AdminAdminSettingsRoute: typeof AdminAdminSettingsRoute
+  AdminAdminUsersRoute: typeof AdminAdminUsersRoute
+  AdminAdminIndexRoute: typeof AdminAdminIndexRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminAdminCoursesRoute: AdminAdminCoursesRoute,
+  AdminAdminEnrollmentsRoute: AdminAdminEnrollmentsRoute,
+  AdminAdminNoticesRoute: AdminAdminNoticesRoute,
+  AdminAdminNotificationsRoute: AdminAdminNotificationsRoute,
+  AdminAdminPaymentsRoute: AdminAdminPaymentsRoute,
+  AdminAdminProgramsRoute: AdminAdminProgramsRoute,
+  AdminAdminSettingsRoute: AdminAdminSettingsRoute,
+  AdminAdminUsersRoute: AdminAdminUsersRoute,
+  AdminAdminIndexRoute: AdminAdminIndexRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AdminRoute: AdminRouteWithChildren,
   AboutRoute: AboutRoute,
   ContactRoute: ContactRoute,
   CoursesRoute: CoursesRoute,
