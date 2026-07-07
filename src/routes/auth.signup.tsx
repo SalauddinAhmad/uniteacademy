@@ -61,163 +61,168 @@ function SignupPage() {
 
 
         {/* RIGHT — Signup form */}
-        <section className="flex items-center justify-center">
-          <div className="w-full max-w-md">
+        <section className="flex w-full items-center justify-center">
+          <div className="w-full max-w-3xl">
             {/* Brand */}
             <div className="mb-6 flex items-center justify-center">
-
               <Link to="/" className="flex items-center gap-2.5">
-                <div className="grid h-10 w-10 place-items-center rounded-xl gradient-primary text-primary-foreground shadow-lg shadow-primary/25">
+                <div className="grid h-11 w-11 place-items-center rounded-xl gradient-primary text-primary-foreground shadow-lg shadow-primary/25">
                   <BookOpen className="h-5 w-5" strokeWidth={2.5} />
                 </div>
-                <span className="text-lg font-bold">Uniteacademy</span>
+                <div className="flex flex-col leading-none">
+                  <span className="text-lg font-bold tracking-tight">Uniteacademy</span>
+                  <span className="text-[10px] font-medium text-muted-foreground">ইউনাইট একাডেমি</span>
+                </div>
               </Link>
             </div>
 
-            <div className="glass-strong rounded-3xl p-7 sm:p-9">
-              <div className="text-center">
-                <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
-                  অ্যাকাউন্ট তৈরি করুন
-                </h2>
-                <p className="mt-1.5 text-sm text-muted-foreground">
-                  ইতিমধ্যে অ্যাকাউন্ট আছে?{" "}
-                  <Link
-                    to="/auth/login"
-                    className="font-semibold text-primary hover:underline"
-                  >
-                    লগইন করুন
-                  </Link>
-                </p>
-              </div>
+            {/* Premium glass card with decorative gradient border */}
+            <div className="relative">
+              <div
+                aria-hidden
+                className="absolute -inset-px rounded-[2rem] opacity-70 blur-sm"
+                style={{
+                  background:
+                    "linear-gradient(135deg, color-mix(in oklab, var(--primary) 60%, transparent), color-mix(in oklab, var(--accent) 45%, transparent) 55%, color-mix(in oklab, var(--primary-glow) 60%, transparent))",
+                }}
+              />
+              <div className="glass-strong relative overflow-hidden rounded-[2rem] p-8 sm:p-10">
+                <div aria-hidden className="pointer-events-none absolute -right-24 -top-24 h-56 w-56 rounded-full bg-primary/25 blur-3xl" />
+                <div aria-hidden className="pointer-events-none absolute -bottom-24 -left-24 h-56 w-56 rounded-full bg-accent/20 blur-3xl" />
 
-              {/* Social */}
-              <div className="mt-6 grid grid-cols-2 gap-3">
-                <button
-                  type="button"
-                  className="group inline-flex items-center justify-center gap-2 rounded-xl border border-border bg-background/50 px-3 py-2.5 text-sm font-medium backdrop-blur transition-all hover:bg-background/80 hover:shadow-md"
-                >
-                  <GoogleIcon className="h-4 w-4" />
-                  Google
-                </button>
-                <button
-                  type="button"
-                  className="group inline-flex items-center justify-center gap-2 rounded-xl border border-border bg-background/50 px-3 py-2.5 text-sm font-medium backdrop-blur transition-all hover:bg-background/80 hover:shadow-md"
-                >
-                  <AppleIcon className="h-4 w-4" />
-                  Apple
-                </button>
-              </div>
+                <div className="relative">
+                  <div className="mx-auto flex w-fit items-center gap-1.5 rounded-full border border-border bg-background/50 px-3 py-1 text-[11px] font-medium text-foreground/80 backdrop-blur">
+                    <Sparkles className="h-3 w-3 text-accent" />
+                    বিনামূল্যে সাইনআপ • ৩০ সেকেন্ডে
+                  </div>
 
-              <div className="my-6 flex items-center gap-3">
-                <div className="h-px flex-1 bg-border" />
-                <span className="text-xs font-medium text-muted-foreground">
-                  অথবা ইমেইল দিয়ে
-                </span>
-                <div className="h-px flex-1 bg-border" />
-              </div>
+                  <div className="mt-4 text-center">
+                    <h2 className="text-3xl font-extrabold tracking-tight sm:text-[2rem]">
+                      অ্যাকাউন্ট তৈরি করুন
+                    </h2>
+                    <p className="mt-2 text-sm text-muted-foreground">
+                      ইতিমধ্যে অ্যাকাউন্ট আছে?{" "}
+                      <Link to="/auth/login" className="font-semibold text-primary hover:underline">
+                        লগইন করুন
+                      </Link>
+                    </p>
+                  </div>
 
-              <form
-                onSubmit={(e) => e.preventDefault()}
-                className="space-y-4"
-                autoComplete="off"
-              >
-                <Field
-                  id="name"
-                  label="পূর্ণ নাম"
-                  icon={User}
-                  type="text"
-                  placeholder="আপনার নাম লিখুন"
-                />
-                <Field
-                  id="email"
-                  label="ইমেইল ঠিকানা"
-                  icon={Mail}
-                  type="email"
-                  placeholder="you@example.com"
-                />
-                <div>
-                  <label
-                    htmlFor="password"
-                    className="mb-1.5 block text-xs font-semibold text-foreground/80"
-                  >
-                    পাসওয়ার্ড
-                  </label>
-                  <div className="relative">
-                    <Lock className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                    <input
-                      id="password"
-                      type={showPw ? "text" : "password"}
-                      placeholder="কমপক্ষে ৮ অক্ষর"
-                      className="peer w-full rounded-xl border border-border bg-background/60 py-2.5 pl-10 pr-11 text-sm text-foreground placeholder:text-muted-foreground/70 backdrop-blur transition-all focus:border-primary/50 focus:bg-background/80 focus:outline-none focus:ring-4 focus:ring-primary/15"
-                    />
+                  <div className="mt-7 grid grid-cols-1 gap-3 sm:grid-cols-2">
                     <button
                       type="button"
-                      onClick={() => setShowPw((v) => !v)}
-                      className="absolute right-2 top-1/2 grid h-8 w-8 -translate-y-1/2 place-items-center rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground"
-                      aria-label={showPw ? "Hide password" : "Show password"}
+                      className="group inline-flex items-center justify-center gap-2.5 rounded-xl border border-border bg-background/60 px-4 py-3 text-sm font-semibold backdrop-blur transition-all hover:-translate-y-0.5 hover:bg-background/90 hover:shadow-lg"
                     >
-                      {showPw ? (
-                        <EyeOff className="h-4 w-4" />
-                      ) : (
-                        <Eye className="h-4 w-4" />
-                      )}
+                      <GoogleIcon className="h-4 w-4" />
+                      Google দিয়ে
+                    </button>
+                    <button
+                      type="button"
+                      className="group inline-flex items-center justify-center gap-2.5 rounded-xl border border-border bg-background/60 px-4 py-3 text-sm font-semibold backdrop-blur transition-all hover:-translate-y-0.5 hover:bg-background/90 hover:shadow-lg"
+                    >
+                      <AppleIcon className="h-4 w-4" />
+                      Apple দিয়ে
                     </button>
                   </div>
-                  <p className="mt-1.5 text-[11px] text-muted-foreground">
-                    বড় হাতের অক্ষর, সংখ্যা ও একটি বিশেষ চিহ্ন ব্যবহার করুন।
-                  </p>
+
+                  <div className="my-7 flex items-center gap-3">
+                    <div className="h-px flex-1 bg-border" />
+                    <span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+                      অথবা ইমেইল দিয়ে
+                    </span>
+                    <div className="h-px flex-1 bg-border" />
+                  </div>
+
+                  <form onSubmit={(e) => e.preventDefault()} className="space-y-5" autoComplete="off">
+                    <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                      <Field id="name" label="পূর্ণ নাম" icon={User} type="text" placeholder="আপনার নাম" />
+                      <Field id="email" label="ইমেইল ঠিকানা" icon={Mail} type="email" placeholder="you@example.com" />
+                    </div>
+
+                    <div>
+                      <label htmlFor="password" className="mb-2 block text-xs font-semibold text-foreground/80">
+                        পাসওয়ার্ড
+                      </label>
+                      <div className="relative">
+                        <Lock className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                        <input
+                          id="password"
+                          type={showPw ? "text" : "password"}
+                          placeholder="কমপক্ষে ৮ অক্ষর"
+                          className="w-full rounded-xl border border-border bg-background/60 py-3 pl-11 pr-12 text-sm text-foreground placeholder:text-muted-foreground/70 backdrop-blur transition-all focus:border-primary/50 focus:bg-background/85 focus:outline-none focus:ring-4 focus:ring-primary/15"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setShowPw((v) => !v)}
+                          className="absolute right-2 top-1/2 grid h-9 w-9 -translate-y-1/2 place-items-center rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground"
+                          aria-label={showPw ? "Hide password" : "Show password"}
+                        >
+                          {showPw ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                        </button>
+                      </div>
+                      <p className="mt-2 text-[11px] text-muted-foreground">
+                        বড় হাতের অক্ষর, সংখ্যা ও একটি বিশেষ চিহ্ন ব্যবহার করুন।
+                      </p>
+                    </div>
+
+                    <label className="flex cursor-pointer items-start gap-2.5">
+                      <input
+                        type="checkbox"
+                        checked={agree}
+                        onChange={(e) => setAgree(e.target.checked)}
+                        className="mt-0.5 h-4 w-4 rounded border-border text-primary focus:ring-2 focus:ring-primary/30"
+                      />
+                      <span className="text-xs leading-relaxed text-foreground/80">
+                        আমি{" "}
+                        <a href="#" className="font-medium text-primary hover:underline">শর্তাবলি</a>{" "}
+                        ও{" "}
+                        <a href="#" className="font-medium text-primary hover:underline">প্রাইভেসি পলিসি</a>{" "}
+                        মেনে নিচ্ছি।
+                      </span>
+                    </label>
+
+                    <button
+                      type="submit"
+                      disabled={!agree}
+                      className="group relative inline-flex w-full items-center justify-center gap-2 overflow-hidden rounded-xl gradient-primary px-4 py-3.5 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/30 transition-all hover:-translate-y-0.5 hover:shadow-xl hover:shadow-primary/40 disabled:cursor-not-allowed disabled:opacity-50 disabled:shadow-none disabled:hover:translate-y-0"
+                    >
+                      <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
+                      <span className="relative">অ্যাকাউন্ট তৈরি করুন</span>
+                      <ArrowRight className="relative h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                    </button>
+                  </form>
+
+                  <div className="mt-7 grid grid-cols-3 gap-3 border-t border-border pt-5">
+                    {[
+                      { i: GraduationCap, t: "২৫+ উস্তাদ" },
+                      { i: BookOpen, t: "১১টি কোর্স" },
+                      { i: ShieldCheck, t: "লাইফটাইম অ্যাক্সেস" },
+                    ].map((p, i) => (
+                      <div key={i} className="flex items-center justify-center gap-2 text-[11px] font-medium text-foreground/75">
+                        <span className="grid h-7 w-7 place-items-center rounded-lg bg-primary/10 text-primary ring-1 ring-primary/20">
+                          <p.i className="h-3.5 w-3.5" strokeWidth={2.4} />
+                        </span>
+                        {p.t}
+                      </div>
+                    ))}
+                  </div>
                 </div>
-
-                <label className="flex cursor-pointer items-start gap-2.5 pt-1">
-                  <input
-                    type="checkbox"
-                    checked={agree}
-                    onChange={(e) => setAgree(e.target.checked)}
-                    className="mt-0.5 h-4 w-4 rounded border-border text-primary focus:ring-2 focus:ring-primary/30"
-                  />
-                  <span className="text-xs leading-relaxed text-foreground/80">
-                    আমি{" "}
-                    <a href="#" className="font-medium text-primary hover:underline">
-                      শর্তাবলি
-                    </a>{" "}
-                    ও{" "}
-                    <a href="#" className="font-medium text-primary hover:underline">
-                      প্রাইভেসি পলিসি
-                    </a>{" "}
-                    মেনে নিচ্ছি।
-                  </span>
-                </label>
-
-                <button
-                  type="submit"
-                  disabled={!agree}
-                  className="group relative mt-2 inline-flex w-full items-center justify-center gap-2 overflow-hidden rounded-xl gradient-primary px-4 py-3 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/30 transition-all hover:shadow-xl hover:shadow-primary/40 disabled:cursor-not-allowed disabled:opacity-50 disabled:shadow-none"
-                >
-                  <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
-                  <span className="relative">অ্যাকাউন্ট তৈরি করুন</span>
-                  <ArrowRight className="relative h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-                </button>
-              </form>
-
-              <div className="mt-6 flex items-center justify-center gap-2 text-[11px] text-muted-foreground">
-                <ShieldCheck className="h-3.5 w-3.5 text-primary" />
-                আপনার তথ্য এনক্রিপ্টেড ও সুরক্ষিত
               </div>
             </div>
 
-            {/* Trust row */}
-            <div className="mt-5 flex items-center justify-center gap-4 text-[11px] text-muted-foreground">
-              <span className="inline-flex items-center gap-1">
+            <div className="mt-5 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[11px] text-muted-foreground">
+              <span className="inline-flex items-center gap-1.5">
                 <CheckCircle2 className="h-3.5 w-3.5 text-primary" /> বিনামূল্যে
               </span>
-              <span className="inline-flex items-center gap-1">
-                <CheckCircle2 className="h-3.5 w-3.5 text-primary" /> কার্ড নয়
+              <span className="inline-flex items-center gap-1.5">
+                <CheckCircle2 className="h-3.5 w-3.5 text-primary" /> কার্ড লাগবে না
               </span>
-              <span className="inline-flex items-center gap-1">
-                <CheckCircle2 className="h-3.5 w-3.5 text-primary" /> ৩০ সেকেন্ডে
+              <span className="inline-flex items-center gap-1.5">
+                <ShieldCheck className="h-3.5 w-3.5 text-primary" /> এনক্রিপ্টেড ও সুরক্ষিত
               </span>
             </div>
           </div>
+
         </section>
       </div>
     </main>
