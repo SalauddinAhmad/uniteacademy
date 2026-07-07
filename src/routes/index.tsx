@@ -436,15 +436,29 @@ function PopularCourses({ courses: list }: { courses: typeof courses }) {
 }
 
 /* ---------------- Benefits grid ---------------- */
+function TelegramIcon({ className = "" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className={className}>
+      <path d="M9.78 15.28 9.4 20.6c.54 0 .78-.23 1.06-.5l2.55-2.44 5.28 3.86c.97.53 1.67.25 1.93-.9l3.5-16.4h.01c.31-1.44-.52-2-1.46-1.65L1.5 9.6C.07 10.16.09 10.94 1.25 11.3l5.28 1.65L18.8 5.25c.58-.38 1.1-.17.67.21z" />
+    </svg>
+  );
+}
 function BenefitsGrid() {
   const items = [
-    { i: Globe2, t: "যেকোনো স্থান থেকে", d: "ইন্টারনেট থাকলেই বাড়ি, অফিস বা যাত্রাপথে শিখুন।" },
-    { i: GraduationCap, t: "অভিজ্ঞ উস্তাদ", d: "দেশ-বিদেশের প্রখ্যাত ইসলামী স্কলার ও শিক্ষকমণ্ডলী।" },
-    { i: Radio, t: "লাইভ + রেকর্ডেড", d: "লাইভ ক্লাসের সাথে রেকর্ডিং — মিস হলেও পিছিয়ে পড়বেন না।" },
-    { i: FileCheck2, t: "কুইজ ও পরীক্ষা", d: "প্রতি মডিউলে মূল্যায়ন — আপনার শেখা যাচাই করুন।" },
-    { i: MessageCircle, t: "টেলিগ্রাম সাপোর্ট", d: "উস্তাদ ও সহপাঠীদের সাথে প্রশ্নোত্তরের প্ল্যাটফর্ম।" },
-    { i: Award, t: "যাচাইযোগ্য সনদ", d: "কোর্স সম্পন্ন হলে পাবেন ডিজিটাল ভেরিফাইড সার্টিফিকেট।" },
-  ];
+    { i: Globe2, t: "যেকোনো স্থান থেকে", d: "ইন্টারনেট থাকলেই বাড়ি, অফিস বা যাত্রাপথে শিখুন।", brand: false },
+    { i: GraduationCap, t: "অভিজ্ঞ উস্তাদ", d: "দেশ-বিদেশের প্রখ্যাত ইসলামী স্কলার ও শিক্ষকমণ্ডলী।", brand: false },
+    { i: Radio, t: "লাইভ + রেকর্ডেড", d: "লাইভ ক্লাসের সাথে রেকর্ডিং — মিস হলেও পিছিয়ে পড়বেন না।", brand: false },
+    { i: FileCheck2, t: "কুইজ ও পরীক্ষা", d: "প্রতি মডিউলে মূল্যায়ন — আপনার শেখা যাচাই করুন।", brand: false },
+    {
+      i: TelegramIcon,
+      t: "টেলিগ্রাম সাপোর্ট",
+      d: "উস্তাদ ও সহপাঠীদের সাথে প্রশ্নোত্তরের ডেডিকেটেড গ্রুপ — ২৪/৭ চালু।",
+      brand: true,
+      href: "https://t.me/uniteacademy",
+      cta: "গ্রুপে যোগ দিন",
+    },
+    { i: Award, t: "যাচাইযোগ্য সনদ", d: "কোর্স সম্পন্ন হলে পাবেন ডিজিটাল ভেরিফাইড সার্টিফিকেট।", brand: false },
+  ] as const;
   return (
     <section className="py-16 sm:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -454,15 +468,51 @@ function BenefitsGrid() {
           desc="ইসলামী শিক্ষার আধুনিক অভিজ্ঞতা — যেখানে ঐতিহ্য মিলেছে প্রযুক্তির সাথে।"
         />
         <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {items.map((f) => (
-            <div key={f.t} className="group rounded-2xl border border-border bg-card p-6 transition-all hover:-translate-y-1 hover:border-primary/40 hover:shadow-xl hover:shadow-primary/10">
-              <div className="grid h-12 w-12 place-items-center rounded-xl gradient-primary text-primary-foreground shadow-lg shadow-primary/25">
-                <f.i className="h-6 w-6" />
-              </div>
-              <h3 className="mt-5 text-lg font-semibold">{f.t}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{f.d}</p>
-            </div>
-          ))}
+          {items.map((f) => {
+            const Wrapper: any = f.brand && "href" in f ? "a" : "div";
+            const wrapperProps = f.brand && "href" in f
+              ? { href: (f as any).href, target: "_blank", rel: "noopener noreferrer" }
+              : {};
+            return (
+              <Wrapper
+                key={f.t}
+                {...wrapperProps}
+                className={`group relative block overflow-hidden rounded-2xl border p-6 transition-all hover:-translate-y-1 hover:shadow-xl ${
+                  f.brand
+                    ? "border-sky-500/30 bg-gradient-to-br from-sky-500/10 via-card to-card hover:border-sky-500/50 hover:shadow-sky-500/15"
+                    : "border-border bg-card hover:border-primary/40 hover:shadow-primary/10"
+                }`}
+              >
+                {f.brand && (
+                  <div className="pointer-events-none absolute -right-8 -top-8 h-28 w-28 rounded-full bg-sky-500/30 opacity-40 blur-3xl transition-opacity group-hover:opacity-70" />
+                )}
+                <div
+                  className={`grid h-12 w-12 place-items-center rounded-xl text-primary-foreground shadow-lg ${
+                    f.brand
+                      ? "bg-gradient-to-br from-sky-400 to-sky-600 shadow-sky-500/30"
+                      : "gradient-primary shadow-primary/25"
+                  }`}
+                >
+                  <f.i className="h-6 w-6" />
+                </div>
+                <h3 className="mt-5 flex items-center gap-2 text-lg font-semibold">
+                  {f.t}
+                  {f.brand && (
+                    <span className="rounded-full bg-sky-500/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-sky-600 dark:text-sky-400">
+                      Telegram
+                    </span>
+                  )}
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{f.d}</p>
+                {f.brand && "cta" in f && (
+                  <div className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-sky-600 transition-all group-hover:gap-2.5 dark:text-sky-400">
+                    {(f as any).cta}
+                    <ArrowRight className="h-4 w-4" />
+                  </div>
+                )}
+              </Wrapper>
+            );
+          })}
         </div>
       </div>
     </section>
