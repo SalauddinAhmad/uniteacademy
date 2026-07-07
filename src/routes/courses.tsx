@@ -42,7 +42,7 @@ function CoursesPage() {
             <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-xs font-semibold text-primary">
               {fmtBn(courses.length)}+ কোর্স উপলব্ধ
             </div>
-            <h1 className="mt-4 text-4xl font-bold tracking-tight sm:text-5xl">সব কোর্স ব্রাউজ করুন</h1>
+            <h1 className="mt-4 text-4xl font-bold tracking-tight sm:text-5xl">আমাদের কোর্সসমূহ</h1>
             <p className="mt-3 text-muted-foreground">আপনার আগ্রহ ও স্তর অনুযায়ী সেরা কোর্সটি বেছে নিন।</p>
           </div>
 
