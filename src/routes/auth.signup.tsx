@@ -91,12 +91,8 @@ function SignupPage() {
                 <div aria-hidden className="pointer-events-none absolute -bottom-24 -left-24 h-56 w-56 rounded-full bg-accent/20 blur-3xl" />
 
                 <div className="relative">
-                  <div className="mx-auto flex w-fit items-center gap-1.5 rounded-full border border-border bg-background/50 px-3 py-1 text-[11px] font-medium text-foreground/80 backdrop-blur">
-                    <Sparkles className="h-3 w-3 text-accent" />
-                    বিনামূল্যে সাইনআপ • ৩০ সেকেন্ডে
-                  </div>
+                  <div className="text-center">
 
-                  <div className="mt-4 text-center">
                     <h2 className="text-3xl font-extrabold tracking-tight sm:text-[2rem]">
                       অ্যাকাউন্ট তৈরি করুন
                     </h2>
