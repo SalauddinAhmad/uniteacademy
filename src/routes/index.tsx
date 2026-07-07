@@ -62,7 +62,7 @@ function Hero() {
       <div className="mx-auto grid max-w-7xl gap-14 px-4 py-20 sm:px-6 md:grid-cols-12 md:py-28 lg:px-8 lg:py-36">
         {/* Left */}
         <div className="md:col-span-7 flex flex-col justify-center">
-          <div className="inline-flex w-fit items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 backdrop-blur-md">
+          <div className="inline-flex w-fit items-center gap-2 rounded-full border border-accent/30 bg-accent/10 px-3 py-1.5 backdrop-blur-md">
             <span className="h-2 w-2 rounded-full bg-accent shadow-[0_0_10px_var(--color-accent)]" />
             <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-accent" style={{ fontFamily: "Poppins" }}>
               New Semester 2026
