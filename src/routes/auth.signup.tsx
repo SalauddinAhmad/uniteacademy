@@ -164,9 +164,10 @@ function SignupPage() {
                       />
                       <span className="text-xs leading-relaxed text-foreground/80">
                         আমি{" "}
-                        <a href="#" className="font-medium text-primary hover:underline">শর্তাবলি</a>{" "}
+                        <Link to="/terms" className="font-medium text-primary hover:underline">শর্তাবলি</Link>{" "}
                         ও{" "}
-                        <a href="#" className="font-medium text-primary hover:underline">প্রাইভেসি পলিসি</a>{" "}
+                        <Link to="/privacy" className="font-medium text-primary hover:underline">প্রাইভেসি পলিসি</Link>{" "}
+
                         মেনে নিচ্ছি।
                       </span>
                     </label>
