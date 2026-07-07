@@ -229,22 +229,23 @@ function FeaturedSpotlight({ course }: { course: typeof courses[number] }) {
               {/* Back gold card */}
               <div className="absolute inset-0 -m-4 -rotate-6 rounded-2xl border border-accent/30 bg-gradient-to-br from-accent/40 to-transparent backdrop-blur-lg" />
               {/* Front glass card */}
-              <div className="relative w-64 rotate-3 rounded-2xl border border-white/20 bg-white/5 p-6 shadow-2xl backdrop-blur-2xl">
+              <div className="relative w-64 rotate-3 rounded-2xl border border-border bg-card p-6 shadow-2xl backdrop-blur-2xl">
                 <div className="flex items-center justify-between">
                   <Award className="h-6 w-6 text-accent" />
                   <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground" style={{ fontFamily: "Poppins" }}>Certificate</span>
                 </div>
                 <div className="mt-6 space-y-2">
-                  <div className="h-3 w-3/4 rounded bg-white/15" />
-                  <div className="h-3 w-1/2 rounded bg-white/10" />
+                  <div className="h-3 w-3/4 rounded bg-muted" />
+                  <div className="h-3 w-1/2 rounded bg-muted" />
                 </div>
                 <div className="mt-6 grid grid-cols-3 gap-2">
                   {[BookOpen, Video, Award].map((I, i) => (
-                    <div key={i} className="grid h-14 place-items-center rounded-lg border border-white/10 bg-white/5">
-                      <I className="h-4 w-4 text-accent" />
+                    <div key={i} className="grid h-14 place-items-center rounded-lg border border-border bg-muted/50">
+                      <I className="h-4 w-4 text-primary" />
                     </div>
                   ))}
                 </div>
+
                 <div className="mt-6 flex items-center justify-between">
                   <div className="text-[10px] uppercase tracking-widest text-muted-foreground">Verified</div>
                   <ShieldCheck className="h-4 w-4 text-accent" />
