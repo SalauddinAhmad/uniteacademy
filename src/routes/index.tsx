@@ -99,7 +99,7 @@ function Hero() {
           </div>
 
 
-          <div className="mt-12 flex flex-wrap items-center gap-x-12 gap-y-6 border-t border-white/10 pt-8">
+          <div className="mt-12 flex flex-wrap items-center gap-x-12 gap-y-6 border-t border-border pt-8">
             {[
               { n: "১৫,০০০+", l: "শিক্ষার্থী" },
               { n: "৫০+", l: "কোর্স" },
@@ -110,10 +110,11 @@ function Hero() {
                   <div className="text-3xl font-bold text-foreground" style={{ fontFamily: "Poppins" }}>{s.n}</div>
                   <div className="mt-1 text-[11px] uppercase tracking-widest text-muted-foreground">{s.l}</div>
                 </div>
-                {i < 2 && <div className="hidden h-10 w-px bg-white/10 sm:block" />}
+                {i < 2 && <div className="hidden h-10 w-px bg-border sm:block" />}
               </div>
             ))}
           </div>
+
         </div>
 
         {/* Right — Featured Card */}
