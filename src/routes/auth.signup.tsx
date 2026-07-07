@@ -91,12 +91,8 @@ function SignupPage() {
                 <div aria-hidden className="pointer-events-none absolute -bottom-24 -left-24 h-56 w-56 rounded-full bg-accent/20 blur-3xl" />
 
                 <div className="relative">
-                  <div className="mx-auto flex w-fit items-center gap-1.5 rounded-full border border-border bg-background/50 px-3 py-1 text-[11px] font-medium text-foreground/80 backdrop-blur">
-                    <Sparkles className="h-3 w-3 text-accent" />
-                    বিনামূল্যে সাইনআপ • ৩০ সেকেন্ডে
-                  </div>
+                  <div className="text-center">
 
-                  <div className="mt-4 text-center">
                     <h2 className="text-3xl font-extrabold tracking-tight sm:text-[2rem]">
                       অ্যাকাউন্ট তৈরি করুন
                     </h2>
@@ -210,17 +206,6 @@ function SignupPage() {
               </div>
             </div>
 
-            <div className="mt-5 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[11px] text-muted-foreground">
-              <span className="inline-flex items-center gap-1.5">
-                <CheckCircle2 className="h-3.5 w-3.5 text-primary" /> বিনামূল্যে
-              </span>
-              <span className="inline-flex items-center gap-1.5">
-                <CheckCircle2 className="h-3.5 w-3.5 text-primary" /> কার্ড লাগবে না
-              </span>
-              <span className="inline-flex items-center gap-1.5">
-                <ShieldCheck className="h-3.5 w-3.5 text-primary" /> এনক্রিপ্টেড ও সুরক্ষিত
-              </span>
-            </div>
           </div>
 
         </section>
