@@ -177,7 +177,7 @@ function FeaturedSpotlight({ course }: { course: typeof courses[number] }) {
   return (
     <section id="diploma" className="py-20 sm:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="relative flex flex-col overflow-hidden rounded-[2rem] border border-white/10 bg-gradient-to-r from-primary/30 via-background/60 to-background/40 backdrop-blur-xl md:flex-row">
+        <div className="relative flex flex-col overflow-hidden rounded-[2rem] border border-border bg-gradient-to-r from-primary/10 via-card to-card shadow-xl shadow-primary/10 backdrop-blur-xl md:flex-row">
           {/* Left: content */}
           <div className="w-full p-10 md:w-1/2 md:p-14">
             <span className="block text-[11px] font-bold uppercase tracking-[0.35em] text-accent" style={{ fontFamily: "Poppins" }}>
