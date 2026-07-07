@@ -86,17 +86,18 @@ function Hero() {
           <div className="mt-9 flex flex-wrap gap-4">
             <Link
               to="/courses"
-              className="inline-flex items-center justify-center gap-2 rounded-xl bg-accent px-8 py-4 text-sm font-bold text-accent-foreground shadow-[0_10px_40px_-10px_var(--color-accent)] transition-transform hover:scale-[1.03]"
+              className="inline-flex items-center justify-center gap-2 rounded-xl gradient-primary px-8 py-4 text-sm font-bold text-primary-foreground shadow-[0_10px_40px_-10px_var(--color-primary)] transition-transform hover:scale-[1.03]"
             >
               কোর্সগুলো দেখুন <ArrowRight className="h-4 w-4" />
             </Link>
             <a
               href="#diploma"
-              className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 px-8 py-4 text-sm font-semibold text-foreground backdrop-blur-md transition-colors hover:bg-white/10"
+              className="inline-flex items-center justify-center gap-2 rounded-xl border border-border bg-card px-8 py-4 text-sm font-semibold text-foreground backdrop-blur-md transition-colors hover:bg-muted"
             >
               <PlayCircle className="h-4 w-4" /> ফ্রি ডেমো ক্লাস
             </a>
           </div>
+
 
           <div className="mt-12 flex flex-wrap items-center gap-x-12 gap-y-6 border-t border-white/10 pt-8">
             {[
