@@ -206,17 +206,6 @@ function SignupPage() {
               </div>
             </div>
 
-            <div className="mt-5 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[11px] text-muted-foreground">
-              <span className="inline-flex items-center gap-1.5">
-                <CheckCircle2 className="h-3.5 w-3.5 text-primary" /> বিনামূল্যে
-              </span>
-              <span className="inline-flex items-center gap-1.5">
-                <CheckCircle2 className="h-3.5 w-3.5 text-primary" /> কার্ড লাগবে না
-              </span>
-              <span className="inline-flex items-center gap-1.5">
-                <ShieldCheck className="h-3.5 w-3.5 text-primary" /> এনক্রিপ্টেড ও সুরক্ষিত
-              </span>
-            </div>
           </div>
 
         </section>
