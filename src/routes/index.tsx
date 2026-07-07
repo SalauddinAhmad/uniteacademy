@@ -53,108 +53,94 @@ function HomePage() {
 /* ---------------- Hero ---------------- */
 function Hero() {
   return (
-    <section className="relative overflow-hidden gradient-hero">
-      <div className="absolute inset-0 -z-10 opacity-40 [background:radial-gradient(60%_50%_at_50%_0%,hsl(var(--primary)/0.25),transparent_70%)]" />
-      <div className="mx-auto grid max-w-7xl gap-12 px-4 py-16 sm:px-6 md:grid-cols-[1.05fr_0.95fr] md:py-24 lg:px-8 lg:py-32">
-        <div className="flex flex-col justify-center">
-          <div className="inline-flex w-fit items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-3 py-1.5 text-xs font-semibold text-primary">
-            <Sparkles className="h-3.5 w-3.5" />
-            নতুন ব্যাচ শুরু হয়েছে — এখনই যুক্ত হোন
+    <section className="relative overflow-hidden">
+      <div className="pointer-events-none absolute inset-0 -z-10">
+        <div className="absolute -top-24 -left-24 h-[520px] w-[520px] rounded-full bg-primary/25 blur-[120px]" />
+        <div className="absolute top-40 -right-32 h-[420px] w-[420px] rounded-full bg-accent/10 blur-[120px]" />
+      </div>
+
+      <div className="mx-auto grid max-w-7xl gap-14 px-4 py-20 sm:px-6 md:grid-cols-12 md:py-28 lg:px-8 lg:py-36">
+        {/* Left */}
+        <div className="md:col-span-7 flex flex-col justify-center">
+          <div className="inline-flex w-fit items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 backdrop-blur-md">
+            <span className="h-2 w-2 rounded-full bg-accent shadow-[0_0_10px_var(--color-accent)]" />
+            <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-accent" style={{ fontFamily: "Poppins" }}>
+              New Semester 2026
+            </span>
           </div>
-          <h1 className="mt-6 text-4xl font-bold leading-[1.1] tracking-tight sm:text-5xl lg:text-6xl">
-            ইসলামী জ্ঞানে <br />
-            <span className="text-gradient">নিজেকে সমৃদ্ধ করুন</span>
+
+          <h1 className="mt-8 text-5xl font-bold leading-[1.15] tracking-tight text-foreground sm:text-6xl lg:text-7xl">
+            দ্বীন শিক্ষা হোক <br />
+            <span className="bg-gradient-to-r from-accent via-[#fbf2c0] to-accent bg-clip-text text-transparent">
+              আধুনিক ও মানসম্মত
+            </span>
           </h1>
-          <p className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">
-            কুরআন, হাদীস, ফিকহ ও সীরাতের গভীর জ্ঞান — অভিজ্ঞ উস্তাদদের কাছ থেকে,
-            বাংলা মাধ্যমে, বিশ্বমানের অনলাইন কোর্সে। ঘরে বসে, নিজের সময়ে।
+
+          <p className="mt-7 max-w-xl text-lg leading-relaxed text-muted-foreground">
+            Uniteacademy-এর সাথে আপনার ইসলামিক শিক্ষার যাত্রা শুরু করুন। অভিজ্ঞ
+            উস্তাদদের তত্ত্বাবধানে আধুনিক প্রযুক্তির সমন্বয়ে ইলম অর্জন করুন —
+            ঘরে বসে, নিজের সময়ে।
           </p>
 
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <Link to="/courses" className="inline-flex items-center justify-center gap-2 rounded-xl gradient-primary px-6 py-3.5 text-sm font-semibold text-primary-foreground shadow-xl shadow-primary/25 transition-transform hover:scale-[1.02]">
-              কোর্স ব্রাউজ করুন <ArrowRight className="h-4 w-4" />
+          <div className="mt-9 flex flex-wrap gap-4">
+            <Link
+              to="/courses"
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-accent px-8 py-4 text-sm font-bold text-accent-foreground shadow-[0_10px_40px_-10px_var(--color-accent)] transition-transform hover:scale-[1.03]"
+            >
+              কোর্সগুলো দেখুন <ArrowRight className="h-4 w-4" />
             </Link>
-            <a href="#diploma" className="inline-flex items-center justify-center gap-2 rounded-xl border border-border bg-background px-6 py-3.5 text-sm font-semibold text-foreground transition-colors hover:bg-muted">
-              <PlayCircle className="h-4 w-4" /> ডিপ্লোমা প্রোগ্রাম দেখুন
+            <a
+              href="#diploma"
+              className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 px-8 py-4 text-sm font-semibold text-foreground backdrop-blur-md transition-colors hover:bg-white/10"
+            >
+              <PlayCircle className="h-4 w-4" /> ফ্রি ডেমো ক্লাস
             </a>
           </div>
 
-          <div className="mt-10 grid grid-cols-3 gap-6 border-t border-border pt-8">
+          <div className="mt-12 flex flex-wrap items-center gap-x-12 gap-y-6 border-t border-white/10 pt-8">
             {[
               { n: "১৫,০০০+", l: "শিক্ষার্থী" },
               { n: "৫০+", l: "কোর্স" },
-              { n: "২৫+", l: "উস্তাদ" },
-            ].map((s) => (
-              <div key={s.l}>
-                <div className="text-2xl font-bold text-foreground">{s.n}</div>
-                <div className="mt-1 text-xs text-muted-foreground">{s.l}</div>
+              { n: "৪.৯/৫", l: "রেটিং" },
+            ].map((s, i) => (
+              <div key={s.l} className="flex items-center gap-12">
+                <div>
+                  <div className="text-3xl font-bold text-foreground" style={{ fontFamily: "Poppins" }}>{s.n}</div>
+                  <div className="mt-1 text-[11px] uppercase tracking-widest text-muted-foreground">{s.l}</div>
+                </div>
+                {i < 2 && <div className="hidden h-10 w-px bg-white/10 sm:block" />}
               </div>
             ))}
           </div>
         </div>
 
-        {/* Hero visual */}
-        <div className="relative flex items-center justify-center">
-          <div className="absolute inset-0 -z-10 blur-3xl opacity-40 gradient-primary rounded-full" />
-          <div className="relative w-full max-w-md">
-            <div className="rounded-3xl border border-border bg-card p-6 shadow-2xl shadow-primary/10">
-              <div className="aspect-[4/5] rounded-2xl gradient-primary p-8 text-primary-foreground">
-                <div className="flex h-full flex-col justify-between">
-                  <div className="flex items-center justify-between">
-                    <div className="text-6xl">🕌</div>
-                    <span className="rounded-full bg-white/20 backdrop-blur px-3 py-1 text-[10px] font-bold uppercase tracking-wider">Featured</span>
-                  </div>
-                  <div>
-                    <div className="text-xs font-medium opacity-80">চলমান কোর্স</div>
-                    <div className="mt-2 text-2xl font-bold leading-tight">
-                      ডিপ্লোমা ইন ইসলামিক স্টাডিজ
-                    </div>
-                    <div className="mt-4 flex items-center justify-between text-xs">
-                      <span className="opacity-80">অগ্রগতি</span>
-                      <span className="font-bold">৮৪%</span>
-                    </div>
-                    <div className="mt-2 h-2 rounded-full bg-white/20 overflow-hidden">
-                      <div className="h-full w-[84%] rounded-full bg-accent" />
-                    </div>
-                  </div>
-                </div>
+        {/* Right — Featured Card */}
+        <div className="md:col-span-5 relative flex items-center">
+          <div className="absolute -inset-6 -z-10 rounded-full bg-primary/25 blur-3xl" />
+          <div className="relative w-full rounded-3xl border border-white/15 bg-gradient-to-br from-white/[0.08] to-white/[0.02] p-8 shadow-2xl backdrop-blur-2xl">
+            <div className="relative aspect-video overflow-hidden rounded-2xl bg-gradient-to-br from-primary/60 to-primary/20">
+              <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
+              <div className="absolute right-4 top-4 rounded-full bg-white/10 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white backdrop-blur">
+                Featured
               </div>
-              <div className="mt-4 grid grid-cols-3 gap-2 text-center text-xs">
-                {[
-                  { i: BookOpen, n: fmtBn(11), l: "কোর্স" },
-                  { i: PlayCircle, n: fmtBn(135), l: "কুইজ" },
-                  { i: Award, n: fmtBn(3), l: "সার্টিফিকেট" },
-                ].map((x, i) => (
-                  <div key={i} className="rounded-xl bg-muted p-3">
-                    <x.i className="mx-auto h-4 w-4 text-primary" />
-                    <div className="mt-1.5 font-bold">{x.n}</div>
-                    <div className="text-[10px] text-muted-foreground">{x.l}</div>
-                  </div>
+              <div className="absolute bottom-4 left-4 rounded bg-accent px-3 py-1 text-[10px] font-bold uppercase text-accent-foreground" style={{ fontFamily: "Poppins" }}>
+                Flagship
+              </div>
+            </div>
+            <h3 className="mt-6 text-2xl font-bold text-foreground">ডিপ্লোমা ইন ইসলামিক স্টাডিজ</h3>
+            <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+              কুরআন, সুন্নাহ ও সমসাময়িক বিষয়ে পূর্ণাঙ্গ জ্ঞান অর্জনের জন্য
+              আমাদের সবচেয়ে জনপ্রিয় ১২ মাসের ফ্ল্যাগশিপ প্রোগ্রাম।
+            </p>
+            <div className="mt-6 flex items-center justify-between border-t border-white/10 pt-5">
+              <div className="flex -space-x-3">
+                {["🧕🏻","🧔🏻","🧔🏽"].map((e,i) => (
+                  <div key={i} className="grid h-10 w-10 place-items-center rounded-full border-2 border-background bg-primary/40 text-lg">{e}</div>
                 ))}
               </div>
-            </div>
-            <div className="absolute -bottom-6 -left-6 rounded-2xl border border-border bg-card p-4 shadow-lg animate-fade-in">
-              <div className="flex items-center gap-3">
-                <div className="grid h-10 w-10 place-items-center rounded-full bg-accent/20 text-accent">
-                  <Award className="h-5 w-5" />
-                </div>
-                <div>
-                  <div className="text-xs font-semibold">সার্টিফায়েড</div>
-                  <div className="text-[10px] text-muted-foreground">স্বীকৃত সনদ</div>
-                </div>
-              </div>
-            </div>
-            <div className="absolute -top-4 -right-4 rounded-2xl border border-border bg-card p-3 shadow-lg animate-fade-in">
-              <div className="flex items-center gap-2">
-                <div className="flex -space-x-2">
-                  {["🧑🏻‍🎓","👨🏽‍🎓","👩🏻‍🎓"].map((e,i)=>(
-                    <div key={i} className="grid h-8 w-8 place-items-center rounded-full border-2 border-card bg-muted text-sm">{e}</div>
-                  ))}
-                </div>
-                <div className="text-xs">
-                  <div className="font-bold">১৫,০০০+</div>
-                  <div className="text-[10px] text-muted-foreground">শিক্ষার্থী</div>
-                </div>
+              <div className="text-right">
+                <div className="text-[10px] uppercase tracking-widest text-muted-foreground">কোর্স ফি</div>
+                <div className="text-lg font-bold text-accent" style={{ fontFamily: "Poppins" }}>৳ ১২,০০০</div>
               </div>
             </div>
           </div>
@@ -168,12 +154,12 @@ function Hero() {
 function TrustLogos() {
   const items = ["সহীহ আকীদাহ", "বাংলা মাধ্যম", "লাইফটাইম অ্যাক্সেস", "যাচাইযোগ্য সনদ", "মোবাইল ফ্রেন্ডলি", "লাইভ + রেকর্ডেড"];
   return (
-    <section className="border-y border-border bg-card/40">
+    <section className="border-y border-white/10 bg-white/[0.02]">
       <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
         <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-xs font-medium text-muted-foreground">
           {items.map((t) => (
             <span key={t} className="inline-flex items-center gap-1.5">
-              <CheckCircle2 className="h-3.5 w-3.5 text-primary" /> {t}
+              <CheckCircle2 className="h-3.5 w-3.5 text-accent" /> {t}
             </span>
           ))}
         </div>
@@ -185,66 +171,88 @@ function TrustLogos() {
 /* ---------------- Featured spotlight (diploma banner) ---------------- */
 function FeaturedSpotlight({ course }: { course: typeof courses[number] }) {
   return (
-    <section id="diploma" className="py-16 sm:py-20">
+    <section id="diploma" className="py-20 sm:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="relative overflow-hidden rounded-3xl border border-border bg-card shadow-xl shadow-primary/5">
-          <div className={`absolute inset-0 -z-10 bg-gradient-to-br ${course.cover} opacity-95`} />
-          <div className="grid gap-8 p-8 text-primary-foreground md:grid-cols-[1.3fr_1fr] md:p-14">
-            <div>
-              <span className="inline-flex items-center gap-2 rounded-full bg-white/15 backdrop-blur px-3 py-1 text-xs font-semibold">
-                <Sparkles className="h-3.5 w-3.5" /> এক্সক্লুসিভ ফ্ল্যাগশিপ প্রোগ্রাম
-              </span>
-              <h2 className="mt-4 text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl">
-                {course.title_bn}
-              </h2>
-              <p className="mt-4 max-w-xl text-primary-foreground/85">
-                আল্লাহ সুবহানাহু ওয়া তা‘আলা আমাদের জন্য জ্ঞান অর্জন ফরয করেছেন।
-                ইসলামের মৌলিক জ্ঞান অর্জনের জন্য পূর্ণাঙ্গ ১২ মাসের অনলাইন প্রোগ্রাম —
-                কুরআন, হাদীস, ফিকহ, আকীদাহ, সীরাত ও ইসলামী ইতিহাস।
-              </p>
-              <div className="mt-6 flex flex-wrap gap-3">
-                {[
-                  { i: Video, t: `${fmtBn(course.lessons)}+ লেসন` },
-                  { i: Clock, t: course.duration },
-                  { i: Users, t: `${fmtBn(course.students)}+ শিক্ষার্থী` },
-                  { i: Award, t: "সনদ প্রদান" },
-                ].map((x) => (
-                  <span key={x.t} className="inline-flex items-center gap-2 rounded-lg bg-white/10 backdrop-blur px-3 py-2 text-sm font-medium">
-                    <x.i className="h-4 w-4" /> {x.t}
-                  </span>
-                ))}
-              </div>
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <Link to="/courses" className="inline-flex items-center justify-center gap-2 rounded-xl bg-accent px-6 py-3.5 text-sm font-bold text-accent-foreground shadow-lg transition-transform hover:scale-[1.02]">
-                  ভর্তি হোন <ArrowRight className="h-4 w-4" />
-                </Link>
-                <Link to="/courses" className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/30 bg-white/10 px-6 py-3.5 text-sm font-semibold backdrop-blur transition-colors hover:bg-white/20">
-                  বিস্তারিত দেখুন
-                </Link>
-              </div>
-            </div>
-            <div className="flex flex-col justify-center gap-3">
+        <div className="relative flex flex-col overflow-hidden rounded-[2rem] border border-white/10 bg-gradient-to-r from-primary/30 via-background/60 to-background/40 backdrop-blur-xl md:flex-row">
+          {/* Left: content */}
+          <div className="w-full p-10 md:w-1/2 md:p-14">
+            <span className="block text-[11px] font-bold uppercase tracking-[0.35em] text-accent" style={{ fontFamily: "Poppins" }}>
+              University Standard
+            </span>
+            <h2 className="mt-5 text-4xl font-bold leading-tight text-foreground sm:text-5xl">
+              {course.title_bn}
+            </h2>
+            <p className="mt-5 max-w-lg text-muted-foreground">
+              আল্লাহ সুবহানাহু ওয়া তা'আলা আমাদের জন্য জ্ঞান অর্জন ফরয করেছেন।
+              পূর্ণাঙ্গ ১২ মাসের অনলাইন প্রোগ্রাম — কুরআন, হাদীস, ফিকহ, আকীদাহ ও সীরাত।
+            </p>
+
+            <ul className="mt-8 space-y-4">
               {[
-                "৬টি প্রধান বিষয়ের সমন্বয়ে গঠিত পূর্ণাঙ্গ সিলেবাস",
-                "প্রতি মডিউলে কুইজ, অ্যাসাইনমেন্ট ও ফাইনাল পরীক্ষা",
+                "বিশ্বমানের কারিকুলাম ও অভিজ্ঞ ওস্তাদ",
                 "লাইভ ক্লাস + রেকর্ডেড ভিডিও + PDF নোট",
                 "টেলিগ্রাম গ্রুপে ২৪/৭ উস্তাদ সাপোর্ট",
-                "কোর্স শেষে ডিজিটাল ভেরিফাইড সার্টিফিকেট",
+                "কোর্স শেষে ভেরিফাইড ডিজিটাল সার্টিফিকেট",
               ].map((t) => (
-                <div key={t} className="flex items-start gap-3 rounded-xl bg-white/10 backdrop-blur px-4 py-3">
-                  <CheckCircle2 className="h-5 w-5 shrink-0 text-accent" />
-                  <span className="text-sm font-medium">{t}</span>
-                </div>
+                <li key={t} className="flex items-start gap-3 text-foreground/90">
+                  <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-accent" />
+                  <span className="text-sm">{t}</span>
+                </li>
               ))}
+            </ul>
+
+            <div className="mt-10 flex flex-wrap items-center gap-4">
+              <Link
+                to="/courses"
+                className="inline-flex items-center gap-2 rounded-xl bg-accent px-6 py-3.5 text-sm font-bold text-accent-foreground shadow-[0_10px_30px_-10px_var(--color-accent)] transition-transform hover:scale-[1.03]"
+              >
+                ভর্তি হোন <ArrowRight className="h-4 w-4" />
+              </Link>
+              <Link to="/courses" className="group inline-flex items-center gap-2 text-sm font-bold text-accent transition-all hover:gap-3">
+                বিস্তারিত কারিকুলাম <ArrowRight className="h-4 w-4" />
+              </Link>
             </div>
           </div>
-          <div className="absolute -right-24 -top-24 h-72 w-72 rounded-full bg-white/10 blur-3xl" />
-          <div className="absolute -bottom-24 -left-24 h-72 w-72 rounded-full bg-accent/20 blur-3xl" />
+
+          {/* Right: layered glass certificate visual */}
+          <div className="relative flex w-full items-center justify-center overflow-hidden p-10 md:w-1/2 md:min-h-[520px] md:p-14">
+            <div className="absolute inset-0 bg-accent/5" />
+            <div className="absolute right-10 top-10 h-40 w-40 rounded-full bg-accent/20 blur-3xl" />
+            <div className="absolute bottom-10 left-10 h-40 w-40 rounded-full bg-primary/40 blur-3xl" />
+
+            <div className="relative">
+              {/* Back gold card */}
+              <div className="absolute inset-0 -m-4 -rotate-6 rounded-2xl border border-accent/30 bg-gradient-to-br from-accent/40 to-transparent backdrop-blur-lg" />
+              {/* Front glass card */}
+              <div className="relative w-64 rotate-3 rounded-2xl border border-white/20 bg-white/5 p-6 shadow-2xl backdrop-blur-2xl">
+                <div className="flex items-center justify-between">
+                  <Award className="h-6 w-6 text-accent" />
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground" style={{ fontFamily: "Poppins" }}>Certificate</span>
+                </div>
+                <div className="mt-6 space-y-2">
+                  <div className="h-3 w-3/4 rounded bg-white/15" />
+                  <div className="h-3 w-1/2 rounded bg-white/10" />
+                </div>
+                <div className="mt-6 grid grid-cols-3 gap-2">
+                  {[BookOpen, Video, Award].map((I, i) => (
+                    <div key={i} className="grid h-14 place-items-center rounded-lg border border-white/10 bg-white/5">
+                      <I className="h-4 w-4 text-accent" />
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-6 flex items-center justify-between">
+                  <div className="text-[10px] uppercase tracking-widest text-muted-foreground">Verified</div>
+                  <ShieldCheck className="h-4 w-4 text-accent" />
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
   );
 }
+
 
 /* ---------------- Stats strip ---------------- */
 function StatsStrip() {
