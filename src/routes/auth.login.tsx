@@ -136,12 +136,15 @@ function LoginPage() {
                   <div className="mt-7">
                     <button
                       type="button"
-                      className="group inline-flex w-full items-center justify-center gap-2.5 rounded-xl border border-border bg-background/60 px-4 py-3 text-sm font-semibold backdrop-blur transition-all hover:-translate-y-0.5 hover:bg-background/90 hover:shadow-lg"
+                      onClick={handleGoogle}
+                      disabled={googleLoading}
+                      className="group inline-flex w-full items-center justify-center gap-2.5 rounded-xl border border-border bg-background/60 px-4 py-3 text-sm font-semibold backdrop-blur transition-all hover:-translate-y-0.5 hover:bg-background/90 hover:shadow-lg disabled:opacity-60"
                     >
-                      <GoogleIcon className="h-4 w-4" />
+                      {googleLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <GoogleIcon className="h-4 w-4" />}
                       Google দিয়ে চালিয়ে যান
                     </button>
                   </div>
+
 
                   <div className="my-7 flex items-center gap-3">
                     <div className="h-px flex-1 bg-border" />
@@ -151,7 +154,7 @@ function LoginPage() {
                     <div className="h-px flex-1 bg-border" />
                   </div>
 
-                  <form onSubmit={(e) => e.preventDefault()} className="space-y-5" autoComplete="off">
+                  <form onSubmit={handleSubmit} className="space-y-5" autoComplete="on">
                     <div>
                       <label htmlFor="email" className="mb-2 block text-xs font-semibold text-foreground/80">
                         ইমেইল ঠিকানা
@@ -161,11 +164,15 @@ function LoginPage() {
                         <input
                           id="email"
                           type="email"
+                          required
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
                           placeholder="you@example.com"
                           className="w-full rounded-xl border border-border bg-background/60 py-3 pl-11 pr-3 text-sm text-foreground placeholder:text-muted-foreground/70 backdrop-blur transition-all focus:border-primary/50 focus:bg-background/85 focus:outline-none focus:ring-4 focus:ring-primary/15"
                         />
                       </div>
                     </div>
+
 
                     <div>
                       <div className="mb-2 flex items-center justify-between">
@@ -184,9 +191,13 @@ function LoginPage() {
                         <input
                           id="password"
                           type={showPw ? "text" : "password"}
+                          required
+                          value={password}
+                          onChange={(e) => setPassword(e.target.value)}
                           placeholder="আপনার পাসওয়ার্ড"
                           className="w-full rounded-xl border border-border bg-background/60 py-3 pl-11 pr-12 text-sm text-foreground placeholder:text-muted-foreground/70 backdrop-blur transition-all focus:border-primary/50 focus:bg-background/85 focus:outline-none focus:ring-4 focus:ring-primary/15"
                         />
+
                         <button
                           type="button"
                           onClick={() => setShowPw((v) => !v)}
@@ -212,12 +223,14 @@ function LoginPage() {
 
                     <button
                       type="submit"
-                      className="group relative inline-flex w-full items-center justify-center gap-2 overflow-hidden rounded-xl gradient-primary px-4 py-3.5 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/30 transition-all hover:-translate-y-0.5 hover:shadow-xl hover:shadow-primary/40"
+                      disabled={loading}
+                      className="group relative inline-flex w-full items-center justify-center gap-2 overflow-hidden rounded-xl gradient-primary px-4 py-3.5 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/30 transition-all hover:-translate-y-0.5 hover:shadow-xl hover:shadow-primary/40 disabled:opacity-60"
                     >
                       <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
-                      <span className="relative">লগইন করুন</span>
-                      <ArrowRight className="relative h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                      {loading ? <Loader2 className="relative h-4 w-4 animate-spin" /> : <span className="relative">লগইন করুন</span>}
+                      {!loading && <ArrowRight className="relative h-4 w-4 transition-transform group-hover:translate-x-0.5" />}
                     </button>
+
                   </form>
 
                   <div className="mt-7 grid grid-cols-3 gap-3 border-t border-border pt-5">
