@@ -649,32 +649,176 @@ function HowItWorks() {
 
 /* ---------------- Instructors ---------------- */
 function InstructorsRow() {
+  const lead = {
+    name: "ড. মোহাম্মাদ মানজুর ইলাহী",
+    title: "প্রধান উপদেষ্টা · ইসলামী স্কলার",
+    edu: "PhD — ইসলামিক ইউনিভার্সিটি অব মদীনা",
+    emoji: "🧕🏻",
+    tag: "ফিকহ ও আকীদাহ",
+    quote: "“দ্বীনের বিশুদ্ধ জ্ঞান প্রতিটি মুসলিমের অধিকার — আমরা সেটাই সহজলভ্য করতে চাই।”",
+    stats: [
+      { k: "২৫+", v: "বছরের অভিজ্ঞতা" },
+      { k: "১২", v: "প্রকাশিত গ্রন্থ" },
+      { k: "৮k+", v: "শিক্ষার্থী" },
+    ],
+  };
   const people = [
-    { name: "ড. মোহাম্মাদ মানজুর ইলাহী", title: "ইসলামী স্কলার, PhD (মদীনা)", emoji: "🧕🏻", tag: "ফিকহ ও আকীদাহ" },
-    { name: "ড. ইমাম হোসেন", title: "মুফাসসির, PhD", emoji: "🧔🏻", tag: "কুরআন ও তাফসীর" },
-    { name: "মুফতি আব্দুল্লাহ", title: "ইসলামিক রিসার্চার", emoji: "🧔🏽", tag: "ফিকহ ও ফতোয়া" },
-    { name: "ড. আব্দুল্লাহি কাফী", title: "সীরাত বিশেষজ্ঞ", emoji: "🧔🏾", tag: "সীরাত ও ইতিহাস" },
+    { name: "ড. ইমাম হোসেন", title: "মুফাসসির, PhD", emoji: "🧔🏻", tag: "কুরআন ও তাফসীর", years: "১৮+" },
+    { name: "মুফতি আব্দুল্লাহ", title: "ইসলামিক রিসার্চার", emoji: "🧔🏽", tag: "ফিকহ ও ফতোয়া", years: "১৫+" },
+    { name: "ড. আব্দুল্লাহি কাফী", title: "সীরাত বিশেষজ্ঞ", emoji: "🧔🏾", tag: "সীরাত ও ইতিহাস", years: "২০+" },
+    { name: "শায়খ আহমাদ", title: "উস্তাদুল হাদীস", emoji: "🧔", tag: "হাদীস ও উলূম", years: "১২+" },
   ];
   return (
-    <section className="border-y border-border bg-muted/30 py-16 sm:py-24">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <SectionHead eyebrow="আমাদের উস্তাদগণ" title="বিশ্বস্ত ও অভিজ্ঞ শিক্ষকমণ্ডলী" desc="দেশ ও বিদেশের প্রখ্যাত আলেম, স্কলার ও গবেষকদের কাছ থেকে শিখুন।" />
-        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {people.map((p) => (
-            <div key={p.name} className="rounded-2xl border border-border bg-card p-6 text-center transition-all hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/10">
-              <div className="mx-auto grid h-24 w-24 place-items-center rounded-full gradient-primary text-5xl">
-                {p.emoji}
-              </div>
-              <h3 className="mt-4 font-semibold">{p.name}</h3>
-              <p className="mt-1 text-xs text-muted-foreground">{p.title}</p>
-              <span className="mt-3 inline-block rounded-full bg-primary/10 px-3 py-1 text-[11px] font-semibold text-primary">{p.tag}</span>
+    <section className="relative overflow-hidden border-y border-border bg-gradient-to-b from-muted/40 via-background to-muted/30 py-20 sm:py-28">
+      {/* ambient washes */}
+      <div className="pointer-events-none absolute -top-40 left-1/3 h-96 w-96 rounded-full bg-primary/10 blur-3xl" />
+      <div className="pointer-events-none absolute -bottom-40 right-1/4 h-96 w-96 rounded-full bg-accent/10 blur-3xl" />
+      {/* soft grid overlay */}
+      <div
+        className="pointer-events-none absolute inset-0 opacity-[0.035]"
+        style={{
+          backgroundImage:
+            "linear-gradient(to right, currentColor 1px, transparent 1px), linear-gradient(to bottom, currentColor 1px, transparent 1px)",
+          backgroundSize: "48px 48px",
+        }}
+      />
+
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        {/* header row */}
+        <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
+          <div className="max-w-2xl">
+            <span className="inline-flex items-center gap-2 rounded-full border border-primary/25 bg-primary/8 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-primary">
+              <GraduationCap className="h-3.5 w-3.5" />
+              আমাদের উস্তাদগণ
+            </span>
+            <h2 className="mt-4 font-display text-3xl font-bold leading-tight tracking-tight sm:text-4xl lg:text-5xl">
+              বিশ্বস্ত ও অভিজ্ঞ <span className="bg-gradient-to-r from-primary via-primary to-accent bg-clip-text text-transparent">শিক্ষকমণ্ডলী</span>
+            </h2>
+            <p className="mt-3 text-base leading-relaxed text-muted-foreground sm:text-lg">
+              মদীনা, আল-আজহার ও উম্মুল কুরা থেকে সনদপ্রাপ্ত — দেশ-বিদেশের প্রখ্যাত আলেম ও গবেষকদের সরাসরি ক্লাসে যুক্ত হোন।
+            </p>
+          </div>
+          <div className="flex flex-wrap items-center gap-2">
+            {["মদীনা", "আল-আজহার", "উম্মুল কুরা", "ঢাকা বিশ্ববিদ্যালয়"].map((u) => (
+              <span key={u} className="rounded-full border border-border bg-card/70 px-3 py-1.5 text-[11px] font-medium text-foreground/80 backdrop-blur">
+                {u}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        {/* main grid: featured + supporting */}
+        <div className="mt-12 grid gap-6 lg:grid-cols-12">
+          {/* Featured lead instructor */}
+          <article className="group relative overflow-hidden rounded-3xl border border-border bg-card p-8 shadow-sm transition-all hover:shadow-xl hover:shadow-primary/10 lg:col-span-5 lg:p-10">
+            {/* corner glow */}
+            <div className="pointer-events-none absolute -right-24 -top-24 h-64 w-64 rounded-full bg-primary/15 blur-3xl transition-opacity duration-500 group-hover:opacity-70" />
+            <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
+
+            <div className="relative flex items-center gap-3">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-primary">
+                <Sparkles className="h-3 w-3" /> ফিচার্ড
+              </span>
+              <span className="text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground">প্রধান উপদেষ্টা</span>
             </div>
-          ))}
+
+            <div className="relative mt-6 flex items-start gap-5">
+              <div className="relative shrink-0">
+                <div className="grid h-24 w-24 place-items-center rounded-2xl gradient-primary text-5xl shadow-lg shadow-primary/25 sm:h-28 sm:w-28">
+                  {lead.emoji}
+                </div>
+                <span className="absolute -bottom-2 -right-2 grid h-8 w-8 place-items-center rounded-full border-2 border-card bg-accent text-accent-foreground shadow-md">
+                  <ShieldCheck className="h-4 w-4" />
+                </span>
+              </div>
+              <div className="min-w-0 pt-1">
+                <h3 className="font-display text-xl font-bold leading-snug sm:text-2xl">{lead.name}</h3>
+                <p className="mt-1 text-sm font-medium text-primary">{lead.title}</p>
+                <p className="mt-1 text-xs text-muted-foreground">{lead.edu}</p>
+                <span className="mt-3 inline-block rounded-full border border-primary/20 bg-primary/8 px-3 py-1 text-[11px] font-semibold text-primary">
+                  {lead.tag}
+                </span>
+              </div>
+            </div>
+
+            <blockquote className="relative mt-7 rounded-2xl border border-border/70 bg-muted/40 p-5 text-sm leading-relaxed text-foreground/90">
+              <Quote className="absolute -top-3 left-4 h-6 w-6 rounded-md bg-card p-1 text-primary shadow-sm" />
+              {lead.quote}
+            </blockquote>
+
+            <div className="mt-7 grid grid-cols-3 gap-3 border-t border-border pt-6">
+              {lead.stats.map((s) => (
+                <div key={s.v} className="text-center">
+                  <div className="font-display text-2xl font-bold tracking-tight text-foreground">{s.k}</div>
+                  <div className="mt-1 text-[11px] leading-tight text-muted-foreground">{s.v}</div>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          {/* Supporting instructors grid */}
+          <div className="grid gap-5 sm:grid-cols-2 lg:col-span-7">
+            {people.map((p, idx) => (
+              <article
+                key={p.name}
+                className="group relative overflow-hidden rounded-2xl border border-border bg-card p-6 transition-all hover:-translate-y-1 hover:border-primary/40 hover:shadow-xl hover:shadow-primary/10"
+              >
+                <div className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-primary/8 opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-100" />
+                <span className="absolute right-4 top-4 rounded-full bg-muted px-2 py-0.5 font-display text-[10px] font-bold tracking-wider text-muted-foreground">
+                  0{idx + 1}
+                </span>
+
+                <div className="relative flex items-center gap-4">
+                  <div className="relative shrink-0">
+                    <div className="grid h-16 w-16 place-items-center rounded-2xl gradient-primary text-3xl shadow-md shadow-primary/20 transition-transform duration-500 group-hover:scale-105 group-hover:-rotate-3">
+                      {p.emoji}
+                    </div>
+                    <span className="absolute -bottom-1.5 -right-1.5 grid h-6 w-6 place-items-center rounded-full border-2 border-card bg-primary text-primary-foreground">
+                      <CheckCircle2 className="h-3 w-3" />
+                    </span>
+                  </div>
+                  <div className="min-w-0">
+                    <h3 className="truncate font-semibold leading-tight">{p.name}</h3>
+                    <p className="mt-0.5 truncate text-xs text-muted-foreground">{p.title}</p>
+                  </div>
+                </div>
+
+                <div className="mt-5 flex items-center justify-between border-t border-border pt-4">
+                  <span className="inline-block rounded-full bg-primary/10 px-2.5 py-1 text-[10px] font-semibold text-primary">
+                    {p.tag}
+                  </span>
+                  <span className="flex items-center gap-1 text-[11px] font-medium text-muted-foreground">
+                    <Clock className="h-3 w-3" /> {p.years} বছর
+                  </span>
+                </div>
+              </article>
+            ))}
+
+            {/* CTA tile */}
+            <Link
+              to="/courses"
+              className="group relative col-span-full flex items-center justify-between gap-4 overflow-hidden rounded-2xl border border-primary/25 bg-gradient-to-r from-primary/10 via-card to-accent/10 p-5 transition-all hover:border-primary/50 hover:shadow-lg hover:shadow-primary/10"
+            >
+              <div className="flex items-center gap-4">
+                <div className="grid h-11 w-11 place-items-center rounded-xl bg-primary/15 text-primary">
+                  <Users className="h-5 w-5" />
+                </div>
+                <div>
+                  <div className="font-semibold">৫০+ অভিজ্ঞ উস্তাদের কাছ থেকে শিখুন</div>
+                  <div className="text-xs text-muted-foreground">সবগুলো কোর্স ও ইনস্ট্রাক্টর দেখুন</div>
+                </div>
+              </div>
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-primary px-4 py-2 text-xs font-semibold text-primary-foreground shadow-md transition-transform group-hover:translate-x-0.5">
+                সব দেখুন <ArrowRight className="h-3.5 w-3.5" />
+              </span>
+            </Link>
+          </div>
         </div>
       </div>
     </section>
   );
 }
+
 
 /* ---------------- Testimonials ---------------- */
 function Testimonials() {
