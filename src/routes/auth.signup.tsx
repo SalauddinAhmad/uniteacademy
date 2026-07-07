@@ -104,22 +104,16 @@ function SignupPage() {
                     </p>
                   </div>
 
-                  <div className="mt-7 grid grid-cols-1 gap-3 sm:grid-cols-2">
+                  <div className="mt-7">
                     <button
                       type="button"
-                      className="group inline-flex items-center justify-center gap-2.5 rounded-xl border border-border bg-background/60 px-4 py-3 text-sm font-semibold backdrop-blur transition-all hover:-translate-y-0.5 hover:bg-background/90 hover:shadow-lg"
+                      className="group inline-flex w-full items-center justify-center gap-2.5 rounded-xl border border-border bg-background/60 px-4 py-3 text-sm font-semibold backdrop-blur transition-all hover:-translate-y-0.5 hover:bg-background/90 hover:shadow-lg"
                     >
                       <GoogleIcon className="h-4 w-4" />
-                      Google দিয়ে
-                    </button>
-                    <button
-                      type="button"
-                      className="group inline-flex items-center justify-center gap-2.5 rounded-xl border border-border bg-background/60 px-4 py-3 text-sm font-semibold backdrop-blur transition-all hover:-translate-y-0.5 hover:bg-background/90 hover:shadow-lg"
-                    >
-                      <AppleIcon className="h-4 w-4" />
-                      Apple দিয়ে
+                      Google দিয়ে চালিয়ে যান
                     </button>
                   </div>
+
 
                   <div className="my-7 flex items-center gap-3">
                     <div className="h-px flex-1 bg-border" />
