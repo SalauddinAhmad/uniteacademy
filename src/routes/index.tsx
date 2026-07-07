@@ -103,7 +103,7 @@ function Hero() {
           <div className="mt-12 flex flex-wrap items-center gap-x-12 gap-y-6 border-t border-border pt-8">
             {[
               { n: "১৫,০০০+", l: "শিক্ষার্থী" },
-              { n: "৫০+", l: "কোর্স" },
+              { n: "০৫+", l: "কোর্স" },
               { n: "৪.৯/৫", l: "রেটিং" },
             ].map((s, i) => (
               <div key={s.l} className="flex items-center gap-12">
@@ -264,7 +264,7 @@ function FeaturedSpotlight({ course }: { course: typeof courses[number] }) {
 /* ---------------- Stats strip ---------------- */
 function StatsStrip() {
   const stats = [
-    { i: BookOpen, n: "৫০+", l: "কোর্স ও কনটেন্ট" },
+    { i: BookOpen, n: "০৫+", l: "কোর্স ও কনটেন্ট" },
     { i: Users, n: "১৫,০০০+", l: "সক্রিয় শিক্ষার্থী" },
     { i: GraduationCap, n: "২৫+", l: "শিক্ষক ও স্কলার" },
     { i: FileText, n: "৪০০+", l: "শিক্ষার উপকরণ" },
@@ -456,7 +456,7 @@ function BenefitsGrid() {
 
   const stats = [
     { n: "১৫,০০০+", l: "শিক্ষার্থী" },
-    { n: "৫০+",      l: "কোর্স" },
+    { n: "০৫+",      l: "কোর্স" },
     { n: "৯৮%",      l: "সন্তুষ্টি" },
     { n: "৪.৯/৫",    l: "রেটিং" },
   ];
@@ -615,7 +615,7 @@ function DiplomaPrograms({ diplomas }: { diplomas: typeof courses }) {
 function HowItWorks() {
   const steps = [
     { n: "০১", i: Users, t: "অ্যাকাউন্ট তৈরি করুন", d: "মাত্র ১ মিনিটে ফ্রি সাইনআপ — ইমেইল বা Google দিয়ে।" },
-    { n: "০২", i: BookOpen, t: "কোর্স বেছে নিন", d: "৫০+ কোর্স থেকে আপনার প্রয়োজন মতো কোর্সে এনরোল করুন।" },
+    { n: "০২", i: BookOpen, t: "কোর্স বেছে নিন", d: "০৫+ কোর্স থেকে আপনার প্রয়োজন মতো কোর্সে এনরোল করুন।" },
     { n: "০৩", i: Video, t: "শিখুন নিজের সময়ে", d: "লাইভ + রেকর্ডেড ক্লাস, PDF ও কুইজের মাধ্যমে অধ্যয়ন করুন।" },
     { n: "০৪", i: Trophy, t: "সনদ অর্জন করুন", d: "কোর্স সম্পন্ন হলে পাবেন যাচাইযোগ্য ডিজিটাল সার্টিফিকেট।" },
   ];
