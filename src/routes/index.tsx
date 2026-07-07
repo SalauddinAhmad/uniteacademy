@@ -62,7 +62,7 @@ function Hero() {
       <div className="mx-auto grid max-w-7xl gap-14 px-4 py-20 sm:px-6 md:grid-cols-12 md:py-28 lg:px-8 lg:py-36">
         {/* Left */}
         <div className="md:col-span-7 flex flex-col justify-center">
-          <div className="inline-flex w-fit items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 backdrop-blur-md">
+          <div className="inline-flex w-fit items-center gap-2 rounded-full border border-accent/30 bg-accent/10 px-3 py-1.5 backdrop-blur-md">
             <span className="h-2 w-2 rounded-full bg-accent shadow-[0_0_10px_var(--color-accent)]" />
             <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-accent" style={{ fontFamily: "Poppins" }}>
               New Semester 2026
@@ -71,9 +71,10 @@ function Hero() {
 
           <h1 className="mt-8 text-5xl font-bold leading-[1.15] tracking-tight text-foreground sm:text-6xl lg:text-7xl">
             দ্বীন শিক্ষা হোক <br />
-            <span className="bg-gradient-to-r from-accent via-[#fbf2c0] to-accent bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-primary via-primary-glow to-primary bg-clip-text text-transparent">
               আধুনিক ও মানসম্মত
             </span>
+
           </h1>
 
           <p className="mt-7 max-w-xl text-lg leading-relaxed text-muted-foreground">
@@ -85,19 +86,20 @@ function Hero() {
           <div className="mt-9 flex flex-wrap gap-4">
             <Link
               to="/courses"
-              className="inline-flex items-center justify-center gap-2 rounded-xl bg-accent px-8 py-4 text-sm font-bold text-accent-foreground shadow-[0_10px_40px_-10px_var(--color-accent)] transition-transform hover:scale-[1.03]"
+              className="inline-flex items-center justify-center gap-2 rounded-xl gradient-primary px-8 py-4 text-sm font-bold text-primary-foreground shadow-[0_10px_40px_-10px_var(--color-primary)] transition-transform hover:scale-[1.03]"
             >
               কোর্সগুলো দেখুন <ArrowRight className="h-4 w-4" />
             </Link>
             <a
               href="#diploma"
-              className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 px-8 py-4 text-sm font-semibold text-foreground backdrop-blur-md transition-colors hover:bg-white/10"
+              className="inline-flex items-center justify-center gap-2 rounded-xl border border-border bg-card px-8 py-4 text-sm font-semibold text-foreground backdrop-blur-md transition-colors hover:bg-muted"
             >
               <PlayCircle className="h-4 w-4" /> ফ্রি ডেমো ক্লাস
             </a>
           </div>
 
-          <div className="mt-12 flex flex-wrap items-center gap-x-12 gap-y-6 border-t border-white/10 pt-8">
+
+          <div className="mt-12 flex flex-wrap items-center gap-x-12 gap-y-6 border-t border-border pt-8">
             {[
               { n: "১৫,০০০+", l: "শিক্ষার্থী" },
               { n: "৫০+", l: "কোর্স" },
@@ -108,19 +110,20 @@ function Hero() {
                   <div className="text-3xl font-bold text-foreground" style={{ fontFamily: "Poppins" }}>{s.n}</div>
                   <div className="mt-1 text-[11px] uppercase tracking-widest text-muted-foreground">{s.l}</div>
                 </div>
-                {i < 2 && <div className="hidden h-10 w-px bg-white/10 sm:block" />}
+                {i < 2 && <div className="hidden h-10 w-px bg-border sm:block" />}
               </div>
             ))}
           </div>
+
         </div>
 
         {/* Right — Featured Card */}
         <div className="md:col-span-5 relative flex items-center">
           <div className="absolute -inset-6 -z-10 rounded-full bg-primary/25 blur-3xl" />
-          <div className="relative w-full rounded-3xl border border-white/15 bg-gradient-to-br from-white/[0.08] to-white/[0.02] p-8 shadow-2xl backdrop-blur-2xl">
-            <div className="relative aspect-video overflow-hidden rounded-2xl bg-gradient-to-br from-primary/60 to-primary/20">
-              <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
-              <div className="absolute right-4 top-4 rounded-full bg-white/10 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white backdrop-blur">
+          <div className="relative w-full rounded-3xl border border-border bg-card p-8 shadow-2xl shadow-primary/10 backdrop-blur-2xl">
+            <div className="relative aspect-video overflow-hidden rounded-2xl gradient-primary">
+              <div className="absolute inset-0 bg-gradient-to-t from-primary/60 to-transparent" />
+              <div className="absolute right-4 top-4 rounded-full bg-white/20 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white backdrop-blur">
                 Featured
               </div>
               <div className="absolute bottom-4 left-4 rounded bg-accent px-3 py-1 text-[10px] font-bold uppercase text-accent-foreground" style={{ fontFamily: "Poppins" }}>
@@ -132,18 +135,19 @@ function Hero() {
               কুরআন, সুন্নাহ ও সমসাময়িক বিষয়ে পূর্ণাঙ্গ জ্ঞান অর্জনের জন্য
               আমাদের সবচেয়ে জনপ্রিয় ১২ মাসের ফ্ল্যাগশিপ প্রোগ্রাম।
             </p>
-            <div className="mt-6 flex items-center justify-between border-t border-white/10 pt-5">
+            <div className="mt-6 flex items-center justify-between border-t border-border pt-5">
               <div className="flex -space-x-3">
                 {["🧕🏻","🧔🏻","🧔🏽"].map((e,i) => (
-                  <div key={i} className="grid h-10 w-10 place-items-center rounded-full border-2 border-background bg-primary/40 text-lg">{e}</div>
+                  <div key={i} className="grid h-10 w-10 place-items-center rounded-full border-2 border-card bg-primary/20 text-lg">{e}</div>
                 ))}
               </div>
               <div className="text-right">
                 <div className="text-[10px] uppercase tracking-widest text-muted-foreground">কোর্স ফি</div>
-                <div className="text-lg font-bold text-accent" style={{ fontFamily: "Poppins" }}>৳ ১২,০০০</div>
+                <div className="text-lg font-bold text-primary" style={{ fontFamily: "Poppins" }}>৳ ১২,০০০</div>
               </div>
             </div>
           </div>
+
         </div>
       </div>
     </section>
@@ -154,7 +158,7 @@ function Hero() {
 function TrustLogos() {
   const items = ["সহীহ আকীদাহ", "বাংলা মাধ্যম", "লাইফটাইম অ্যাক্সেস", "যাচাইযোগ্য সনদ", "মোবাইল ফ্রেন্ডলি", "লাইভ + রেকর্ডেড"];
   return (
-    <section className="border-y border-white/10 bg-white/[0.02]">
+    <section className="border-y border-border bg-card/40">
       <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
         <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-xs font-medium text-muted-foreground">
           {items.map((t) => (
@@ -173,7 +177,7 @@ function FeaturedSpotlight({ course }: { course: typeof courses[number] }) {
   return (
     <section id="diploma" className="py-20 sm:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="relative flex flex-col overflow-hidden rounded-[2rem] border border-white/10 bg-gradient-to-r from-primary/30 via-background/60 to-background/40 backdrop-blur-xl md:flex-row">
+        <div className="relative flex flex-col overflow-hidden rounded-[2rem] border border-border bg-gradient-to-r from-primary/10 via-card to-card shadow-xl shadow-primary/10 backdrop-blur-xl md:flex-row">
           {/* Left: content */}
           <div className="w-full p-10 md:w-1/2 md:p-14">
             <span className="block text-[11px] font-bold uppercase tracking-[0.35em] text-accent" style={{ fontFamily: "Poppins" }}>
@@ -204,14 +208,15 @@ function FeaturedSpotlight({ course }: { course: typeof courses[number] }) {
             <div className="mt-10 flex flex-wrap items-center gap-4">
               <Link
                 to="/courses"
-                className="inline-flex items-center gap-2 rounded-xl bg-accent px-6 py-3.5 text-sm font-bold text-accent-foreground shadow-[0_10px_30px_-10px_var(--color-accent)] transition-transform hover:scale-[1.03]"
+                className="inline-flex items-center gap-2 rounded-xl gradient-primary px-6 py-3.5 text-sm font-bold text-primary-foreground shadow-[0_10px_30px_-10px_var(--color-primary)] transition-transform hover:scale-[1.03]"
               >
                 ভর্তি হোন <ArrowRight className="h-4 w-4" />
               </Link>
-              <Link to="/courses" className="group inline-flex items-center gap-2 text-sm font-bold text-accent transition-all hover:gap-3">
+              <Link to="/courses" className="group inline-flex items-center gap-2 text-sm font-bold text-primary transition-all hover:gap-3">
                 বিস্তারিত কারিকুলাম <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
+
           </div>
 
           {/* Right: layered glass certificate visual */}
@@ -224,22 +229,23 @@ function FeaturedSpotlight({ course }: { course: typeof courses[number] }) {
               {/* Back gold card */}
               <div className="absolute inset-0 -m-4 -rotate-6 rounded-2xl border border-accent/30 bg-gradient-to-br from-accent/40 to-transparent backdrop-blur-lg" />
               {/* Front glass card */}
-              <div className="relative w-64 rotate-3 rounded-2xl border border-white/20 bg-white/5 p-6 shadow-2xl backdrop-blur-2xl">
+              <div className="relative w-64 rotate-3 rounded-2xl border border-border bg-card p-6 shadow-2xl backdrop-blur-2xl">
                 <div className="flex items-center justify-between">
                   <Award className="h-6 w-6 text-accent" />
                   <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground" style={{ fontFamily: "Poppins" }}>Certificate</span>
                 </div>
                 <div className="mt-6 space-y-2">
-                  <div className="h-3 w-3/4 rounded bg-white/15" />
-                  <div className="h-3 w-1/2 rounded bg-white/10" />
+                  <div className="h-3 w-3/4 rounded bg-muted" />
+                  <div className="h-3 w-1/2 rounded bg-muted" />
                 </div>
                 <div className="mt-6 grid grid-cols-3 gap-2">
                   {[BookOpen, Video, Award].map((I, i) => (
-                    <div key={i} className="grid h-14 place-items-center rounded-lg border border-white/10 bg-white/5">
-                      <I className="h-4 w-4 text-accent" />
+                    <div key={i} className="grid h-14 place-items-center rounded-lg border border-border bg-muted/50">
+                      <I className="h-4 w-4 text-primary" />
                     </div>
                   ))}
                 </div>
+
                 <div className="mt-6 flex items-center justify-between">
                   <div className="text-[10px] uppercase tracking-widest text-muted-foreground">Verified</div>
                   <ShieldCheck className="h-4 w-4 text-accent" />
