@@ -208,14 +208,15 @@ function FeaturedSpotlight({ course }: { course: typeof courses[number] }) {
             <div className="mt-10 flex flex-wrap items-center gap-4">
               <Link
                 to="/courses"
-                className="inline-flex items-center gap-2 rounded-xl bg-accent px-6 py-3.5 text-sm font-bold text-accent-foreground shadow-[0_10px_30px_-10px_var(--color-accent)] transition-transform hover:scale-[1.03]"
+                className="inline-flex items-center gap-2 rounded-xl gradient-primary px-6 py-3.5 text-sm font-bold text-primary-foreground shadow-[0_10px_30px_-10px_var(--color-primary)] transition-transform hover:scale-[1.03]"
               >
                 ভর্তি হোন <ArrowRight className="h-4 w-4" />
               </Link>
-              <Link to="/courses" className="group inline-flex items-center gap-2 text-sm font-bold text-accent transition-all hover:gap-3">
+              <Link to="/courses" className="group inline-flex items-center gap-2 text-sm font-bold text-primary transition-all hover:gap-3">
                 বিস্তারিত কারিকুলাম <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
+
           </div>
 
           {/* Right: layered glass certificate visual */}
