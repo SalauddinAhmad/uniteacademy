@@ -71,9 +71,10 @@ function Hero() {
 
           <h1 className="mt-8 text-5xl font-bold leading-[1.15] tracking-tight text-foreground sm:text-6xl lg:text-7xl">
             দ্বীন শিক্ষা হোক <br />
-            <span className="bg-gradient-to-r from-accent via-[#fbf2c0] to-accent bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-primary via-primary-glow to-primary bg-clip-text text-transparent">
               আধুনিক ও মানসম্মত
             </span>
+
           </h1>
 
           <p className="mt-7 max-w-xl text-lg leading-relaxed text-muted-foreground">
