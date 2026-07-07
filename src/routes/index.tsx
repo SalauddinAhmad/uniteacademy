@@ -261,59 +261,33 @@ function FeaturedSpotlight({ course }: { course: typeof courses[number] }) {
 }
 
 
-/* ---------------- Stats strip — premium ---------------- */
+/* ---------------- Stats strip — compact Taibah style ---------------- */
 function StatsStrip() {
   const stats = [
-    { i: BookOpen,       n: "১১",      suf: "টি",  l: "কোর্স ও কনটেন্ট" },
-    { i: Users,          n: "১৫,০০০", suf: "+",   l: "সক্রিয় শিক্ষার্থী" },
-    { i: GraduationCap,  n: "২৫",     suf: "+",   l: "শিক্ষক ও স্কলার" },
-    { i: FileText,       n: "৪০০",    suf: "+",   l: "শিক্ষার উপকরণ" },
+    { n: "১১",      suf: "টি", l: "কোর্স ও কনটেন্ট" },
+    { n: "১৫,০০০", suf: "+",  l: "সক্রিয় শিক্ষার্থী" },
+    { n: "২৫",     suf: "+",  l: "শিক্ষক ও স্কলার" },
+    { n: "৪০০",    suf: "+",  l: "শিক্ষার উপকরণ" },
   ];
   return (
-    <section className="relative overflow-hidden border-y border-border bg-secondary/40 py-16 md:py-20">
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute -top-24 left-1/4 h-64 w-64 rounded-full bg-primary/10 blur-3xl" />
-        <div className="absolute -bottom-24 right-1/4 h-64 w-64 rounded-full bg-accent/10 blur-3xl" />
-        <div
-          className="absolute inset-0 opacity-[0.04]"
-          style={{
-            backgroundImage: "radial-gradient(currentColor 1px, transparent 1px)",
-            backgroundSize: "22px 22px",
-          }}
-        />
-      </div>
-
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-2 gap-px overflow-hidden rounded-3xl border border-border bg-border/60 shadow-sm md:grid-cols-4">
-          {stats.map((s, idx) => (
+    <section className="border-y border-border bg-secondary/40 py-8">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-2 divide-y divide-border sm:grid-cols-4 sm:divide-x sm:divide-y-0">
+          {stats.map((s, i) => (
             <div
               key={s.l}
-              className="group relative bg-card/90 backdrop-blur px-6 py-10 text-center transition-colors hover:bg-card"
+              className={`px-4 py-4 text-center ${i >= 2 ? "border-t border-border sm:border-t-0" : ""}`}
             >
-              <span className="pointer-events-none absolute left-4 top-4 h-8 w-8 rounded-tl-2xl border-l-2 border-t-2 border-primary/30 opacity-60 transition-all group-hover:opacity-100 group-hover:border-primary" />
-              <span className="pointer-events-none absolute bottom-4 right-4 h-8 w-8 rounded-br-2xl border-b-2 border-r-2 border-primary/30 opacity-60 transition-all group-hover:opacity-100 group-hover:border-primary" />
-
-              <div className="mx-auto mb-5 grid h-14 w-14 place-items-center rounded-2xl bg-primary/10 text-primary ring-1 ring-primary/20 transition-transform group-hover:scale-110 group-hover:bg-primary/15">
-                <s.i className="h-7 w-7" />
-              </div>
-
               <div className="flex items-baseline justify-center gap-0.5">
-                <span className="bg-gradient-to-br from-primary via-primary to-accent bg-clip-text text-5xl font-extrabold leading-none tracking-tight text-transparent md:text-6xl">
+                <span className="bg-gradient-to-br from-primary to-accent bg-clip-text text-3xl font-extrabold leading-none tracking-tight text-transparent md:text-4xl">
                   {s.n}
                 </span>
-                <span className="text-2xl font-bold text-primary/70 md:text-3xl">
+                <span className="text-xl font-bold text-primary/70 md:text-2xl">
                   {s.suf}
                 </span>
               </div>
-
-              <div className="mx-auto mt-4 h-px w-10 bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
-
-              <div className="mt-3 text-sm font-medium text-muted-foreground md:text-base">
+              <div className="mt-1.5 text-xs font-medium text-muted-foreground md:text-sm">
                 {s.l}
-              </div>
-
-              <div className="absolute right-4 top-4 text-[10px] font-semibold tracking-widest text-muted-foreground/50">
-                ০{fmtBn(idx + 1)}
               </div>
             </div>
           ))}
