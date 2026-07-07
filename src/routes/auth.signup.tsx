@@ -63,8 +63,9 @@ function SignupPage() {
         {/* RIGHT — Signup form */}
         <section className="flex items-center justify-center">
           <div className="w-full max-w-md">
-            {/* Mobile brand */}
-            <div className="mb-6 flex items-center justify-center lg:hidden">
+            {/* Brand */}
+            <div className="mb-6 flex items-center justify-center">
+
               <Link to="/" className="flex items-center gap-2.5">
                 <div className="grid h-10 w-10 place-items-center rounded-xl gradient-primary text-primary-foreground shadow-lg shadow-primary/25">
                   <BookOpen className="h-5 w-5" strokeWidth={2.5} />
