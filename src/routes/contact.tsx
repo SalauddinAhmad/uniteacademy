@@ -7,8 +7,8 @@ import {
   Clock,
   Send,
   MessageCircle,
-  Facebook,
-  Youtube,
+  Globe,
+  Video,
   Sparkles,
   CheckCircle2,
   HelpCircle,
@@ -282,7 +282,7 @@ function ContactPage() {
                   আমাদের কমিউনিটির সাথে যুক্ত থাকুন।
                 </p>
                 <div className="mt-4 grid grid-cols-4 gap-2">
-                  {[Facebook, Youtube, Send, MessageCircle].map((Icon, i) => (
+                  {[Globe, Video, Send, MessageCircle].map((Icon, i) => (
                     <a
                       key={i}
                       href="#"
