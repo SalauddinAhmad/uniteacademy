@@ -335,108 +335,76 @@ function CategoryBrowser() {
   const totalCourses = courses.length;
 
   return (
-    <section className="relative py-20 sm:py-28">
-      {/* ambient gold/indigo wash */}
+    <section className="relative py-12 sm:py-16">
       <div className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute left-1/2 top-10 h-72 w-[42rem] -translate-x-1/2 rounded-full bg-primary/10 blur-3xl" />
-        <div className="absolute right-10 bottom-20 h-64 w-64 rounded-full bg-accent/15 blur-3xl" />
+        <div className="absolute left-1/2 top-0 h-56 w-[36rem] -translate-x-1/2 rounded-full bg-primary/10 blur-3xl" />
+        <div className="absolute right-10 bottom-10 h-40 w-40 rounded-full bg-accent/15 blur-3xl" />
       </div>
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
-          <div className="max-w-2xl">
-            <div className="inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-accent-foreground/80 backdrop-blur">
-              <span className="h-1.5 w-1.5 rounded-full bg-accent" />
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <div className="max-w-xl">
+            <div className="inline-flex items-center gap-1.5 rounded-full border border-accent/30 bg-accent/10 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-accent-foreground/80 backdrop-blur">
+              <span className="h-1 w-1 rounded-full bg-accent" />
               ক্যাটাগরি
             </div>
-            <h2 className="mt-4 text-3xl font-bold leading-tight tracking-tight sm:text-4xl md:text-5xl">
-              যে বিষয়ে আগ্রহ,
-              <br />
-              <span className="text-gradient">সেখান থেকে শুরু করুন</span>
+            <h2 className="mt-3 text-2xl font-bold leading-tight tracking-tight sm:text-3xl">
+              যে বিষয়ে আগ্রহ, <span className="text-gradient">সেখান থেকে শুরু করুন</span>
             </h2>
-            <p className="mt-4 text-base text-muted-foreground sm:text-lg">
-              সাজানো ৭টি বিষয়ভিত্তিক ধারা — প্রত্যেকটিতে যত্ন নিয়ে তৈরি কোর্স, অভিজ্ঞ উস্তাদ ও ধাপে ধাপে শেখার পথ।
+            <p className="mt-2 text-sm text-muted-foreground">
+              ৭টি বিষয়ভিত্তিক ধারা — বেছে নিন আপনার পথ।
             </p>
           </div>
           <Link
             to="/courses"
-            className="group inline-flex items-center gap-2 rounded-full border border-border bg-card px-5 py-2.5 text-sm font-semibold text-foreground/80 backdrop-blur transition-all hover:border-primary/40 hover:text-primary"
+            className="group inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-4 py-2 text-xs font-semibold text-foreground/80 backdrop-blur transition-all hover:border-primary/40 hover:text-primary"
           >
             সব {fmtBn(totalCourses)}টি কোর্স
-            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+            <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
           </Link>
         </div>
 
-        {/* Bento grid — first tile spans 2 cols on md+ */}
-        <div className="mt-12 grid auto-rows-[minmax(200px,auto)] gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-          {list.map((c, idx) => {
+        {/* Compact grid */}
+        <div className="mt-6 grid gap-3 grid-cols-2 md:grid-cols-4 lg:grid-cols-7">
+          {list.map((c) => {
             const m = catMeta[c] || {
               emoji: "📘", arabic: "", desc: "",
               tint: "from-primary/20 via-primary/5 to-transparent",
               ring: "ring-primary/30", glow: "bg-primary/40",
             };
             const count = courses.filter((x) => x.category === c).length;
-            const featured = idx === 0;
             return (
               <Link
                 key={c}
                 to="/courses"
-                className={`group relative overflow-hidden rounded-3xl border border-border bg-card p-6 backdrop-blur-xl transition-all duration-500 hover:-translate-y-1.5 hover:border-primary/30 hover:shadow-2xl hover:shadow-primary/10 ${
-                  featured ? "sm:col-span-2 md:row-span-2 md:p-8" : ""
-                }`}
+                className="group relative overflow-hidden rounded-2xl border border-border bg-card p-4 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/10"
               >
-                {/* tinted radial background */}
-                <div className={`pointer-events-none absolute inset-0 -z-10 bg-gradient-to-br ${m.tint} opacity-70 transition-opacity duration-500 group-hover:opacity-100`} />
-                {/* floating glow blob */}
-                <div className={`pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full ${m.glow} opacity-30 blur-3xl transition-all duration-700 group-hover:opacity-60 group-hover:scale-125`} />
+                <div className={`pointer-events-none absolute inset-0 -z-10 bg-gradient-to-br ${m.tint} opacity-60 transition-opacity duration-300 group-hover:opacity-100`} />
+                <div className={`pointer-events-none absolute -right-6 -top-6 h-20 w-20 rounded-full ${m.glow} opacity-25 blur-2xl transition-all duration-500 group-hover:opacity-50 group-hover:scale-125`} />
 
                 {/* Arabic watermark */}
                 <div
-                  className={`pointer-events-none absolute right-4 select-none font-display text-foreground/[0.06] transition-all duration-500 group-hover:text-foreground/[0.1] ${
-                    featured ? "top-4 text-[8rem] leading-none" : "top-2 text-6xl"
-                  }`}
+                  className="pointer-events-none absolute right-2 top-1 select-none text-3xl font-display text-foreground/[0.07] transition-colors duration-300 group-hover:text-foreground/[0.12]"
                   style={{ fontFamily: "'Noto Naskh Arabic', 'Noto Sans Bengali', serif" }}
                 >
                   {m.arabic}
                 </div>
 
-                {/* icon chip */}
-                <div className={`relative inline-flex h-14 w-14 items-center justify-center rounded-2xl border border-border bg-card text-3xl shadow-sm ring-1 ${m.ring} transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-6 ${featured ? "h-16 w-16 text-4xl" : ""}`}>
+                <div className={`relative inline-flex h-10 w-10 items-center justify-center rounded-xl border border-border bg-card text-xl shadow-sm ring-1 ${m.ring} transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-6`}>
                   {m.emoji}
                 </div>
 
-                <div className="relative mt-5">
-                  <h3 className={`font-semibold tracking-tight text-foreground ${featured ? "text-2xl md:text-3xl" : "text-lg"}`}>
-                    {c}
-                  </h3>
-                  <p className={`mt-1.5 text-muted-foreground ${featured ? "text-base max-w-md" : "text-xs"}`}>
-                    {m.desc}
-                  </p>
+                <div className="relative mt-3">
+                  <h3 className="text-sm font-semibold tracking-tight text-foreground">{c}</h3>
+                  <p className="mt-0.5 text-[11px] leading-snug text-muted-foreground line-clamp-2">{m.desc}</p>
                 </div>
 
-                {featured && (
-                  <div className="relative mt-6 flex flex-wrap gap-2">
-                    {["সার্টিফিকেট", "লাইভ + রেকর্ডেড", "কুইজ ও পরীক্ষা"].map((tag) => (
-                      <span key={tag} className="rounded-full border border-border bg-card/60 px-3 py-1 text-xs font-medium text-foreground/70 backdrop-blur">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                )}
-
-                <div className={`relative flex items-center justify-between border-t border-border/60 pt-4 ${featured ? "mt-8" : "mt-6"}`}>
-                  <span className="inline-flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
-                    <span className="inline-block h-1.5 w-1.5 rounded-full bg-primary" />
+                <div className="relative mt-3 flex items-center justify-between border-t border-border/60 pt-2.5">
+                  <span className="text-[10px] font-medium text-muted-foreground">
                     {fmtBn(count)} কোর্স
                   </span>
-                  <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-primary transition-all group-hover:gap-2.5">
-                    দেখুন
-                    <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
-                  </span>
+                  <ArrowRight className="h-3.5 w-3.5 text-primary opacity-0 transition-all group-hover:translate-x-0.5 group-hover:opacity-100" />
                 </div>
-
-                {/* bottom accent bar */}
-                <div className="pointer-events-none absolute inset-x-6 bottom-0 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
               </Link>
             );
           })}
