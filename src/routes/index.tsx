@@ -9,6 +9,7 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { CourseCard } from "@/components/course-card";
 import { courses, categories, fmtBn } from "@/lib/courses";
+import instructorPortrait from "@/assets/instructor-portrait.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
