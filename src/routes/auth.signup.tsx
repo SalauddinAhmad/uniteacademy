@@ -62,7 +62,7 @@ function SignupPage() {
 
         {/* RIGHT — Signup form */}
         <section className="flex w-full items-center justify-center">
-          <div className="w-full max-w-3xl">
+          <div className="w-full max-w-xl">
             {/* Brand */}
             <div className="mb-6 flex items-center justify-center">
               <Link to="/" className="flex items-center gap-2.5">
