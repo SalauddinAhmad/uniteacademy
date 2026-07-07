@@ -45,65 +45,108 @@
 
 :root {
   --radius: 0.75rem;
-  /* Midnight Indigo palette: #1E1B4B primary, #4F46E5 accent glow, #F59E0B amber, #FAFAFA bg, #111827 ink */
-  --background: oklch(0.99 0.002 265);
+  /* Midnight Indigo palette — glassmorphism tuned (translucent surfaces over aurora) */
+  --background: oklch(0.985 0.005 265);
   --foreground: oklch(0.18 0.03 265);
-  --card: oklch(1 0 0);
+  --card: oklch(1 0 0 / 0.55);
   --card-foreground: oklch(0.18 0.03 265);
-  --popover: oklch(1 0 0);
+  --popover: oklch(1 0 0 / 0.92);
   --popover-foreground: oklch(0.18 0.03 265);
-  --primary: oklch(0.28 0.11 275);            /* deep midnight indigo #1E1B4B */
+  --primary: oklch(0.28 0.11 275);
   --primary-foreground: oklch(0.985 0.005 265);
-  --primary-glow: oklch(0.55 0.22 275);       /* electric indigo #4F46E5 */
-  --secondary: oklch(0.96 0.01 265);
+  --primary-glow: oklch(0.55 0.22 275);
+  --secondary: oklch(0.98 0.01 265 / 0.55);
   --secondary-foreground: oklch(0.24 0.08 275);
-  --muted: oklch(0.96 0.008 265);
-  --muted-foreground: oklch(0.5 0.03 265);
-  --accent: oklch(0.78 0.16 75);              /* amber #F59E0B */
+  --muted: oklch(0.96 0.008 265 / 0.55);
+  --muted-foreground: oklch(0.42 0.03 265);
+  --accent: oklch(0.78 0.16 75);
   --accent-foreground: oklch(0.2 0.05 60);
   --destructive: oklch(0.6 0.24 27);
   --destructive-foreground: oklch(0.985 0.005 265);
-  --border: oklch(0.92 0.012 265);
-  --input: oklch(0.94 0.012 265);
+  --border: oklch(1 0 0 / 0.4);
+  --input: oklch(1 0 0 / 0.5);
   --ring: oklch(0.55 0.22 275);
 }
 
 .dark {
-  --background: oklch(0.14 0.03 265);         /* #0a0a1a-ish */
+  --background: oklch(0.14 0.03 265);
   --foreground: oklch(0.97 0.005 265);
-  --card: oklch(0.19 0.05 270);
+  --card: oklch(0.22 0.06 270 / 0.45);
   --card-foreground: oklch(0.97 0.005 265);
-  --popover: oklch(0.19 0.05 270);
+  --popover: oklch(0.19 0.05 270 / 0.92);
   --popover-foreground: oklch(0.97 0.005 265);
   --primary: oklch(0.62 0.22 275);
   --primary-foreground: oklch(0.14 0.03 265);
   --primary-glow: oklch(0.7 0.2 275);
-  --secondary: oklch(0.24 0.05 270);
+  --secondary: oklch(0.24 0.05 270 / 0.5);
   --secondary-foreground: oklch(0.97 0.005 265);
-  --muted: oklch(0.24 0.05 270);
-  --muted-foreground: oklch(0.7 0.03 265);
+  --muted: oklch(0.24 0.05 270 / 0.45);
+  --muted-foreground: oklch(0.78 0.03 265);
   --accent: oklch(0.78 0.16 75);
   --accent-foreground: oklch(0.16 0.03 265);
   --destructive: oklch(0.65 0.22 25);
   --destructive-foreground: oklch(0.985 0.005 265);
-  --border: oklch(1 0 0 / 12%);
-  --input: oklch(1 0 0 / 15%);
+  --border: oklch(1 0 0 / 0.14);
+  --input: oklch(1 0 0 / 0.18);
   --ring: oklch(0.62 0.22 275);
 }
 
 @layer base {
   * { border-color: var(--color-border); }
-  html { font-family: var(--font-sans); }
-  body {
+  html {
+    font-family: var(--font-sans);
     background-color: var(--color-background);
+  }
+  body {
     color: var(--color-foreground);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+    position: relative;
+    background: transparent;
+  }
+  /* Fixed aurora backdrop — glassmorphism canvas */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+      radial-gradient(60% 45% at 12% 8%, color-mix(in oklab, var(--primary-glow) 55%, transparent), transparent 65%),
+      radial-gradient(45% 40% at 88% 18%, color-mix(in oklab, var(--accent) 40%, transparent), transparent 65%),
+      radial-gradient(55% 45% at 80% 85%, color-mix(in oklab, var(--primary-glow) 45%, transparent), transparent 65%),
+      radial-gradient(60% 50% at 20% 95%, color-mix(in oklab, var(--primary) 45%, transparent), transparent 65%),
+      linear-gradient(180deg, oklch(0.98 0.01 265), oklch(0.94 0.03 275));
+  }
+  .dark body::before {
+    background:
+      radial-gradient(55% 45% at 12% 8%, color-mix(in oklab, var(--primary-glow) 45%, transparent), transparent 65%),
+      radial-gradient(45% 40% at 88% 18%, color-mix(in oklab, var(--accent) 25%, transparent), transparent 65%),
+      radial-gradient(55% 45% at 80% 85%, color-mix(in oklab, var(--primary-glow) 40%, transparent), transparent 65%),
+      radial-gradient(60% 50% at 20% 95%, color-mix(in oklab, var(--primary) 60%, transparent), transparent 65%),
+      linear-gradient(180deg, oklch(0.11 0.03 265), oklch(0.16 0.05 275));
   }
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-display);
     letter-spacing: -0.02em;
   }
+
+  /* Global glassmorphism — any translucent surface gets frosted blur */
+  .bg-card,
+  [class*="bg-card/"],
+  .bg-background\/80,
+  .bg-background\/70,
+  .bg-muted\/30,
+  .bg-muted\/40,
+  .bg-muted\/50,
+  .bg-secondary\/60,
+  .bg-secondary\/50 {
+    backdrop-filter: blur(22px) saturate(160%);
+    background-color: var(--color-card);
+  }
+  .bg-secondary\/60, .bg-secondary\/50 { background-color: var(--color-secondary); }
+  .bg-muted\/30, .bg-muted\/40, .bg-muted\/50 { background-color: var(--color-muted); }
 }
 
 @utility gradient-primary {
@@ -112,8 +155,7 @@
 @utility gradient-hero {
   background-image:
     radial-gradient(ellipse at top left, color-mix(in oklab, var(--color-primary-glow) 35%, transparent), transparent 60%),
-    radial-gradient(ellipse at bottom right, color-mix(in oklab, var(--color-accent) 25%, transparent), transparent 55%),
-    linear-gradient(180deg, var(--color-background), color-mix(in oklab, var(--color-primary) 8%, var(--color-background)));
+    radial-gradient(ellipse at bottom right, color-mix(in oklab, var(--color-accent) 25%, transparent), transparent 55%);
 }
 @utility text-gradient {
   background-image: linear-gradient(135deg, var(--color-primary), var(--color-primary-glow));
@@ -121,3 +163,16 @@
   background-clip: text;
   color: transparent;
 }
+@utility glass {
+  background-color: color-mix(in oklab, var(--color-card) 85%, transparent);
+  backdrop-filter: blur(22px) saturate(160%);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 10px 40px -12px color-mix(in oklab, var(--color-primary) 25%, transparent);
+}
+@utility glass-strong {
+  background-color: color-mix(in oklab, var(--color-card) 100%, white 10%);
+  backdrop-filter: blur(28px) saturate(180%);
+  border: 1px solid color-mix(in oklab, white 30%, transparent);
+  box-shadow: 0 20px 60px -16px color-mix(in oklab, var(--color-primary) 30%, transparent);
+}
+
