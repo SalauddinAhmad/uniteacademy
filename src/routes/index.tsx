@@ -727,12 +727,15 @@ function InstructorsRow() {
                 <span className="absolute right-4 top-4 grid h-7 w-7 place-items-center rounded-full bg-white/70 text-primary shadow-sm backdrop-blur transition-transform duration-500 group-hover:rotate-6">
                   <ShieldCheck className="h-3.5 w-3.5" />
                 </span>
-                {/* emoji portrait */}
-                <div className="absolute inset-x-0 bottom-0 flex items-end justify-center pb-2">
-                  <span className="text-[7rem] leading-none drop-shadow-sm transition-transform duration-500 group-hover:scale-105 sm:text-[8rem]">
-                    {p.emoji}
-                  </span>
-                </div>
+                {/* portrait image */}
+                <img
+                  src={instructorPortrait}
+                  alt={p.name}
+                  loading="lazy"
+                  width={768}
+                  height={1024}
+                  className="absolute inset-x-0 bottom-0 mx-auto h-[92%] w-auto object-contain object-bottom drop-shadow-md transition-transform duration-500 group-hover:scale-[1.03]"
+                />
                 {/* soft bottom fade */}
                 <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-card/90 to-transparent" />
               </div>
