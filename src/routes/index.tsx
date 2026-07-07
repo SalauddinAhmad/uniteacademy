@@ -264,10 +264,10 @@ function FeaturedSpotlight({ course }: { course: typeof courses[number] }) {
 /* ---------------- Stats strip — compact Taibah style ---------------- */
 function StatsStrip() {
   const stats = [
-    { n: "১১",      suf: "টি", l: "কোর্স ও কনটেন্ট" },
-    { n: "১৫,০০০", suf: "+",  l: "সক্রিয় শিক্ষার্থী" },
-    { n: "২৫",     suf: "+",  l: "শিক্ষক ও স্কলার" },
-    { n: "৪০০",    suf: "+",  l: "শিক্ষার উপকরণ" },
+    { i: BookOpen,      n: "১১",      suf: "টি", l: "কোর্স ও কনটেন্ট" },
+    { i: Users,         n: "১৫,০০০", suf: "+",  l: "সক্রিয় শিক্ষার্থী" },
+    { i: GraduationCap, n: "২৫",     suf: "+",  l: "শিক্ষক ও স্কলার" },
+    { i: FileText,      n: "৪০০",    suf: "+",  l: "শিক্ষার উপকরণ" },
   ];
   return (
     <section className="border-y border-border bg-secondary/40 py-4">
@@ -276,18 +276,23 @@ function StatsStrip() {
           {stats.map((s, i) => (
             <div
               key={s.l}
-              className={`px-3 py-2 text-center ${i >= 2 ? "border-t border-border sm:border-t-0" : ""}`}
+              className={`group flex items-center justify-center gap-3 px-3 py-2 ${i >= 2 ? "border-t border-border sm:border-t-0" : ""}`}
             >
-              <div className="flex items-baseline justify-center gap-0.5">
-                <span className="bg-gradient-to-br from-primary to-accent bg-clip-text text-2xl font-extrabold leading-none tracking-tight text-transparent md:text-3xl">
-                  {s.n}
-                </span>
-                <span className="text-base font-bold text-primary/70 md:text-lg">
-                  {s.suf}
-                </span>
+              <div className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-primary/10 text-primary ring-1 ring-primary/20 transition-all group-hover:scale-105 group-hover:bg-primary/15 md:h-11 md:w-11">
+                <s.i className="h-5 w-5 md:h-5.5 md:w-5.5" strokeWidth={2.2} />
               </div>
-              <div className="mt-1 text-[11px] font-medium text-muted-foreground md:text-xs">
-                {s.l}
+              <div className="text-left">
+                <div className="flex items-baseline gap-0.5">
+                  <span className="bg-gradient-to-br from-primary to-accent bg-clip-text text-2xl font-extrabold leading-none tracking-tight text-transparent md:text-[26px]">
+                    {s.n}
+                  </span>
+                  <span className="text-base font-bold text-primary/70 md:text-lg">
+                    {s.suf}
+                  </span>
+                </div>
+                <div className="mt-1 text-[11px] font-medium text-muted-foreground md:text-xs">
+                  {s.l}
+                </div>
               </div>
             </div>
           ))}
