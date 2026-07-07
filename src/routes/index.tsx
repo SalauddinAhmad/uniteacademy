@@ -289,44 +289,154 @@ function StatsStrip() {
   );
 }
 
-/* ---------------- Category browser ---------------- */
+/* ---------------- Category browser — premium bento ---------------- */
 function CategoryBrowser() {
-  const catMeta: Record<string, { emoji: string; desc: string }> = {
-    "ডিপ্লোমা": { emoji: "🎓", desc: "পূর্ণাঙ্গ প্রোগ্রাম" },
-    "কুরআন": { emoji: "📗", desc: "তিলাওয়াত ও তাফসীর" },
-    "সীরাত": { emoji: "🕋", desc: "রাসূল ﷺ এর জীবন" },
-    "ফিকহ": { emoji: "⚖️", desc: "বিধি-বিধান" },
-    "আকীদাহ": { emoji: "🌱", desc: "বিশ্বাসের ভিত্তি" },
-    "আদাব": { emoji: "🤲", desc: "ইসলামী শিষ্টাচার" },
-    "স্কিল": { emoji: "✍️", desc: "জীবন দক্ষতা" },
+  const catMeta: Record<
+    string,
+    { emoji: string; desc: string; tint: string; ring: string; glow: string; arabic: string }
+  > = {
+    "ডিপ্লোমা": {
+      emoji: "🎓", arabic: "دبلوم", desc: "পূর্ণাঙ্গ ১২ মাসের প্রোগ্রাম",
+      tint: "from-primary/25 via-primary/5 to-transparent",
+      ring: "ring-primary/30", glow: "bg-primary/40",
+    },
+    "কুরআন": {
+      emoji: "📗", arabic: "القرآن", desc: "তিলাওয়াত, তাজবীদ ও তাফসীর",
+      tint: "from-emerald-500/25 via-emerald-500/5 to-transparent",
+      ring: "ring-emerald-500/30", glow: "bg-emerald-500/40",
+    },
+    "সীরাত": {
+      emoji: "🕋", arabic: "السيرة", desc: "রাসূল ﷺ এর পূর্ণ জীবনী",
+      tint: "from-accent/30 via-accent/5 to-transparent",
+      ring: "ring-accent/40", glow: "bg-accent/50",
+    },
+    "ফিকহ": {
+      emoji: "⚖️", arabic: "الفقه", desc: "ইবাদত ও লেনদেনের বিধান",
+      tint: "from-sky-500/25 via-sky-500/5 to-transparent",
+      ring: "ring-sky-500/30", glow: "bg-sky-500/40",
+    },
+    "আকীদাহ": {
+      emoji: "🌱", arabic: "العقيدة", desc: "সহীহ বিশ্বাসের ভিত্তি",
+      tint: "from-teal-500/25 via-teal-500/5 to-transparent",
+      ring: "ring-teal-500/30", glow: "bg-teal-500/40",
+    },
+    "আদাব": {
+      emoji: "🤲", arabic: "الآداب", desc: "ইসলামী শিষ্টাচার ও চরিত্র",
+      tint: "from-rose-500/25 via-rose-500/5 to-transparent",
+      ring: "ring-rose-500/30", glow: "bg-rose-500/40",
+    },
+    "স্কিল": {
+      emoji: "✍️", arabic: "المهارات", desc: "অধ্যয়ন ও জীবন দক্ষতা",
+      tint: "from-violet-500/25 via-violet-500/5 to-transparent",
+      ring: "ring-violet-500/30", glow: "bg-violet-500/40",
+    },
   };
   const list = categories.filter((c) => c !== "সবগুলো");
+  const totalCourses = courses.length;
+
   return (
-    <section className="py-16 sm:py-20">
+    <section className="relative py-20 sm:py-28">
+      {/* ambient gold/indigo wash */}
+      <div className="pointer-events-none absolute inset-0 -z-10">
+        <div className="absolute left-1/2 top-10 h-72 w-[42rem] -translate-x-1/2 rounded-full bg-primary/10 blur-3xl" />
+        <div className="absolute right-10 bottom-20 h-64 w-64 rounded-full bg-accent/15 blur-3xl" />
+      </div>
+
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <SectionHead
-          eyebrow="ক্যাটাগরি অনুযায়ী শিখুন"
-          title="যে বিষয়ে আগ্রহ, সেখান থেকে শুরু করুন"
-          desc="আপনার প্রয়োজন অনুযায়ী বেছে নিন — শুরু করুন আজই।"
-        />
-        <div className="mt-10 grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-          {list.map((c) => {
-            const m = catMeta[c] || { emoji: "📘", desc: "" };
+        <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
+          <div className="max-w-2xl">
+            <div className="inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-accent-foreground/80 backdrop-blur">
+              <span className="h-1.5 w-1.5 rounded-full bg-accent" />
+              ক্যাটাগরি
+            </div>
+            <h2 className="mt-4 text-3xl font-bold leading-tight tracking-tight sm:text-4xl md:text-5xl">
+              যে বিষয়ে আগ্রহ,
+              <br />
+              <span className="text-gradient">সেখান থেকে শুরু করুন</span>
+            </h2>
+            <p className="mt-4 text-base text-muted-foreground sm:text-lg">
+              সাজানো ৭টি বিষয়ভিত্তিক ধারা — প্রত্যেকটিতে যত্ন নিয়ে তৈরি কোর্স, অভিজ্ঞ উস্তাদ ও ধাপে ধাপে শেখার পথ।
+            </p>
+          </div>
+          <Link
+            to="/courses"
+            className="group inline-flex items-center gap-2 rounded-full border border-border bg-card px-5 py-2.5 text-sm font-semibold text-foreground/80 backdrop-blur transition-all hover:border-primary/40 hover:text-primary"
+          >
+            সব {fmtBn(totalCourses)}টি কোর্স
+            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+          </Link>
+        </div>
+
+        {/* Bento grid — first tile spans 2 cols on md+ */}
+        <div className="mt-12 grid auto-rows-[minmax(200px,auto)] gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          {list.map((c, idx) => {
+            const m = catMeta[c] || {
+              emoji: "📘", arabic: "", desc: "",
+              tint: "from-primary/20 via-primary/5 to-transparent",
+              ring: "ring-primary/30", glow: "bg-primary/40",
+            };
             const count = courses.filter((x) => x.category === c).length;
+            const featured = idx === 0;
             return (
               <Link
                 key={c}
                 to="/courses"
-                className="group relative overflow-hidden rounded-2xl border border-border bg-card p-5 transition-all hover:-translate-y-1 hover:border-primary/40 hover:shadow-xl hover:shadow-primary/10"
+                className={`group relative overflow-hidden rounded-3xl border border-border bg-card p-6 backdrop-blur-xl transition-all duration-500 hover:-translate-y-1.5 hover:border-primary/30 hover:shadow-2xl hover:shadow-primary/10 ${
+                  featured ? "sm:col-span-2 md:row-span-2 md:p-8" : ""
+                }`}
               >
-                <div className="text-3xl">{m.emoji}</div>
-                <div className="mt-3 font-semibold">{c}</div>
-                <div className="mt-0.5 text-xs text-muted-foreground">{m.desc}</div>
-                <div className="mt-4 flex items-center justify-between text-xs">
-                  <span className="text-muted-foreground">{fmtBn(count)} কোর্স</span>
-                  <ArrowRight className="h-4 w-4 text-primary opacity-0 transition-all group-hover:translate-x-1 group-hover:opacity-100" />
+                {/* tinted radial background */}
+                <div className={`pointer-events-none absolute inset-0 -z-10 bg-gradient-to-br ${m.tint} opacity-70 transition-opacity duration-500 group-hover:opacity-100`} />
+                {/* floating glow blob */}
+                <div className={`pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full ${m.glow} opacity-30 blur-3xl transition-all duration-700 group-hover:opacity-60 group-hover:scale-125`} />
+
+                {/* Arabic watermark */}
+                <div
+                  className={`pointer-events-none absolute right-4 select-none font-display text-foreground/[0.06] transition-all duration-500 group-hover:text-foreground/[0.1] ${
+                    featured ? "top-4 text-[8rem] leading-none" : "top-2 text-6xl"
+                  }`}
+                  style={{ fontFamily: "'Noto Naskh Arabic', 'Noto Sans Bengali', serif" }}
+                >
+                  {m.arabic}
                 </div>
-                <div className="pointer-events-none absolute inset-x-0 -bottom-1 h-1 gradient-primary opacity-0 transition-opacity group-hover:opacity-100" />
+
+                {/* icon chip */}
+                <div className={`relative inline-flex h-14 w-14 items-center justify-center rounded-2xl border border-border bg-card text-3xl shadow-sm ring-1 ${m.ring} transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-6 ${featured ? "h-16 w-16 text-4xl" : ""}`}>
+                  {m.emoji}
+                </div>
+
+                <div className="relative mt-5">
+                  <h3 className={`font-semibold tracking-tight text-foreground ${featured ? "text-2xl md:text-3xl" : "text-lg"}`}>
+                    {c}
+                  </h3>
+                  <p className={`mt-1.5 text-muted-foreground ${featured ? "text-base max-w-md" : "text-xs"}`}>
+                    {m.desc}
+                  </p>
+                </div>
+
+                {featured && (
+                  <div className="relative mt-6 flex flex-wrap gap-2">
+                    {["সার্টিফিকেট", "লাইভ + রেকর্ডেড", "কুইজ ও পরীক্ষা"].map((tag) => (
+                      <span key={tag} className="rounded-full border border-border bg-card/60 px-3 py-1 text-xs font-medium text-foreground/70 backdrop-blur">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                )}
+
+                <div className={`relative flex items-center justify-between border-t border-border/60 pt-4 ${featured ? "mt-8" : "mt-6"}`}>
+                  <span className="inline-flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
+                    <span className="inline-block h-1.5 w-1.5 rounded-full bg-primary" />
+                    {fmtBn(count)} কোর্স
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-primary transition-all group-hover:gap-2.5">
+                    দেখুন
+                    <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+                  </span>
+                </div>
+
+                {/* bottom accent bar */}
+                <div className="pointer-events-none absolute inset-x-6 bottom-0 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
               </Link>
             );
           })}
