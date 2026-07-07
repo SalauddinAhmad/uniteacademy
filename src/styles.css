@@ -44,29 +44,30 @@
 }
 
 :root {
-  --radius: 0.75rem;
-  /* Midnight Indigo palette — glassmorphism tuned (translucent surfaces over aurora) */
-  --background: oklch(0.985 0.005 265);
-  --foreground: oklch(0.18 0.03 265);
-  --card: oklch(1 0 0 / 0.55);
-  --card-foreground: oklch(0.18 0.03 265);
-  --popover: oklch(1 0 0 / 0.92);
-  --popover-foreground: oklch(0.18 0.03 265);
-  --primary: oklch(0.28 0.11 275);
-  --primary-foreground: oklch(0.985 0.005 265);
-  --primary-glow: oklch(0.55 0.22 275);
-  --secondary: oklch(0.98 0.01 265 / 0.55);
-  --secondary-foreground: oklch(0.24 0.08 275);
-  --muted: oklch(0.96 0.008 265 / 0.55);
-  --muted-foreground: oklch(0.42 0.03 265);
-  --accent: oklch(0.78 0.16 75);
-  --accent-foreground: oklch(0.2 0.05 60);
-  --destructive: oklch(0.6 0.24 27);
-  --destructive-foreground: oklch(0.985 0.005 265);
-  --border: oklch(1 0 0 / 0.4);
-  --input: oklch(1 0 0 / 0.5);
-  --ring: oklch(0.55 0.22 275);
+  --radius: 1rem;
+  /* Premium Midnight Indigo — dark by default, gold accent, glass surfaces */
+  --background: oklch(0.11 0.05 275);
+  --foreground: oklch(0.97 0.005 265);
+  --card: oklch(1 0 0 / 0.05);
+  --card-foreground: oklch(0.97 0.005 265);
+  --popover: oklch(0.14 0.05 275 / 0.95);
+  --popover-foreground: oklch(0.97 0.005 265);
+  --primary: oklch(0.55 0.22 275);
+  --primary-foreground: oklch(0.11 0.05 275);
+  --primary-glow: oklch(0.68 0.2 275);
+  --secondary: oklch(1 0 0 / 0.05);
+  --secondary-foreground: oklch(0.97 0.005 265);
+  --muted: oklch(1 0 0 / 0.05);
+  --muted-foreground: oklch(0.72 0.02 265);
+  --accent: oklch(0.8 0.14 85);
+  --accent-foreground: oklch(0.14 0.05 275);
+  --destructive: oklch(0.65 0.24 27);
+  --destructive-foreground: oklch(0.97 0.005 265);
+  --border: oklch(1 0 0 / 0.12);
+  --input: oklch(1 0 0 / 0.1);
+  --ring: oklch(0.8 0.14 85);
 }
+
 
 .dark {
   --background: oklch(0.14 0.03 265);
@@ -105,7 +106,7 @@
     position: relative;
     background: transparent;
   }
-  /* Fixed aurora backdrop — glassmorphism canvas */
+  /* Fixed premium backdrop — deep midnight with subtle indigo/gold ambient glows */
   body::before {
     content: "";
     position: fixed;
@@ -113,20 +114,13 @@
     z-index: -1;
     pointer-events: none;
     background:
-      radial-gradient(60% 45% at 12% 8%, color-mix(in oklab, var(--primary-glow) 55%, transparent), transparent 65%),
-      radial-gradient(45% 40% at 88% 18%, color-mix(in oklab, var(--accent) 40%, transparent), transparent 65%),
-      radial-gradient(55% 45% at 80% 85%, color-mix(in oklab, var(--primary-glow) 45%, transparent), transparent 65%),
-      radial-gradient(60% 50% at 20% 95%, color-mix(in oklab, var(--primary) 45%, transparent), transparent 65%),
-      linear-gradient(180deg, oklch(0.98 0.01 265), oklch(0.94 0.03 275));
+      radial-gradient(45% 40% at 8% 6%, color-mix(in oklab, var(--primary) 35%, transparent), transparent 65%),
+      radial-gradient(40% 35% at 92% 12%, color-mix(in oklab, var(--accent) 14%, transparent), transparent 65%),
+      radial-gradient(50% 40% at 85% 88%, color-mix(in oklab, var(--primary-glow) 22%, transparent), transparent 65%),
+      radial-gradient(55% 45% at 15% 96%, color-mix(in oklab, var(--primary) 28%, transparent), transparent 65%),
+      linear-gradient(180deg, oklch(0.09 0.05 275), oklch(0.13 0.06 278));
   }
-  .dark body::before {
-    background:
-      radial-gradient(55% 45% at 12% 8%, color-mix(in oklab, var(--primary-glow) 45%, transparent), transparent 65%),
-      radial-gradient(45% 40% at 88% 18%, color-mix(in oklab, var(--accent) 25%, transparent), transparent 65%),
-      radial-gradient(55% 45% at 80% 85%, color-mix(in oklab, var(--primary-glow) 40%, transparent), transparent 65%),
-      radial-gradient(60% 50% at 20% 95%, color-mix(in oklab, var(--primary) 60%, transparent), transparent 65%),
-      linear-gradient(180deg, oklch(0.11 0.03 265), oklch(0.16 0.05 275));
-  }
+
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-display);
     letter-spacing: -0.02em;
