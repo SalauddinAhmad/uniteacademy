@@ -261,26 +261,59 @@ function FeaturedSpotlight({ course }: { course: typeof courses[number] }) {
 }
 
 
-/* ---------------- Stats strip ---------------- */
+/* ---------------- Stats strip — premium ---------------- */
 function StatsStrip() {
   const stats = [
-    { i: BookOpen, n: "১১টি", l: "কোর্স ও কনটেন্ট" },
-    { i: Users, n: "১৫,০০০+", l: "সক্রিয় শিক্ষার্থী" },
-    { i: GraduationCap, n: "২৫+", l: "শিক্ষক ও স্কলার" },
-    { i: FileText, n: "৪০০+", l: "শিক্ষার উপকরণ" },
+    { i: BookOpen,       n: "১১",      suf: "টি",  l: "কোর্স ও কনটেন্ট" },
+    { i: Users,          n: "১৫,০০০", suf: "+",   l: "সক্রিয় শিক্ষার্থী" },
+    { i: GraduationCap,  n: "২৫",     suf: "+",   l: "শিক্ষক ও স্কলার" },
+    { i: FileText,       n: "৪০০",    suf: "+",   l: "শিক্ষার উপকরণ" },
   ];
   return (
-    <section className="bg-secondary/60 py-10">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-          {stats.map((s) => (
-            <div key={s.l} className="flex items-center gap-4 rounded-2xl border border-border bg-card p-5">
-              <div className="grid h-12 w-12 shrink-0 place-items-center rounded-xl gradient-primary text-primary-foreground">
-                <s.i className="h-6 w-6" />
+    <section className="relative overflow-hidden border-y border-border bg-secondary/40 py-16 md:py-20">
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute -top-24 left-1/4 h-64 w-64 rounded-full bg-primary/10 blur-3xl" />
+        <div className="absolute -bottom-24 right-1/4 h-64 w-64 rounded-full bg-accent/10 blur-3xl" />
+        <div
+          className="absolute inset-0 opacity-[0.04]"
+          style={{
+            backgroundImage: "radial-gradient(currentColor 1px, transparent 1px)",
+            backgroundSize: "22px 22px",
+          }}
+        />
+      </div>
+
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-2 gap-px overflow-hidden rounded-3xl border border-border bg-border/60 shadow-sm md:grid-cols-4">
+          {stats.map((s, idx) => (
+            <div
+              key={s.l}
+              className="group relative bg-card/90 backdrop-blur px-6 py-10 text-center transition-colors hover:bg-card"
+            >
+              <span className="pointer-events-none absolute left-4 top-4 h-8 w-8 rounded-tl-2xl border-l-2 border-t-2 border-primary/30 opacity-60 transition-all group-hover:opacity-100 group-hover:border-primary" />
+              <span className="pointer-events-none absolute bottom-4 right-4 h-8 w-8 rounded-br-2xl border-b-2 border-r-2 border-primary/30 opacity-60 transition-all group-hover:opacity-100 group-hover:border-primary" />
+
+              <div className="mx-auto mb-5 grid h-14 w-14 place-items-center rounded-2xl bg-primary/10 text-primary ring-1 ring-primary/20 transition-transform group-hover:scale-110 group-hover:bg-primary/15">
+                <s.i className="h-7 w-7" />
               </div>
-              <div className="min-w-0">
-                <div className="text-2xl font-bold leading-tight">{s.n}</div>
-                <div className="truncate text-xs text-muted-foreground">{s.l}</div>
+
+              <div className="flex items-baseline justify-center gap-0.5">
+                <span className="bg-gradient-to-br from-primary via-primary to-accent bg-clip-text text-5xl font-extrabold leading-none tracking-tight text-transparent md:text-6xl">
+                  {s.n}
+                </span>
+                <span className="text-2xl font-bold text-primary/70 md:text-3xl">
+                  {s.suf}
+                </span>
+              </div>
+
+              <div className="mx-auto mt-4 h-px w-10 bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
+
+              <div className="mt-3 text-sm font-medium text-muted-foreground md:text-base">
+                {s.l}
+              </div>
+
+              <div className="absolute right-4 top-4 text-[10px] font-semibold tracking-widest text-muted-foreground/50">
+                ০{fmtBn(idx + 1)}
               </div>
             </div>
           ))}
