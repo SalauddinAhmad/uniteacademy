@@ -120,10 +120,10 @@ function Hero() {
         {/* Right — Featured Card */}
         <div className="md:col-span-5 relative flex items-center">
           <div className="absolute -inset-6 -z-10 rounded-full bg-primary/25 blur-3xl" />
-          <div className="relative w-full rounded-3xl border border-white/15 bg-gradient-to-br from-white/[0.08] to-white/[0.02] p-8 shadow-2xl backdrop-blur-2xl">
-            <div className="relative aspect-video overflow-hidden rounded-2xl bg-gradient-to-br from-primary/60 to-primary/20">
-              <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
-              <div className="absolute right-4 top-4 rounded-full bg-white/10 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white backdrop-blur">
+          <div className="relative w-full rounded-3xl border border-border bg-card p-8 shadow-2xl shadow-primary/10 backdrop-blur-2xl">
+            <div className="relative aspect-video overflow-hidden rounded-2xl gradient-primary">
+              <div className="absolute inset-0 bg-gradient-to-t from-primary/60 to-transparent" />
+              <div className="absolute right-4 top-4 rounded-full bg-white/20 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white backdrop-blur">
                 Featured
               </div>
               <div className="absolute bottom-4 left-4 rounded bg-accent px-3 py-1 text-[10px] font-bold uppercase text-accent-foreground" style={{ fontFamily: "Poppins" }}>
@@ -135,18 +135,19 @@ function Hero() {
               কুরআন, সুন্নাহ ও সমসাময়িক বিষয়ে পূর্ণাঙ্গ জ্ঞান অর্জনের জন্য
               আমাদের সবচেয়ে জনপ্রিয় ১২ মাসের ফ্ল্যাগশিপ প্রোগ্রাম।
             </p>
-            <div className="mt-6 flex items-center justify-between border-t border-white/10 pt-5">
+            <div className="mt-6 flex items-center justify-between border-t border-border pt-5">
               <div className="flex -space-x-3">
                 {["🧕🏻","🧔🏻","🧔🏽"].map((e,i) => (
-                  <div key={i} className="grid h-10 w-10 place-items-center rounded-full border-2 border-background bg-primary/40 text-lg">{e}</div>
+                  <div key={i} className="grid h-10 w-10 place-items-center rounded-full border-2 border-card bg-primary/20 text-lg">{e}</div>
                 ))}
               </div>
               <div className="text-right">
                 <div className="text-[10px] uppercase tracking-widest text-muted-foreground">কোর্স ফি</div>
-                <div className="text-lg font-bold text-accent" style={{ fontFamily: "Poppins" }}>৳ ১২,০০০</div>
+                <div className="text-lg font-bold text-primary" style={{ fontFamily: "Poppins" }}>৳ ১২,০০০</div>
               </div>
             </div>
           </div>
+
         </div>
       </div>
     </section>
