@@ -158,7 +158,7 @@ function Hero() {
 function TrustLogos() {
   const items = ["সহীহ আকীদাহ", "বাংলা মাধ্যম", "লাইফটাইম অ্যাক্সেস", "যাচাইযোগ্য সনদ", "মোবাইল ফ্রেন্ডলি", "লাইভ + রেকর্ডেড"];
   return (
-    <section className="border-y border-white/10 bg-white/[0.02]">
+    <section className="border-y border-border bg-card/40">
       <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
         <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-xs font-medium text-muted-foreground">
           {items.map((t) => (
