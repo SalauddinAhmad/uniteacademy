@@ -281,7 +281,7 @@ const courseInput = z.object({
   titleBn: z.string().min(2).max(200),
   titleEn: z.string().max(200).optional().nullable(),
   description: z.string().max(2000).optional().nullable(),
-  coverUrl: z.string().url().optional().nullable().or(z.literal("")),
+  coverUrl: z.string().optional().nullable().or(z.literal("")),
   category: z.enum(["diploma", "talimul_quran", "free", "teacher_training"]),
   type: z.enum(["live", "recorded"]),
   durationMinutes: z.number().int().min(0).default(0),
