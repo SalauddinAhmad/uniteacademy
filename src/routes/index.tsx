@@ -10,6 +10,9 @@ import { SiteFooter } from "@/components/site-footer";
 import { CourseCard } from "@/components/course-card";
 import { courses, categories, fmtBn } from "@/lib/courses";
 import instructorPortrait from "@/assets/instructor-portrait.jpg";
+import diplomaArabicCover from "@/assets/courses/diploma-arabic-language.jpg";
+import diplomaIslamicCover from "@/assets/courses/diploma-islamic-studies.jpg";
+import diplomaQuranCover from "@/assets/courses/diploma-quran-studies.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -586,9 +589,9 @@ function BenefitsGrid() {
 /* ---------------- Diploma programs ---------------- */
 function DiplomaPrograms({ diplomas }: { diplomas: typeof courses }) {
   const items = [
-    { title: "Diploma in Arabic Language", desc: "দৈনন্দিন জীবনে আরবী কথোপকথন, লিখন ও বোঝার দক্ষতা — সাজানো দারসের মাধ্যমে।", tag: "১২ মাস", emoji: "🅰️", cover: "from-blue-600 to-indigo-700" },
-    { title: "Diploma in Islamic Studies", desc: "কুরআন, হাদীস, ফিকহ, আকীদাহ ও সীরাতের পূর্ণাঙ্গ প্রোগ্রাম।", tag: "১২ মাস", emoji: "🕌", cover: "from-indigo-600 to-violet-700" },
-    { title: "Diploma in Quran Studies", desc: "তিলাওয়াত, তাজবীদ ও তাফসীরের গভীর অধ্যয়ন।", tag: "১০ মাস", emoji: "📗", cover: "from-emerald-600 to-teal-700" },
+    { title: "Diploma in Arabic Language", desc: "দৈনন্দিন জীবনে আরবী কথোপকথন, লিখন ও বোঝার দক্ষতা — সাজানো দারসের মাধ্যমে।", tag: "১২ মাস", image: diplomaArabicCover, cover: "from-blue-600 to-indigo-700" },
+    { title: "Diploma in Islamic Studies", desc: "কুরআন, হাদীস, ফিকহ, আকীদাহ ও সীরাতের পূর্ণাঙ্গ প্রোগ্রাম।", tag: "১২ মাস", image: diplomaIslamicCover, cover: "from-indigo-600 to-violet-700" },
+    { title: "Diploma in Quran Studies", desc: "তিলাওয়াত, তাজবীদ ও তাফসীরের গভীর অধ্যয়ন।", tag: "১০ মাস", image: diplomaQuranCover, cover: "from-emerald-600 to-teal-700" },
   ];
   return (
     <section className="bg-secondary/50 py-16 sm:py-24">
@@ -601,12 +604,20 @@ function DiplomaPrograms({ diplomas }: { diplomas: typeof courses }) {
         <div className="mt-10 grid gap-6 md:grid-cols-3">
           {items.map((d) => (
             <div key={d.title} className="group relative overflow-hidden rounded-2xl border border-border bg-card shadow-md transition-all hover:-translate-y-1 hover:shadow-2xl hover:shadow-primary/10">
-              <div className={`relative aspect-[16/10] bg-gradient-to-br ${d.cover} p-6 text-primary-foreground`}>
-                <div className="flex items-start justify-between">
-                  <span className="rounded-full bg-white/20 backdrop-blur px-3 py-1 text-[10px] font-bold uppercase tracking-wider">Diploma</span>
-                  <span className="rounded-full bg-white/20 backdrop-blur px-3 py-1 text-xs font-semibold">{d.tag}</span>
+              <div className={`relative aspect-[16/10] overflow-hidden bg-gradient-to-br ${d.cover}`}>
+                <img
+                  src={d.image}
+                  alt={d.title}
+                  loading="lazy"
+                  width={1024}
+                  height={640}
+                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent" />
+                <div className="relative flex items-start justify-between p-6 text-primary-foreground">
+                  <span className="rounded-full bg-white/25 backdrop-blur px-3 py-1 text-[10px] font-bold uppercase tracking-wider">Diploma</span>
+                  <span className="rounded-full bg-white/25 backdrop-blur px-3 py-1 text-xs font-semibold">{d.tag}</span>
                 </div>
-                <div className="absolute bottom-6 left-6 text-5xl">{d.emoji}</div>
               </div>
               <div className="p-6">
                 <h3 className="text-lg font-bold leading-snug">{d.title}</h3>
