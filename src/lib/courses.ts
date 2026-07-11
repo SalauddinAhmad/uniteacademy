@@ -1,3 +1,15 @@
+import diplomaCover from "@/assets/courses/diploma-islamic-studies.jpg";
+import rasulCover from "@/assets/courses/rasul-shikkhadan-poddhoti.jpg";
+import taharatCover from "@/assets/courses/fiqh-taharat.jpg";
+import siyamCover from "@/assets/courses/fiqh-siyam.jpg";
+import siratCover from "@/assets/courses/sirat-makki.jpg";
+import quranMulnitiCover from "@/assets/courses/quran-bujhar-mulniti.jpg";
+import salatCover from "@/assets/courses/fiqh-salat.jpg";
+import akidaCover from "@/assets/courses/islami-akidar-porichoy.jpg";
+import ilmAdobCover from "@/assets/courses/ilm-orjoner-adob.jpg";
+import studyCover from "@/assets/courses/study-skills.jpg";
+import talimulCover from "@/assets/courses/talimul-quran-primary.jpg";
+
 export type Course = {
   slug: string;
   title_bn: string;
@@ -11,8 +23,9 @@ export type Course = {
   originalPrice?: number;
   rating: number;
   students: number;
-  cover: string; // gradient token
+  cover: string; // gradient token (fallback tint)
   emoji: string;
+  thumbnail: string; // book cover image
   description: string;
 };
 
@@ -32,6 +45,7 @@ export const courses: Course[] = [
     students: 3420,
     cover: "from-indigo-600 to-violet-700",
     emoji: "🕌",
+    thumbnail: diplomaCover,
     description: "কুরআন, হাদীস, ফিকহ ও ইসলামী ইতিহাসের পূর্ণাঙ্গ ১২ মাসের ডিপ্লোমা প্রোগ্রাম।",
   },
   {
@@ -48,6 +62,7 @@ export const courses: Course[] = [
     students: 1820,
     cover: "from-blue-600 to-indigo-700",
     emoji: "📖",
+    thumbnail: rasulCover,
     description: "রাসূলুল্লাহ (সাঃ) কীভাবে সাহাবীদের শিক্ষা দিতেন — ১২টি মডিউলে বিস্তারিত।",
   },
   {
@@ -64,6 +79,7 @@ export const courses: Course[] = [
     students: 2140,
     cover: "from-cyan-600 to-blue-700",
     emoji: "💧",
+    thumbnail: taharatCover,
     description: "পবিত্রতা ও অজু-গোসল সংক্রান্ত ফিকহের বিস্তারিত পাঠ।",
   },
   {
@@ -80,6 +96,7 @@ export const courses: Course[] = [
     students: 1560,
     cover: "from-amber-500 to-orange-600",
     emoji: "🌙",
+    thumbnail: siyamCover,
     description: "রমাদান ও সিয়ামের ফিকহি বিধিবিধান — বাস্তব উদাহরণসহ।",
   },
   {
@@ -96,6 +113,7 @@ export const courses: Course[] = [
     students: 2890,
     cover: "from-emerald-600 to-teal-700",
     emoji: "🕋",
+    thumbnail: siratCover,
     description: "মক্কার ১৩ বছরের রাসূল (সাঃ) এর জীবন — গভীর বিশ্লেষণ।",
   },
   {
@@ -112,6 +130,7 @@ export const courses: Course[] = [
     students: 1240,
     cover: "from-violet-600 to-purple-700",
     emoji: "📗",
+    thumbnail: quranMulnitiCover,
     description: "উলূমুল কুরআন — কুরআন বুঝতে হলে যে মূলনীতি জানা জরুরি।",
   },
   {
@@ -128,6 +147,7 @@ export const courses: Course[] = [
     students: 3210,
     cover: "from-rose-500 to-pink-700",
     emoji: "🤲",
+    thumbnail: salatCover,
     description: "সালাতের সম্পূর্ণ ফিকহ — নিয়ম, ভুল ও সমাধান।",
   },
   {
@@ -144,6 +164,7 @@ export const courses: Course[] = [
     students: 1980,
     cover: "from-green-600 to-emerald-700",
     emoji: "🌱",
+    thumbnail: akidaCover,
     description: "সহীহ আকীদার ভিত্তি ও তার বাস্তব প্রয়োগ।",
   },
   {
@@ -160,6 +181,7 @@ export const courses: Course[] = [
     students: 4210,
     cover: "from-amber-600 to-yellow-700",
     emoji: "📚",
+    thumbnail: ilmAdobCover,
     description: "একজন তালিবুল ইলমের চরিত্র, আচরণ ও প্রস্তুতি।",
   },
   {
@@ -176,6 +198,7 @@ export const courses: Course[] = [
     students: 1120,
     cover: "from-sky-500 to-cyan-700",
     emoji: "✍️",
+    thumbnail: studyCover,
     description: "কার্যকর পড়াশোনা, নোট নেওয়া ও সময় ব্যবস্থাপনা।",
   },
   {
@@ -193,6 +216,7 @@ export const courses: Course[] = [
     students: 5340,
     cover: "from-teal-600 to-emerald-700",
     emoji: "🕊️",
+    thumbnail: talimulCover,
     description: "শুদ্ধভাবে কুরআন পড়া শেখার প্রাথমিক কোর্স।",
   },
 ];
