@@ -17,7 +17,7 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as AdminRouteImport } from './routes/_admin'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as CoursesSlugRouteImport } from './routes/courses.$slug'
+import { Route as CoursesSlugRouteImport } from './routes/courses_.$slug'
 import { Route as AuthSignupRouteImport } from './routes/auth.signup'
 import { Route as AuthLoginRouteImport } from './routes/auth.login'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
@@ -80,9 +80,9 @@ const IndexRoute = IndexRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const CoursesSlugRoute = CoursesSlugRouteImport.update({
-  id: '/$slug',
-  path: '/$slug',
-  getParentRoute: () => CoursesRoute,
+  id: '/courses_/$slug',
+  path: '/courses/$slug',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const AuthSignupRoute = AuthSignupRouteImport.update({
   id: '/auth/signup',
@@ -209,7 +209,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
-  '/courses': typeof CoursesRouteWithChildren
+  '/courses': typeof CoursesRoute
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
   '/dashboard': typeof AuthenticatedDashboardRouteWithChildren
@@ -240,7 +240,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
-  '/courses': typeof CoursesRouteWithChildren
+  '/courses': typeof CoursesRoute
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
   '/auth/login': typeof AuthLoginRoute
@@ -273,13 +273,13 @@ export interface FileRoutesById {
   '/_admin': typeof AdminRouteWithChildren
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
-  '/courses': typeof CoursesRouteWithChildren
+  '/courses': typeof CoursesRoute
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRouteWithChildren
   '/auth/login': typeof AuthLoginRoute
   '/auth/signup': typeof AuthSignupRoute
-  '/courses/$slug': typeof CoursesSlugRoute
+  '/courses_/$slug': typeof CoursesSlugRoute
   '/_admin/admin/courses': typeof AdminAdminCoursesRoute
   '/_admin/admin/enrollments': typeof AdminAdminEnrollmentsRoute
   '/_admin/admin/notices': typeof AdminAdminNoticesRoute
@@ -375,7 +375,7 @@ export interface FileRouteTypes {
     | '/_authenticated/dashboard'
     | '/auth/login'
     | '/auth/signup'
-    | '/courses/$slug'
+    | '/courses_/$slug'
     | '/_admin/admin/courses'
     | '/_admin/admin/enrollments'
     | '/_admin/admin/notices'
@@ -403,11 +403,12 @@ export interface RootRouteChildren {
   AdminRoute: typeof AdminRouteWithChildren
   AboutRoute: typeof AboutRoute
   ContactRoute: typeof ContactRoute
-  CoursesRoute: typeof CoursesRouteWithChildren
+  CoursesRoute: typeof CoursesRoute
   PrivacyRoute: typeof PrivacyRoute
   TermsRoute: typeof TermsRoute
   AuthLoginRoute: typeof AuthLoginRoute
   AuthSignupRoute: typeof AuthSignupRoute
+  CoursesSlugRoute: typeof CoursesSlugRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -468,12 +469,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/courses/$slug': {
-      id: '/courses/$slug'
-      path: '/$slug'
+    '/courses_/$slug': {
+      id: '/courses_/$slug'
+      path: '/courses/$slug'
       fullPath: '/courses/$slug'
       preLoaderRoute: typeof CoursesSlugRouteImport
-      parentRoute: typeof CoursesRoute
+      parentRoute: typeof rootRouteImport
     }
     '/auth/signup': {
       id: '/auth/signup'
@@ -717,28 +718,18 @@ const AdminRouteChildren: AdminRouteChildren = {
 
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 
-interface CoursesRouteChildren {
-  CoursesSlugRoute: typeof CoursesSlugRoute
-}
-
-const CoursesRouteChildren: CoursesRouteChildren = {
-  CoursesSlugRoute: CoursesSlugRoute,
-}
-
-const CoursesRouteWithChildren =
-  CoursesRoute._addFileChildren(CoursesRouteChildren)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AdminRoute: AdminRouteWithChildren,
   AboutRoute: AboutRoute,
   ContactRoute: ContactRoute,
-  CoursesRoute: CoursesRouteWithChildren,
+  CoursesRoute: CoursesRoute,
   PrivacyRoute: PrivacyRoute,
   TermsRoute: TermsRoute,
   AuthLoginRoute: AuthLoginRoute,
   AuthSignupRoute: AuthSignupRoute,
+  CoursesSlugRoute: CoursesSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
