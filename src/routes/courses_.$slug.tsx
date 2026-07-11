@@ -19,7 +19,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { CourseCard } from "@/components/course-card";
 import { courses, fmtBn } from "@/lib/courses";
 
-export const Route = createFileRoute("/courses/$slug")({
+export const Route = createFileRoute("/courses_/$slug")({
   head: ({ params }) => {
     const c = courses.find((x) => x.slug === params.slug);
     const title = c ? `${c.title_bn} — Uniteacademy` : "কোর্স — Uniteacademy";
