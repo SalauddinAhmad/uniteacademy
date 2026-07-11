@@ -87,39 +87,78 @@ export type Database = {
       courses: {
         Row: {
           category: Database["public"]["Enums"]["course_category"]
+          category_label: string | null
           cover_url: string | null
           created_at: string
           description: string | null
           duration_minutes: number
+          duration_text: string | null
           id: string
+          instructor: string | null
           is_published: boolean
+          learn_points: Json
+          lessons_count: number
+          level: string | null
+          long_description: string | null
+          modules: Json
+          original_price: number | null
+          price: number
+          rating: number
+          requirements: Json
           slug: string
+          students: number
           title_bn: string
           title_en: string | null
           type: Database["public"]["Enums"]["course_type"]
         }
         Insert: {
           category?: Database["public"]["Enums"]["course_category"]
+          category_label?: string | null
           cover_url?: string | null
           created_at?: string
           description?: string | null
           duration_minutes?: number
+          duration_text?: string | null
           id?: string
+          instructor?: string | null
           is_published?: boolean
+          learn_points?: Json
+          lessons_count?: number
+          level?: string | null
+          long_description?: string | null
+          modules?: Json
+          original_price?: number | null
+          price?: number
+          rating?: number
+          requirements?: Json
           slug: string
+          students?: number
           title_bn: string
           title_en?: string | null
           type?: Database["public"]["Enums"]["course_type"]
         }
         Update: {
           category?: Database["public"]["Enums"]["course_category"]
+          category_label?: string | null
           cover_url?: string | null
           created_at?: string
           description?: string | null
           duration_minutes?: number
+          duration_text?: string | null
           id?: string
+          instructor?: string | null
           is_published?: boolean
+          learn_points?: Json
+          lessons_count?: number
+          level?: string | null
+          long_description?: string | null
+          modules?: Json
+          original_price?: number | null
+          price?: number
+          rating?: number
+          requirements?: Json
           slug?: string
+          students?: number
           title_bn?: string
           title_en?: string | null
           type?: Database["public"]["Enums"]["course_type"]
