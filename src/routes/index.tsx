@@ -125,9 +125,14 @@ function Hero() {
         <div className="md:col-span-5 relative flex items-center">
           <div className="absolute -inset-6 -z-10 rounded-full bg-primary/25 blur-3xl" />
           <div className="relative w-full rounded-3xl border border-border bg-card p-8 shadow-2xl shadow-primary/10 backdrop-blur-2xl">
-            <div className="relative aspect-video overflow-hidden rounded-2xl gradient-primary">
-              <div className="absolute inset-0 bg-gradient-to-t from-primary/60 to-transparent" />
-              <div className="absolute right-4 top-4 rounded-full bg-white/20 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white backdrop-blur">
+            <div className="relative aspect-video overflow-hidden rounded-2xl">
+              <img
+                src={diplomaCover}
+                alt="ডিপ্লোমা ইন ইসলামিক স্টাডিজ"
+                className="absolute inset-0 h-full w-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
+              <div className="absolute right-4 top-4 rounded-full bg-white/85 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-primary shadow backdrop-blur">
                 Featured
               </div>
               <div className="absolute bottom-4 left-4 rounded bg-accent px-3 py-1 text-[10px] font-bold uppercase text-accent-foreground" style={{ fontFamily: "Poppins" }}>
