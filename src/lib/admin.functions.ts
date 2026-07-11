@@ -247,7 +247,7 @@ export const listAdminCourses = createServerFn({ method: "GET" })
       }
     }
 
-    return (courses ?? []).map(c => ({
+    return (courses ?? []).map((c: any) => ({
       id: c.id,
       slug: c.slug,
       titleBn: c.title_bn,
@@ -260,6 +260,19 @@ export const listAdminCourses = createServerFn({ method: "GET" })
       isPublished: !!c.is_published,
       createdAt: c.created_at,
       teacherNames: teachersByCourse.get(c.id) ?? [],
+      instructor: c.instructor ?? null,
+      categoryLabel: c.category_label ?? null,
+      level: (c.level as AdminCourseDto["level"]) ?? null,
+      durationText: c.duration_text ?? null,
+      lessonsCount: c.lessons_count ?? 0,
+      price: c.price ?? 0,
+      originalPrice: c.original_price ?? null,
+      rating: Number(c.rating ?? 0),
+      students: c.students ?? 0,
+      longDescription: c.long_description ?? null,
+      learnPoints: Array.isArray(c.learn_points) ? c.learn_points : [],
+      requirements: Array.isArray(c.requirements) ? c.requirements : [],
+      modules: Array.isArray(c.modules) ? c.modules : [],
     }));
   });
 
