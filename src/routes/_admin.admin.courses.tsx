@@ -135,21 +135,33 @@ function CoursesPage() {
     queryClient.invalidateQueries({ queryKey: ["admin", "stats"] });
   };
 
+  const buildPayload = (d: FormState) => ({
+    slug: d.slug,
+    titleBn: d.titleBn,
+    titleEn: d.titleEn || null,
+    description: d.description || null,
+    coverUrl: d.coverUrl || null,
+    category: d.category,
+    type: d.type,
+    durationMinutes: d.durationMinutes,
+    isPublished: d.isPublished,
+    instructor: d.instructor || null,
+    categoryLabel: d.categoryLabel || null,
+    level: d.level,
+    durationText: d.durationText || null,
+    lessonsCount: d.lessonsCount,
+    price: d.price,
+    originalPrice: d.originalPrice === "" ? null : Number(d.originalPrice),
+    rating: d.rating,
+    students: d.students,
+    longDescription: d.longDescription || null,
+    learnPoints: toLines(d.learnPoints),
+    requirements: toLines(d.requirements),
+    modules: toLines(d.modules),
+  });
+
   const createMut = useMutation({
-    mutationFn: (d: FormState) =>
-      createCourse({
-        data: {
-          slug: d.slug,
-          titleBn: d.titleBn,
-          titleEn: d.titleEn || null,
-          description: d.description || null,
-          coverUrl: d.coverUrl || null,
-          category: d.category,
-          type: d.type,
-          durationMinutes: d.durationMinutes,
-          isPublished: d.isPublished,
-        },
-      }),
+    mutationFn: (d: FormState) => createCourse({ data: buildPayload(d) }),
     onSuccess: () => {
       toast.success("Course created");
       setOpen(false);
@@ -160,20 +172,7 @@ function CoursesPage() {
 
   const updateMut = useMutation({
     mutationFn: (d: FormState & { id: string }) =>
-      updateCourse({
-        data: {
-          id: d.id,
-          slug: d.slug,
-          titleBn: d.titleBn,
-          titleEn: d.titleEn || null,
-          description: d.description || null,
-          coverUrl: d.coverUrl || null,
-          category: d.category,
-          type: d.type,
-          durationMinutes: d.durationMinutes,
-          isPublished: d.isPublished,
-        },
-      }),
+      updateCourse({ data: { id: d.id, ...buildPayload(d) } }),
     onSuccess: () => {
       toast.success("Course updated");
       setOpen(false);
@@ -215,6 +214,19 @@ function CoursesPage() {
       type: c.type,
       durationMinutes: c.durationMinutes,
       isPublished: c.isPublished,
+      instructor: c.instructor ?? "",
+      categoryLabel: c.categoryLabel ?? "",
+      level: c.level ?? "beginner",
+      durationText: c.durationText ?? "",
+      lessonsCount: c.lessonsCount,
+      price: c.price,
+      originalPrice: c.originalPrice ?? "",
+      rating: c.rating,
+      students: c.students,
+      longDescription: c.longDescription ?? "",
+      learnPoints: fromLines(c.learnPoints),
+      requirements: fromLines(c.requirements),
+      modules: fromLines(c.modules),
     });
     setOpen(true);
   }
