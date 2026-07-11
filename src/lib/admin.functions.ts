@@ -50,6 +50,19 @@ export type AdminCourseDto = {
   isPublished: boolean;
   createdAt: string;
   teacherNames: string[];
+  instructor: string | null;
+  categoryLabel: string | null;
+  level: "beginner" | "intermediate" | "advanced" | null;
+  durationText: string | null;
+  lessonsCount: number;
+  price: number;
+  originalPrice: number | null;
+  rating: number;
+  students: number;
+  longDescription: string | null;
+  learnPoints: string[];
+  requirements: string[];
+  modules: string[];
 };
 
 // ---------- Guard ----------
@@ -234,7 +247,7 @@ export const listAdminCourses = createServerFn({ method: "GET" })
       }
     }
 
-    return (courses ?? []).map(c => ({
+    return (courses ?? []).map((c: any) => ({
       id: c.id,
       slug: c.slug,
       titleBn: c.title_bn,
@@ -247,6 +260,19 @@ export const listAdminCourses = createServerFn({ method: "GET" })
       isPublished: !!c.is_published,
       createdAt: c.created_at,
       teacherNames: teachersByCourse.get(c.id) ?? [],
+      instructor: c.instructor ?? null,
+      categoryLabel: c.category_label ?? null,
+      level: (c.level as AdminCourseDto["level"]) ?? null,
+      durationText: c.duration_text ?? null,
+      lessonsCount: c.lessons_count ?? 0,
+      price: c.price ?? 0,
+      originalPrice: c.original_price ?? null,
+      rating: Number(c.rating ?? 0),
+      students: c.students ?? 0,
+      longDescription: c.long_description ?? null,
+      learnPoints: Array.isArray(c.learn_points) ? c.learn_points : [],
+      requirements: Array.isArray(c.requirements) ? c.requirements : [],
+      modules: Array.isArray(c.modules) ? c.modules : [],
     }));
   });
 
@@ -260,7 +286,47 @@ const courseInput = z.object({
   type: z.enum(["live", "recorded"]),
   durationMinutes: z.number().int().min(0).default(0),
   isPublished: z.boolean().default(false),
+  instructor: z.string().max(200).optional().nullable(),
+  categoryLabel: z.string().max(80).optional().nullable(),
+  level: z.enum(["beginner", "intermediate", "advanced"]).optional().nullable(),
+  durationText: z.string().max(80).optional().nullable(),
+  lessonsCount: z.number().int().min(0).default(0),
+  price: z.number().int().min(0).default(0),
+  originalPrice: z.number().int().min(0).optional().nullable(),
+  rating: z.number().min(0).max(5).default(0),
+  students: z.number().int().min(0).default(0),
+  longDescription: z.string().max(10000).optional().nullable(),
+  learnPoints: z.array(z.string()).default([]),
+  requirements: z.array(z.string()).default([]),
+  modules: z.array(z.string()).default([]),
 });
+
+function courseRow(data: z.infer<typeof courseInput>) {
+  return {
+    slug: data.slug,
+    title_bn: data.titleBn,
+    title_en: data.titleEn ?? null,
+    description: data.description ?? null,
+    cover_url: data.coverUrl ? data.coverUrl : null,
+    category: data.category,
+    type: data.type,
+    duration_minutes: data.durationMinutes,
+    is_published: data.isPublished,
+    instructor: data.instructor ?? null,
+    category_label: data.categoryLabel ?? null,
+    level: data.level ?? null,
+    duration_text: data.durationText ?? null,
+    lessons_count: data.lessonsCount,
+    price: data.price,
+    original_price: data.originalPrice ?? null,
+    rating: data.rating,
+    students: data.students,
+    long_description: data.longDescription ?? null,
+    learn_points: data.learnPoints,
+    requirements: data.requirements,
+    modules: data.modules,
+  } as any;
+}
 
 export const createCourse = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
@@ -270,17 +336,7 @@ export const createCourse = createServerFn({ method: "POST" })
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const { data: row, error } = await supabaseAdmin
       .from("courses")
-      .insert({
-        slug: data.slug,
-        title_bn: data.titleBn,
-        title_en: data.titleEn ?? null,
-        description: data.description ?? null,
-        cover_url: data.coverUrl ? data.coverUrl : null,
-        category: data.category,
-        type: data.type,
-        duration_minutes: data.durationMinutes,
-        is_published: data.isPublished,
-      })
+      .insert(courseRow(data))
       .select("id")
       .single();
     if (error) throw new Error(error.message);
@@ -297,17 +353,7 @@ export const updateCourse = createServerFn({ method: "POST" })
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const { error } = await supabaseAdmin
       .from("courses")
-      .update({
-        slug: data.slug,
-        title_bn: data.titleBn,
-        title_en: data.titleEn ?? null,
-        description: data.description ?? null,
-        cover_url: data.coverUrl ? data.coverUrl : null,
-        category: data.category,
-        type: data.type,
-        duration_minutes: data.durationMinutes,
-        is_published: data.isPublished,
-      })
+      .update(courseRow(data))
       .eq("id", data.id);
     if (error) throw new Error(error.message);
     return { ok: true };
