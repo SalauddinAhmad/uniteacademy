@@ -9,10 +9,16 @@ export function CourseCard({ course }: { course: Course }) {
       className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-card transition-all hover:-translate-y-1 hover:border-primary/40 hover:shadow-xl hover:shadow-primary/10"
     >
       <div className={`relative aspect-[16/10] bg-gradient-to-br ${course.cover} overflow-hidden`}>
-        <div className="absolute inset-0 grid place-items-center text-7xl opacity-90 transition-transform group-hover:scale-110">
-          {course.emoji}
-        </div>
-        <div className="absolute left-3 top-3 rounded-full bg-white/95 px-2.5 py-1 text-[11px] font-semibold text-primary shadow-sm">
+        <img
+          src={course.thumbnail}
+          alt={course.title_bn}
+          loading="lazy"
+          width={1024}
+          height={640}
+          className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+        />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+        <div className="absolute left-3 top-3 rounded-full bg-white/95 px-2.5 py-1 text-[11px] font-semibold text-primary shadow-sm backdrop-blur">
           {course.category}
         </div>
         {course.originalPrice && (
