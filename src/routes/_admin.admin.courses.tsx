@@ -341,13 +341,16 @@ function CoursesPage() {
       </div>
 
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="max-w-2xl">
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>{form.id ? "Edit course" : "New course"}</DialogTitle>
             <DialogDescription>
-              Course details are visible to students once published.
+              All fields below control what students see on the course detail page.
             </DialogDescription>
           </DialogHeader>
+
+          {/* --- Basic --- */}
+          <div className="mt-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Basic info</div>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div className="sm:col-span-2">
               <Label htmlFor="titleBn">Title (Bangla) *</Label>
@@ -367,7 +370,7 @@ function CoursesPage() {
               />
             </div>
             <div>
-              <Label>Category</Label>
+              <Label>Category (system)</Label>
               <Select value={form.category} onValueChange={(v: any) => setForm({ ...form, category: v })}>
                 <SelectTrigger><SelectValue /></SelectTrigger>
                 <SelectContent>
@@ -376,6 +379,15 @@ function CoursesPage() {
                   ))}
                 </SelectContent>
               </Select>
+            </div>
+            <div>
+              <Label htmlFor="categoryLabel">Category label (Bangla)</Label>
+              <Input
+                id="categoryLabel"
+                value={form.categoryLabel}
+                placeholder="যেমন: ফিকহ, কুরআন, সীরাত"
+                onChange={e => setForm({ ...form, categoryLabel: e.target.value })}
+              />
             </div>
             <div>
               <Label>Type</Label>
@@ -388,15 +400,30 @@ function CoursesPage() {
               </Select>
             </div>
             <div>
-              <Label htmlFor="duration">Duration (minutes)</Label>
+              <Label>Level</Label>
+              <Select value={form.level} onValueChange={(v: any) => setForm({ ...form, level: v })}>
+                <SelectTrigger><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="beginner">Beginner</SelectItem>
+                  <SelectItem value="intermediate">Intermediate</SelectItem>
+                  <SelectItem value="advanced">Advanced</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div>
+              <Label htmlFor="instructor">Instructor</Label>
               <Input
-                id="duration"
-                type="number"
-                min={0}
-                value={form.durationMinutes}
-                onChange={e => setForm({ ...form, durationMinutes: parseInt(e.target.value || "0", 10) })}
+                id="instructor"
+                value={form.instructor}
+                placeholder="ড. ইমাম হোসেন"
+                onChange={e => setForm({ ...form, instructor: e.target.value })}
               />
             </div>
+          </div>
+
+          {/* --- Media & summary --- */}
+          <div className="mt-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Media & summary</div>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div className="sm:col-span-2">
               <Label htmlFor="cover">Cover image URL</Label>
               <Input
@@ -405,24 +432,151 @@ function CoursesPage() {
                 placeholder="https://…"
                 onChange={e => setForm({ ...form, coverUrl: e.target.value })}
               />
+              {form.coverUrl && (
+                <div className="mt-2 h-32 w-full overflow-hidden rounded-lg border border-border/60">
+                  <img src={form.coverUrl} alt="" className="h-full w-full object-cover" />
+                </div>
+              )}
             </div>
             <div className="sm:col-span-2">
-              <Label htmlFor="desc">Description</Label>
+              <Label htmlFor="desc">Short description (card / SEO)</Label>
               <Textarea
                 id="desc"
-                rows={3}
+                rows={2}
                 value={form.description}
                 onChange={e => setForm({ ...form, description: e.target.value })}
               />
             </div>
-            <div className="sm:col-span-2 flex items-center gap-3 rounded-lg border border-border/60 bg-muted/20 p-3">
-              <Switch checked={form.isPublished} onCheckedChange={v => setForm({ ...form, isPublished: v })} />
-              <div>
-                <div className="text-sm font-medium">Published</div>
-                <div className="text-xs text-muted-foreground">Visible to students in the catalog</div>
-              </div>
+            <div className="sm:col-span-2">
+              <Label htmlFor="longDesc">Long description (detail page body)</Label>
+              <Textarea
+                id="longDesc"
+                rows={5}
+                value={form.longDescription}
+                onChange={e => setForm({ ...form, longDescription: e.target.value })}
+              />
             </div>
           </div>
+
+          {/* --- Numbers --- */}
+          <div className="mt-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Duration, price & stats</div>
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+            <div>
+              <Label htmlFor="durationText">Duration (Bangla)</Label>
+              <Input
+                id="durationText"
+                value={form.durationText}
+                placeholder="৮ সপ্তাহ"
+                onChange={e => setForm({ ...form, durationText: e.target.value })}
+              />
+            </div>
+            <div>
+              <Label htmlFor="duration">Duration (min)</Label>
+              <Input
+                id="duration"
+                type="number"
+                min={0}
+                value={form.durationMinutes}
+                onChange={e => setForm({ ...form, durationMinutes: parseInt(e.target.value || "0", 10) })}
+              />
+            </div>
+            <div>
+              <Label htmlFor="lessons">Lessons</Label>
+              <Input
+                id="lessons"
+                type="number"
+                min={0}
+                value={form.lessonsCount}
+                onChange={e => setForm({ ...form, lessonsCount: parseInt(e.target.value || "0", 10) })}
+              />
+            </div>
+            <div>
+              <Label htmlFor="students">Students</Label>
+              <Input
+                id="students"
+                type="number"
+                min={0}
+                value={form.students}
+                onChange={e => setForm({ ...form, students: parseInt(e.target.value || "0", 10) })}
+              />
+            </div>
+            <div>
+              <Label htmlFor="price">Price (৳)</Label>
+              <Input
+                id="price"
+                type="number"
+                min={0}
+                value={form.price}
+                onChange={e => setForm({ ...form, price: parseInt(e.target.value || "0", 10) })}
+              />
+            </div>
+            <div>
+              <Label htmlFor="origPrice">Original price (৳)</Label>
+              <Input
+                id="origPrice"
+                type="number"
+                min={0}
+                value={form.originalPrice}
+                onChange={e => setForm({ ...form, originalPrice: e.target.value === "" ? "" : parseInt(e.target.value, 10) })}
+              />
+            </div>
+            <div>
+              <Label htmlFor="rating">Rating (0–5)</Label>
+              <Input
+                id="rating"
+                type="number"
+                step="0.1"
+                min={0}
+                max={5}
+                value={form.rating}
+                onChange={e => setForm({ ...form, rating: parseFloat(e.target.value || "0") })}
+              />
+            </div>
+          </div>
+
+          {/* --- Curriculum --- */}
+          <div className="mt-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Curriculum (one item per line)</div>
+          <div className="grid grid-cols-1 gap-4">
+            <div>
+              <Label htmlFor="modules">Modules</Label>
+              <Textarea
+                id="modules"
+                rows={5}
+                value={form.modules}
+                placeholder={"মডিউল ১ : পরিচিতি\nমডিউল ২ : মৌলিক ধারণা"}
+                onChange={e => setForm({ ...form, modules: e.target.value })}
+              />
+            </div>
+            <div>
+              <Label htmlFor="learn">What you will learn</Label>
+              <Textarea
+                id="learn"
+                rows={4}
+                value={form.learnPoints}
+                placeholder={"কুরআন সহীহভাবে পড়া\nতাজবীদের মূলনীতি"}
+                onChange={e => setForm({ ...form, learnPoints: e.target.value })}
+              />
+            </div>
+            <div>
+              <Label htmlFor="reqs">Requirements</Label>
+              <Textarea
+                id="reqs"
+                rows={3}
+                value={form.requirements}
+                placeholder={"বেসিক আরবী পড়তে পারা\nদৈনিক ৩০ মিনিট সময়"}
+                onChange={e => setForm({ ...form, requirements: e.target.value })}
+              />
+            </div>
+          </div>
+
+          <div className="mt-4 flex items-center gap-3 rounded-lg border border-border/60 bg-muted/20 p-3">
+            <Switch checked={form.isPublished} onCheckedChange={v => setForm({ ...form, isPublished: v })} />
+            <div>
+              <div className="text-sm font-medium">Published</div>
+              <div className="text-xs text-muted-foreground">Visible to students in the catalog</div>
+            </div>
+          </div>
+
           <DialogFooter>
             <Button variant="outline" onClick={() => setOpen(false)}>Cancel</Button>
             <Button onClick={submit} disabled={createMut.isPending || updateMut.isPending}>
