@@ -50,6 +50,19 @@ export type AdminCourseDto = {
   isPublished: boolean;
   createdAt: string;
   teacherNames: string[];
+  instructor: string | null;
+  categoryLabel: string | null;
+  level: "beginner" | "intermediate" | "advanced" | null;
+  durationText: string | null;
+  lessonsCount: number;
+  price: number;
+  originalPrice: number | null;
+  rating: number;
+  students: number;
+  longDescription: string | null;
+  learnPoints: string[];
+  requirements: string[];
+  modules: string[];
 };
 
 // ---------- Guard ----------
