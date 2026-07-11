@@ -127,7 +127,7 @@ function Hero() {
           <div className="relative w-full rounded-3xl border border-border bg-card p-8 shadow-2xl shadow-primary/10 backdrop-blur-2xl">
             <div className="relative aspect-video overflow-hidden rounded-2xl">
               <img
-                src={diplomaCover}
+                src={diplomaIslamicCover}
                 alt="ডিপ্লোমা ইন ইসলামিক স্টাডিজ"
                 className="absolute inset-0 h-full w-full object-cover"
               />
