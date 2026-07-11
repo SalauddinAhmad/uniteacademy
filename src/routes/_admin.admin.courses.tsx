@@ -80,6 +80,19 @@ type FormState = {
   type: "live" | "recorded";
   durationMinutes: number;
   isPublished: boolean;
+  instructor: string;
+  categoryLabel: string;
+  level: "beginner" | "intermediate" | "advanced";
+  durationText: string;
+  lessonsCount: number;
+  price: number;
+  originalPrice: number | "";
+  rating: number;
+  students: number;
+  longDescription: string;
+  learnPoints: string;
+  requirements: string;
+  modules: string;
 };
 
 const EMPTY_FORM: FormState = {
@@ -92,7 +105,23 @@ const EMPTY_FORM: FormState = {
   type: "recorded",
   durationMinutes: 0,
   isPublished: false,
+  instructor: "",
+  categoryLabel: "",
+  level: "beginner",
+  durationText: "",
+  lessonsCount: 0,
+  price: 0,
+  originalPrice: "",
+  rating: 0,
+  students: 0,
+  longDescription: "",
+  learnPoints: "",
+  requirements: "",
+  modules: "",
 };
+
+const toLines = (s: string) => s.split("\n").map((x) => x.trim()).filter(Boolean);
+const fromLines = (arr: string[] | null | undefined) => (arr ?? []).join("\n");
 
 function CoursesPage() {
   const { data: courses } = useSuspenseQuery(coursesQuery);
