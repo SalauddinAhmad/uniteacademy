@@ -5,7 +5,8 @@ import { fmtBn, type Course } from "@/lib/courses";
 export function CourseCard({ course }: { course: Course }) {
   return (
     <Link
-      to="/courses"
+      to="/courses/$slug"
+      params={{ slug: course.slug }}
       className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-card transition-all hover:-translate-y-1 hover:border-primary/40 hover:shadow-xl hover:shadow-primary/10"
     >
       <div className={`relative aspect-[16/10] bg-gradient-to-br ${course.cover} overflow-hidden`}>
