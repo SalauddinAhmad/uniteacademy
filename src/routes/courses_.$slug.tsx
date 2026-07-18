@@ -79,9 +79,12 @@ const TABS = [
 ] as const;
 
 function CourseDetailPage() {
-  const { course } = Route.useLoaderData();
+  const { slug } = Route.useParams();
+  const { data: course } = useSuspenseQuery(courseBySlugQueryOptions(slug));
+  const { data: allCourses = [] } = useSuspenseQuery(coursesQueryOptions());
   const [tab, setTab] = useState<(typeof TABS)[number]["id"]>("info");
-  const related = courses.filter((c) => c.slug !== course.slug && c.category === course.category).slice(0, 3);
+  if (!course) return null;
+  const related = allCourses.filter((c) => c.slug !== course.slug && c.category === course.category).slice(0, 3);
   const topics = Math.round(course.lessons * 3.2);
   const quizzes = Math.round(course.lessons * 0.4);
   const hours = Math.round(course.lessons * 1.4);
