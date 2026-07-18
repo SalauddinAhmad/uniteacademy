@@ -1,5 +1,6 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useState } from "react";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import {
   Layers,
   PlayCircle,
@@ -17,27 +18,34 @@ import {
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { CourseCard } from "@/components/course-card";
-import { courses, fmtBn } from "@/lib/courses";
+import { fmtBn } from "@/lib/courses";
+import { getCourseMeta } from "@/lib/course-meta";
+import {
+  courseBySlugQueryOptions,
+  coursesQueryOptions,
+} from "@/lib/api/courses";
 
 export const Route = createFileRoute("/courses_/$slug")({
   head: ({ params }) => {
-    const c = courses.find((x) => x.slug === params.slug);
-    const title = c ? `${c.title_bn} — Uniteacademy` : "কোর্স — Uniteacademy";
-    const desc = c?.description ?? "Uniteacademy-এর ইসলামী কোর্সসমূহ।";
+    const meta = getCourseMeta(params.slug);
+    const title = `${meta.title_en || "কোর্স"} — Uniteacademy`;
+    const desc = "Uniteacademy-এর ইসলামী কোর্সসমূহ।";
     return {
       meta: [
         { title },
         { name: "description", content: desc },
         { property: "og:title", content: title },
         { property: "og:description", content: desc },
-        ...(c ? [{ property: "og:image", content: c.thumbnail as unknown as string }] : []),
       ],
     };
   },
-  loader: ({ params }) => {
-    const course = courses.find((c) => c.slug === params.slug);
+  loader: async ({ params, context }) => {
+    const course = await context.queryClient.ensureQueryData(
+      courseBySlugQueryOptions(params.slug),
+    );
     if (!course) throw notFound();
-    return { course };
+    // Prefetch related list — non-blocking.
+    void context.queryClient.prefetchQuery(coursesQueryOptions());
   },
   component: CourseDetailPage,
   notFoundComponent: NotFoundView,
@@ -71,9 +79,12 @@ const TABS = [
 ] as const;
 
 function CourseDetailPage() {
-  const { course } = Route.useLoaderData();
+  const { slug } = Route.useParams();
+  const { data: course } = useSuspenseQuery(courseBySlugQueryOptions(slug));
+  const { data: allCourses = [] } = useSuspenseQuery(coursesQueryOptions());
   const [tab, setTab] = useState<(typeof TABS)[number]["id"]>("info");
-  const related = courses.filter((c) => c.slug !== course.slug && c.category === course.category).slice(0, 3);
+  if (!course) return null;
+  const related = allCourses.filter((c) => c.slug !== course.slug && c.category === course.category).slice(0, 3);
   const topics = Math.round(course.lessons * 3.2);
   const quizzes = Math.round(course.lessons * 0.4);
   const hours = Math.round(course.lessons * 1.4);

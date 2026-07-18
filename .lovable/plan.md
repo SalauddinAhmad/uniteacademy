@@ -4,7 +4,7 @@
 - ✅ **Phase 2 — Data layer** (complete): seed script (11 courses + DIS + admin/teacher/student accounts), `/api/enrollments`, `/api/programs`, full `/api/admin/*` CRUD.
 - 🟡 **Phase 3 — Frontend rewire** (in progress)
   - ✅ 3a: REST API client (`src/lib/api/client.ts`), `AuthUser` types, `useAuth()` context, login/signup pages rewired, `_authenticated` gate uses JWT.
-  - ⏳ 3b: Public routes (courses list, `/courses/$slug`, home)
+  - ✅ 3b: Public courses (`/courses` list + `/courses/$slug` detail) rewired via TanStack Query → REST (`/api/courses`, `/api/courses/:slug`). Static fallback if API unreachable. Home page (`/`) intentionally still uses static curated data.
   - ⏳ 3c: Student dashboard (`/dashboard/*`)
   - ⏳ 3d: Admin console (`/admin/*`)
 - ⏳ Phase 4 — File uploads (multer → local disk / cPanel)
