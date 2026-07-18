@@ -1,10 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { Search, SlidersHorizontal } from "lucide-react";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { CourseCard } from "@/components/course-card";
-import { categories, courses, fmtBn } from "@/lib/courses";
+import { categories, fmtBn } from "@/lib/courses";
+import { coursesQueryOptions } from "@/lib/api/courses";
 
 export const Route = createFileRoute("/courses")({
   head: () => ({
@@ -15,10 +17,12 @@ export const Route = createFileRoute("/courses")({
       { property: "og:description", content: "অভিজ্ঞ উস্তাদদের কাছ থেকে ইসলামী জ্ঞান অর্জনের সেরা কোর্সগুলো।" },
     ],
   }),
+  loader: ({ context }) => context.queryClient.ensureQueryData(coursesQueryOptions()),
   component: CoursesPage,
 });
 
 function CoursesPage() {
+  const { data: courses } = useSuspenseQuery(coursesQueryOptions());
   const [query, setQuery] = useState("");
   const [cat, setCat] = useState("সবগুলো");
   const [level, setLevel] = useState<string>("all");
@@ -30,7 +34,7 @@ function CoursesPage() {
       if (query && !(`${c.title_bn} ${c.title_en} ${c.instructor}`.toLowerCase().includes(query.toLowerCase()))) return false;
       return true;
     });
-  }, [query, cat, level]);
+  }, [courses, query, cat, level]);
 
   return (
     <div className="min-h-screen bg-background">
