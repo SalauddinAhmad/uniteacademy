@@ -20,6 +20,33 @@ enum Role {
   admin
 }
 
+enum PaymentStatus {
+  pending
+  success
+  failed
+  refunded
+}
+
+enum NoticeAudience {
+  all
+  students
+  teachers
+}
+
+enum EventKind {
+  class_session
+  exam
+  holiday
+  other
+}
+
+enum SubmissionStatus {
+  pending
+  submitted
+  graded
+  late
+}
+
 model User {
   id             String   @id @default(uuid())
   email          String   @unique
@@ -34,6 +61,10 @@ model User {
 
   enrollments    Enrollment[]
   taughtCourses  Course[]     @relation("CourseInstructor")
+  submissions    AssignmentSubmission[]
+  examAttempts   ExamAttempt[]
+  notifications  Notification[]
+  payments       Payment[]
 
   @@index([role])
 }
