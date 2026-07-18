@@ -287,9 +287,3 @@ function QuizPane({ lessonId, onPassed }: { lessonId: string; onPassed: () => vo
     </div>
   );
 }
-
-function useQuizWithQuery(lessonId: string) {
-  // dynamic import to avoid re-declaring; simple useQuery hook
-  const { useQuery } = require("@tanstack/react-query") as typeof import("@tanstack/react-query");
-  return useQuery(quizQuery(lessonId));
-}
