@@ -126,7 +126,83 @@ async function main() {
     update: {},
     create: { userId: student.id, programId: dis.id, isBehind: true },
   });
-  console.log(`✅ demo student enrolled in DIS\n`);
+  console.log(`✅ demo student enrolled in DIS`);
+
+  // 6. Phase 5 sample data
+  const firstCourse = await prisma.course.findUnique({ where: { slug: "fiqh-salat" } });
+  const secondCourse = await prisma.course.findUnique({ where: { slug: "sirat-makki" } });
+  if (firstCourse && secondCourse) {
+    const day = 24 * 60 * 60 * 1000;
+    const now = Date.now();
+
+    // enroll student in fiqh-salat too (for own-course scoping)
+    await prisma.enrollment.upsert({
+      where: { userId_courseId: { userId: student.id, courseId: firstCourse.id } },
+      update: {},
+      create: { userId: student.id, courseId: firstCourse.id, progress: 35 },
+    });
+
+    const assignmentSeeds = [
+      { courseId: firstCourse.id, title: "সালাতের ফরযসমূহ লিখিত অ্যাসাইনমেন্ট", dueAt: new Date(now + 3 * day), points: 100 },
+      { courseId: firstCourse.id, title: "সাহু সিজদার বিধান — সংক্ষিপ্ত নোট", dueAt: new Date(now - 5 * day), points: 50 },
+      { courseId: secondCourse.id, title: "মাক্কী যুগের শিক্ষা — রচনা", dueAt: new Date(now + 10 * day), points: 100 },
+    ];
+    for (const a of assignmentSeeds) {
+      const existing = await prisma.assignment.findFirst({ where: { courseId: a.courseId, title: a.title } });
+      if (!existing) await prisma.assignment.create({ data: a });
+    }
+
+    const examSeeds = [
+      { courseId: firstCourse.id, title: "ফিকহুস সালাত মিডটার্ম", scheduledAt: new Date(now + 7 * day), durationMin: 90, totalMarks: 100 },
+      { courseId: secondCourse.id, title: "সীরাত মাক্কী কুইজ", scheduledAt: new Date(now + 14 * day), durationMin: 45, totalMarks: 50 },
+    ];
+    for (const e of examSeeds) {
+      const existing = await prisma.exam.findFirst({ where: { courseId: e.courseId, title: e.title } });
+      if (!existing) await prisma.exam.create({ data: e });
+    }
+
+    const noticeSeeds = [
+      { title: "স্বাগতম Uniteacademy-তে", body: "আপনাদের সবাইকে স্বাগতম। ক্লাস শুরু হবে আগামী রবিবার।", audience: "all" as const },
+      { title: "নতুন ব্যাচ ভর্তি চলছে", body: "ডিপ্লোমা ইন ইসলামিক স্টাডিজ ব্যাচ-১২ এর ভর্তি শুরু হয়েছে।", audience: "all" as const },
+      { title: "শিক্ষকদের মিটিং", body: "শুক্রবার সন্ধ্যা ৭টায় সাপ্তাহিক শিক্ষক মিটিং।", audience: "teachers" as const },
+    ];
+    for (const n of noticeSeeds) {
+      const existing = await prisma.notice.findFirst({ where: { title: n.title } });
+      if (!existing) await prisma.notice.create({ data: n });
+    }
+
+    const notificationSeeds = [
+      { userId: student.id, title: "নতুন অ্যাসাইনমেন্ট", body: "ফিকহুস সালাত কোর্সে নতুন অ্যাসাইনমেন্ট যুক্ত হয়েছে।", link: "/dashboard/assignments" },
+      { userId: student.id, title: "ক্লাস রিমাইন্ডার", body: "আগামীকাল সকাল ৯টায় সীরাত মাক্কী ক্লাস।", link: "/dashboard/calendar" },
+      { userId: student.id, title: "পেমেন্ট সফল", body: "আপনার পেমেন্ট সফলভাবে গ্রহণ করা হয়েছে।", link: "/dashboard/payments" },
+    ];
+    for (const nf of notificationSeeds) {
+      const existing = await prisma.notification.findFirst({ where: { userId: nf.userId, title: nf.title } });
+      if (!existing) await prisma.notification.create({ data: nf });
+    }
+
+    const paymentSeeds = [
+      { userId: student.id, courseId: firstCourse.id, amountCents: 100000, method: "bkash", status: "success" as const, txnId: "BKS-2601-001" },
+      { userId: student.id, courseId: secondCourse.id, amountCents: 120000, method: "nagad", status: "success" as const, txnId: "NGD-2601-002" },
+      { userId: student.id, amountCents: 1200000, method: "bank", status: "pending" as const, txnId: null, note: "DIS ব্যাচ-১১ ভর্তি ফি" },
+    ];
+    for (const p of paymentSeeds) {
+      const existing = await prisma.payment.findFirst({ where: { userId: p.userId, txnId: p.txnId ?? undefined, note: p.note ?? undefined } });
+      if (!existing) await prisma.payment.create({ data: p });
+    }
+
+    const eventSeeds = [
+      { title: "ফিকহুস সালাত — লাইভ ক্লাস", startAt: new Date(now + 1 * day), endAt: new Date(now + 1 * day + 60 * 60 * 1000), courseId: firstCourse.id, kind: "class_session" as const },
+      { title: "সীরাত মাক্কী কুইজ", startAt: new Date(now + 14 * day), courseId: secondCourse.id, kind: "exam" as const },
+      { title: "জাতীয় ছুটি", startAt: new Date(now + 5 * day), kind: "holiday" as const, description: "সরকারি ছুটি।" },
+    ];
+    for (const ev of eventSeeds) {
+      const existing = await prisma.event.findFirst({ where: { title: ev.title, startAt: ev.startAt } });
+      if (!existing) await prisma.event.create({ data: ev });
+    }
+
+    console.log(`✅ Phase 5 sample data (assignments, exams, notices, notifications, payments, events)\n`);
+  }
 }
 
 main()
