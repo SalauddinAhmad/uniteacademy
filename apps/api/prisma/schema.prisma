@@ -126,6 +126,7 @@ model Course {
   exams           Exam[]
   payments        Payment[]
   events          Event[]
+  modules         Module[]
 
   @@index([isPublished, isFeatured])
   @@index([instructorId])
