@@ -39,45 +39,28 @@ export const Route = createFileRoute("/auth/signup")({
 
 function SignupPage() {
   const navigate = useNavigate();
+  const { register } = useAuth();
   const [showPw, setShowPw] = useState(false);
   const [agree, setAgree] = useState(false);
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [googleLoading, setGoogleLoading] = useState(false);
-
-  const handleGoogle = async () => {
-    setGoogleLoading(true);
-    const res = await lovable.auth.signInWithOAuth("google", { redirect_uri: window.location.origin });
-    if (res.error) {
-      toast.error(res.error.message || "Google sign-in failed");
-      setGoogleLoading(false);
-      return;
-    }
-    if (res.redirected) return;
-    navigate({ to: "/dashboard" });
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!agree) return;
     setLoading(true);
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        emailRedirectTo: `${window.location.origin}/dashboard`,
-        data: { full_name: fullName },
-      },
-    });
-    setLoading(false);
-    if (error) {
-      toast.error(error.message);
-      return;
+    try {
+      await register({ email, password, name: fullName });
+      toast.success("অ্যাকাউন্ট তৈরি হয়েছে");
+      navigate({ to: "/dashboard" });
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "সাইনআপ ব্যর্থ";
+      toast.error(message);
+    } finally {
+      setLoading(false);
     }
-    toast.success("অ্যাকাউন্ট তৈরি হয়েছে");
-    navigate({ to: "/dashboard" });
   };
 
   return (
