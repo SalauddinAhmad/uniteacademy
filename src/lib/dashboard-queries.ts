@@ -1,14 +1,15 @@
-import { queryOptions } from "@tanstack/react-query";
-import { getOverview, getMyCourses, getCourseDetail } from "./dashboard.functions";
-
-export const overviewQuery = () =>
-  queryOptions({ queryKey: ["dashboard", "overview"], queryFn: () => getOverview() });
-
-export const myCoursesQuery = () =>
-  queryOptions({ queryKey: ["dashboard", "my-courses"], queryFn: () => getMyCourses() });
-
-export const courseDetailQuery = (enrollmentId: string) =>
-  queryOptions({
-    queryKey: ["dashboard", "course-detail", enrollmentId],
-    queryFn: () => getCourseDetail({ data: { enrollmentId } }),
-  });
+// Re-export query options and DTO types from the REST-backed dashboard module.
+// Kept for backwards compatibility with existing route imports.
+export {
+  overviewQuery,
+  myCoursesQuery,
+  courseDetailQuery,
+} from "@/lib/api/dashboard";
+export type {
+  ProfileDto,
+  OverviewDto,
+  ProgramEnrollmentDto,
+  CourseCardDto,
+  MyCoursesDto,
+  CourseDetailDto,
+} from "@/lib/api/dashboard";
