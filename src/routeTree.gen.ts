@@ -40,6 +40,7 @@ import { Route as AdminAdminNotificationsRouteImport } from './routes/_admin.adm
 import { Route as AdminAdminNoticesRouteImport } from './routes/_admin.admin.notices'
 import { Route as AdminAdminEnrollmentsRouteImport } from './routes/_admin.admin.enrollments'
 import { Route as AdminAdminCoursesRouteImport } from './routes/_admin.admin.courses'
+import { Route as AuthenticatedLearnCourseSlugLessonIdRouteImport } from './routes/_authenticated/learn.$courseSlug.$lessonId'
 import { Route as AuthenticatedDashboardEnrollmentsIdRouteImport } from './routes/_authenticated/dashboard.enrollments.$id'
 
 const TermsRoute = TermsRouteImport.update({
@@ -205,6 +206,12 @@ const AdminAdminCoursesRoute = AdminAdminCoursesRouteImport.update({
   path: '/admin/courses',
   getParentRoute: () => AdminRoute,
 } as any)
+const AuthenticatedLearnCourseSlugLessonIdRoute =
+  AuthenticatedLearnCourseSlugLessonIdRouteImport.update({
+    id: '/$lessonId',
+    path: '/$lessonId',
+    getParentRoute: () => AuthenticatedLearnCourseSlugRoute,
+  } as any)
 const AuthenticatedDashboardEnrollmentsIdRoute =
   AuthenticatedDashboardEnrollmentsIdRouteImport.update({
     id: '/$id',
@@ -239,10 +246,11 @@ export interface FileRoutesByFullPath {
   '/dashboard/notice': typeof AuthenticatedDashboardNoticeRoute
   '/dashboard/notifications': typeof AuthenticatedDashboardNotificationsRoute
   '/dashboard/payments': typeof AuthenticatedDashboardPaymentsRoute
-  '/learn/$courseSlug': typeof AuthenticatedLearnCourseSlugRoute
+  '/learn/$courseSlug': typeof AuthenticatedLearnCourseSlugRouteWithChildren
   '/admin/': typeof AdminAdminIndexRoute
   '/dashboard/': typeof AuthenticatedDashboardIndexRoute
   '/dashboard/enrollments/$id': typeof AuthenticatedDashboardEnrollmentsIdRoute
+  '/learn/$courseSlug/$lessonId': typeof AuthenticatedLearnCourseSlugLessonIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -270,10 +278,11 @@ export interface FileRoutesByTo {
   '/dashboard/notice': typeof AuthenticatedDashboardNoticeRoute
   '/dashboard/notifications': typeof AuthenticatedDashboardNotificationsRoute
   '/dashboard/payments': typeof AuthenticatedDashboardPaymentsRoute
-  '/learn/$courseSlug': typeof AuthenticatedLearnCourseSlugRoute
+  '/learn/$courseSlug': typeof AuthenticatedLearnCourseSlugRouteWithChildren
   '/admin': typeof AdminAdminIndexRoute
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
   '/dashboard/enrollments/$id': typeof AuthenticatedDashboardEnrollmentsIdRoute
+  '/learn/$courseSlug/$lessonId': typeof AuthenticatedLearnCourseSlugLessonIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -305,10 +314,11 @@ export interface FileRoutesById {
   '/_authenticated/dashboard/notice': typeof AuthenticatedDashboardNoticeRoute
   '/_authenticated/dashboard/notifications': typeof AuthenticatedDashboardNotificationsRoute
   '/_authenticated/dashboard/payments': typeof AuthenticatedDashboardPaymentsRoute
-  '/_authenticated/learn/$courseSlug': typeof AuthenticatedLearnCourseSlugRoute
+  '/_authenticated/learn/$courseSlug': typeof AuthenticatedLearnCourseSlugRouteWithChildren
   '/_admin/admin/': typeof AdminAdminIndexRoute
   '/_authenticated/dashboard/': typeof AuthenticatedDashboardIndexRoute
   '/_authenticated/dashboard/enrollments/$id': typeof AuthenticatedDashboardEnrollmentsIdRoute
+  '/_authenticated/learn/$courseSlug/$lessonId': typeof AuthenticatedLearnCourseSlugLessonIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -343,6 +353,7 @@ export interface FileRouteTypes {
     | '/admin/'
     | '/dashboard/'
     | '/dashboard/enrollments/$id'
+    | '/learn/$courseSlug/$lessonId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -374,6 +385,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/dashboard'
     | '/dashboard/enrollments/$id'
+    | '/learn/$courseSlug/$lessonId'
   id:
     | '__root__'
     | '/'
@@ -408,6 +420,7 @@ export interface FileRouteTypes {
     | '/_admin/admin/'
     | '/_authenticated/dashboard/'
     | '/_authenticated/dashboard/enrollments/$id'
+    | '/_authenticated/learn/$courseSlug/$lessonId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -643,6 +656,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminAdminCoursesRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/_authenticated/learn/$courseSlug/$lessonId': {
+      id: '/_authenticated/learn/$courseSlug/$lessonId'
+      path: '/$lessonId'
+      fullPath: '/learn/$courseSlug/$lessonId'
+      preLoaderRoute: typeof AuthenticatedLearnCourseSlugLessonIdRouteImport
+      parentRoute: typeof AuthenticatedLearnCourseSlugRoute
+    }
     '/_authenticated/dashboard/enrollments/$id': {
       id: '/_authenticated/dashboard/enrollments/$id'
       path: '/$id'
@@ -701,14 +721,30 @@ const AuthenticatedDashboardRouteWithChildren =
     AuthenticatedDashboardRouteChildren,
   )
 
+interface AuthenticatedLearnCourseSlugRouteChildren {
+  AuthenticatedLearnCourseSlugLessonIdRoute: typeof AuthenticatedLearnCourseSlugLessonIdRoute
+}
+
+const AuthenticatedLearnCourseSlugRouteChildren: AuthenticatedLearnCourseSlugRouteChildren =
+  {
+    AuthenticatedLearnCourseSlugLessonIdRoute:
+      AuthenticatedLearnCourseSlugLessonIdRoute,
+  }
+
+const AuthenticatedLearnCourseSlugRouteWithChildren =
+  AuthenticatedLearnCourseSlugRoute._addFileChildren(
+    AuthenticatedLearnCourseSlugRouteChildren,
+  )
+
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRouteWithChildren
-  AuthenticatedLearnCourseSlugRoute: typeof AuthenticatedLearnCourseSlugRoute
+  AuthenticatedLearnCourseSlugRoute: typeof AuthenticatedLearnCourseSlugRouteWithChildren
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDashboardRoute: AuthenticatedDashboardRouteWithChildren,
-  AuthenticatedLearnCourseSlugRoute: AuthenticatedLearnCourseSlugRoute,
+  AuthenticatedLearnCourseSlugRoute:
+    AuthenticatedLearnCourseSlugRouteWithChildren,
 }
 
 const AuthenticatedRouteRouteWithChildren =
