@@ -45,7 +45,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Badge } from "@/components/ui/badge";
-import { supabase } from "@/integrations/supabase/client";
+import { logout as apiLogout } from "@/lib/api/auth";
 import { useQueryClient } from "@tanstack/react-query";
 
 const mainItems = [
@@ -237,7 +237,7 @@ function Topbar({
   const signOut = async () => {
     await qc.cancelQueries();
     qc.clear();
-    await supabase.auth.signOut();
+    apiLogout();
     navigate({ to: "/auth/login", replace: true });
   };
 
