@@ -16,6 +16,16 @@ router.get("/", async (req, res) => {
   res.json({ notifications: rows, unread });
 });
 
+// Admin: list every notification with user info
+router.get("/all", requireRole("admin"), async (_req, res) => {
+  const rows = await prisma.notification.findMany({
+    orderBy: { createdAt: "desc" },
+    take: 300,
+    include: { user: { select: { id: true, email: true, fullName: true } } },
+  });
+  res.json({ notifications: rows });
+});
+
 router.patch("/:id/read", async (req, res) => {
   const row = await prisma.notification.findUnique({ where: { id: req.params.id } });
   if (!row || row.userId !== req.user!.sub) return res.status(404).json({ error: "Not found" });
