@@ -1,7 +1,8 @@
 ## Progress
 
-- ✅ **Phase 1 — Backend bootstrap** (complete): `apps/api/` scaffold with Express + Prisma + JWT auth, MySQL schema (User/Course/Program/Enrollment), `/api/auth/*` + `/api/courses/*` endpoints, `.env.example`, README with cPanel notes.
-- ⏭️ **Phase 2 — Data layer**: seed script (11 courses + DIS program), enrollments/programs endpoints, admin CRUD.
+- ✅ **Phase 1 — Backend bootstrap** (complete): `apps/api/` scaffold with Express + Prisma + JWT auth, MySQL schema, `/api/auth/*` + `/api/courses/*`, `.env.example`, README.
+- ✅ **Phase 2 — Data layer** (complete): seed script (11 courses + DIS + admin/teacher/student accounts), `/api/enrollments`, `/api/programs`, full `/api/admin/*` CRUD.
+- ⏭️ **Phase 3** — Frontend rewire to REST API
 - ⏳ Phase 3 — Frontend rewire to REST API
 - ⏳ Phase 4 — File uploads (multer → local disk / cPanel)
 - ⏳ Phase 5 — Email (Gmail SMTP: verification, password reset)
