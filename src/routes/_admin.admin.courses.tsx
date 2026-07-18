@@ -42,7 +42,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { Plus, Pencil, Trash2, BookOpen, Radio, Video } from "lucide-react";
+import { Plus, Pencil, Trash2, BookOpen, Radio, Video, ListTree } from "lucide-react";
 import { toast } from "sonner";
 
 const coursesQuery = queryOptions({
