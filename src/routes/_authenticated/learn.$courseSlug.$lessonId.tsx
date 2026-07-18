@@ -154,7 +154,7 @@ function PdfPane({ url }: { url: string | null }) {
 
 // ─────────────── Quiz pane ─────────────
 function QuizPane({ lessonId, onPassed }: { lessonId: string; onPassed: () => void }) {
-  const { data, isLoading, error } = useQuizWithQuery(lessonId);
+  const { data, isLoading, error } = useQuery(quizQuery(lessonId));
   const [answers, setAnswers] = useState<Record<string, number>>({});
   const [result, setResult] = useState<Awaited<ReturnType<typeof submitQuiz>> | null>(null);
   const [submitting, setSubmitting] = useState(false);
