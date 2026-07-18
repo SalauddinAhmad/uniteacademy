@@ -39,36 +39,26 @@ export const Route = createFileRoute("/auth/login")({
 
 function LoginPage() {
   const navigate = useNavigate();
+  const { login } = useAuth();
   const [showPw, setShowPw] = useState(false);
   const [remember, setRemember] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [googleLoading, setGoogleLoading] = useState(false);
-
-  const handleGoogle = async () => {
-    setGoogleLoading(true);
-    const res = await lovable.auth.signInWithOAuth("google", { redirect_uri: window.location.origin });
-    if (res.error) {
-      toast.error(res.error.message || "Google sign-in failed");
-      setGoogleLoading(false);
-      return;
-    }
-    if (res.redirected) return;
-    navigate({ to: "/dashboard" });
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
-    setLoading(false);
-    if (error) {
-      toast.error(error.message);
-      return;
+    try {
+      await login(email, password);
+      toast.success("লগইন সফল");
+      navigate({ to: "/dashboard" });
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "লগইন ব্যর্থ";
+      toast.error(message);
+    } finally {
+      setLoading(false);
     }
-    toast.success("Login successful");
-    navigate({ to: "/dashboard" });
   };
 
   return (
