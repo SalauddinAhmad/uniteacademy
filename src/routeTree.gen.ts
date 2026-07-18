@@ -42,6 +42,7 @@ import { Route as AdminAdminEnrollmentsRouteImport } from './routes/_admin.admin
 import { Route as AdminAdminCoursesRouteImport } from './routes/_admin.admin.courses'
 import { Route as AuthenticatedLearnCourseSlugLessonIdRouteImport } from './routes/_authenticated/learn.$courseSlug.$lessonId'
 import { Route as AuthenticatedDashboardEnrollmentsIdRouteImport } from './routes/_authenticated/dashboard.enrollments.$id'
+import { Route as AdminAdminCoursesIdContentRouteImport } from './routes/_admin.admin.courses.$id.content'
 
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
@@ -218,6 +219,12 @@ const AuthenticatedDashboardEnrollmentsIdRoute =
     path: '/$id',
     getParentRoute: () => AuthenticatedDashboardEnrollmentsRoute,
   } as any)
+const AdminAdminCoursesIdContentRoute =
+  AdminAdminCoursesIdContentRouteImport.update({
+    id: '/$id/content',
+    path: '/$id/content',
+    getParentRoute: () => AdminAdminCoursesRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -230,7 +237,7 @@ export interface FileRoutesByFullPath {
   '/auth/login': typeof AuthLoginRoute
   '/auth/signup': typeof AuthSignupRoute
   '/courses/$slug': typeof CoursesSlugRoute
-  '/admin/courses': typeof AdminAdminCoursesRoute
+  '/admin/courses': typeof AdminAdminCoursesRouteWithChildren
   '/admin/enrollments': typeof AdminAdminEnrollmentsRoute
   '/admin/notices': typeof AdminAdminNoticesRoute
   '/admin/notifications': typeof AdminAdminNotificationsRoute
@@ -251,6 +258,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/': typeof AuthenticatedDashboardIndexRoute
   '/dashboard/enrollments/$id': typeof AuthenticatedDashboardEnrollmentsIdRoute
   '/learn/$courseSlug/$lessonId': typeof AuthenticatedLearnCourseSlugLessonIdRoute
+  '/admin/courses/$id/content': typeof AdminAdminCoursesIdContentRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -262,7 +270,7 @@ export interface FileRoutesByTo {
   '/auth/login': typeof AuthLoginRoute
   '/auth/signup': typeof AuthSignupRoute
   '/courses/$slug': typeof CoursesSlugRoute
-  '/admin/courses': typeof AdminAdminCoursesRoute
+  '/admin/courses': typeof AdminAdminCoursesRouteWithChildren
   '/admin/enrollments': typeof AdminAdminEnrollmentsRoute
   '/admin/notices': typeof AdminAdminNoticesRoute
   '/admin/notifications': typeof AdminAdminNotificationsRoute
@@ -283,6 +291,7 @@ export interface FileRoutesByTo {
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
   '/dashboard/enrollments/$id': typeof AuthenticatedDashboardEnrollmentsIdRoute
   '/learn/$courseSlug/$lessonId': typeof AuthenticatedLearnCourseSlugLessonIdRoute
+  '/admin/courses/$id/content': typeof AdminAdminCoursesIdContentRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -298,7 +307,7 @@ export interface FileRoutesById {
   '/auth/login': typeof AuthLoginRoute
   '/auth/signup': typeof AuthSignupRoute
   '/courses_/$slug': typeof CoursesSlugRoute
-  '/_admin/admin/courses': typeof AdminAdminCoursesRoute
+  '/_admin/admin/courses': typeof AdminAdminCoursesRouteWithChildren
   '/_admin/admin/enrollments': typeof AdminAdminEnrollmentsRoute
   '/_admin/admin/notices': typeof AdminAdminNoticesRoute
   '/_admin/admin/notifications': typeof AdminAdminNotificationsRoute
@@ -319,6 +328,7 @@ export interface FileRoutesById {
   '/_authenticated/dashboard/': typeof AuthenticatedDashboardIndexRoute
   '/_authenticated/dashboard/enrollments/$id': typeof AuthenticatedDashboardEnrollmentsIdRoute
   '/_authenticated/learn/$courseSlug/$lessonId': typeof AuthenticatedLearnCourseSlugLessonIdRoute
+  '/_admin/admin/courses/$id/content': typeof AdminAdminCoursesIdContentRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -354,6 +364,7 @@ export interface FileRouteTypes {
     | '/dashboard/'
     | '/dashboard/enrollments/$id'
     | '/learn/$courseSlug/$lessonId'
+    | '/admin/courses/$id/content'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -386,6 +397,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/dashboard/enrollments/$id'
     | '/learn/$courseSlug/$lessonId'
+    | '/admin/courses/$id/content'
   id:
     | '__root__'
     | '/'
@@ -421,6 +433,7 @@ export interface FileRouteTypes {
     | '/_authenticated/dashboard/'
     | '/_authenticated/dashboard/enrollments/$id'
     | '/_authenticated/learn/$courseSlug/$lessonId'
+    | '/_admin/admin/courses/$id/content'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -670,6 +683,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardEnrollmentsIdRouteImport
       parentRoute: typeof AuthenticatedDashboardEnrollmentsRoute
     }
+    '/_admin/admin/courses/$id/content': {
+      id: '/_admin/admin/courses/$id/content'
+      path: '/$id/content'
+      fullPath: '/admin/courses/$id/content'
+      preLoaderRoute: typeof AdminAdminCoursesIdContentRouteImport
+      parentRoute: typeof AdminAdminCoursesRoute
+    }
   }
 }
 
@@ -750,8 +770,19 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
 const AuthenticatedRouteRouteWithChildren =
   AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
+interface AdminAdminCoursesRouteChildren {
+  AdminAdminCoursesIdContentRoute: typeof AdminAdminCoursesIdContentRoute
+}
+
+const AdminAdminCoursesRouteChildren: AdminAdminCoursesRouteChildren = {
+  AdminAdminCoursesIdContentRoute: AdminAdminCoursesIdContentRoute,
+}
+
+const AdminAdminCoursesRouteWithChildren =
+  AdminAdminCoursesRoute._addFileChildren(AdminAdminCoursesRouteChildren)
+
 interface AdminRouteChildren {
-  AdminAdminCoursesRoute: typeof AdminAdminCoursesRoute
+  AdminAdminCoursesRoute: typeof AdminAdminCoursesRouteWithChildren
   AdminAdminEnrollmentsRoute: typeof AdminAdminEnrollmentsRoute
   AdminAdminNoticesRoute: typeof AdminAdminNoticesRoute
   AdminAdminNotificationsRoute: typeof AdminAdminNotificationsRoute
@@ -763,7 +794,7 @@ interface AdminRouteChildren {
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
-  AdminAdminCoursesRoute: AdminAdminCoursesRoute,
+  AdminAdminCoursesRoute: AdminAdminCoursesRouteWithChildren,
   AdminAdminEnrollmentsRoute: AdminAdminEnrollmentsRoute,
   AdminAdminNoticesRoute: AdminAdminNoticesRoute,
   AdminAdminNotificationsRoute: AdminAdminNotificationsRoute,

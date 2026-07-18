@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { queryOptions, useSuspenseQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import {
@@ -42,7 +42,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { Plus, Pencil, Trash2, BookOpen, Radio, Video } from "lucide-react";
+import { Plus, Pencil, Trash2, BookOpen, Radio, Video, ListTree } from "lucide-react";
 import { toast } from "sonner";
 
 const coursesQuery = queryOptions({
@@ -312,7 +312,12 @@ function CoursesPage() {
                   <span className="text-xs text-muted-foreground">Live</span>
                 </div>
                 <div className="ml-auto flex gap-1">
-                  <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => openEdit(c)}>
+                  <Button variant="ghost" size="icon" className="h-8 w-8" title="Content builder" asChild>
+                    <Link to="/admin/courses/$id/content" params={{ id: c.id }}>
+                      <ListTree className="h-4 w-4" />
+                    </Link>
+                  </Button>
+                  <Button variant="ghost" size="icon" className="h-8 w-8" title="Edit" onClick={() => openEdit(c)}>
                     <Pencil className="h-4 w-4" />
                   </Button>
                   <Button
