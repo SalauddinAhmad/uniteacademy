@@ -47,6 +47,19 @@ enum SubmissionStatus {
   late
 }
 
+enum LessonKind {
+  video
+  pdf
+  text
+  quiz
+}
+
+enum LessonProgressStatus {
+  not_started
+  in_progress
+  completed
+}
+
 model User {
   id             String   @id @default(uuid())
   email          String   @unique
