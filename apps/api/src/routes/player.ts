@@ -348,4 +348,24 @@ router.get("/admin/lessons/:id/quiz", requireRole("admin", "teacher"), async (re
   res.json({ quiz });
 });
 
+// Admin: full outline by courseId (includes hidden/all lessons, no lock logic)
+router.get("/admin/courses/:id/outline", requireRole("admin", "teacher"), async (req, res) => {
+  const course = await prisma.course.findUnique({
+    where: { id: req.params.id },
+    select: { id: true, slug: true, title: true },
+  });
+  if (!course) return res.status(404).json({ error: "Not found" });
+  const modules = await prisma.module.findMany({
+    where: { courseId: course.id },
+    orderBy: { order: "asc" },
+    include: {
+      lessons: {
+        orderBy: { order: "asc" },
+        include: { quiz: { select: { id: true, passMarks: true, _count: { select: { questions: true } } } } },
+      },
+    },
+  });
+  res.json({ course, modules });
+});
+
 export default router;
