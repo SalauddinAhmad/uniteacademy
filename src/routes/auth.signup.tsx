@@ -12,8 +12,7 @@ import {
   GraduationCap,
   Loader2,
 } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
-import { lovable } from "@/integrations/lovable";
+import { useAuth } from "@/hooks/use-auth";
 import { toast } from "sonner";
 
 
