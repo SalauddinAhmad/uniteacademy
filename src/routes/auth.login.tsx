@@ -11,8 +11,7 @@ import {
   GraduationCap,
   Loader2,
 } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
-import { lovable } from "@/integrations/lovable";
+import { useAuth } from "@/hooks/use-auth";
 import { toast } from "sonner";
 
 
@@ -40,36 +39,26 @@ export const Route = createFileRoute("/auth/login")({
 
 function LoginPage() {
   const navigate = useNavigate();
+  const { login } = useAuth();
   const [showPw, setShowPw] = useState(false);
   const [remember, setRemember] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [googleLoading, setGoogleLoading] = useState(false);
-
-  const handleGoogle = async () => {
-    setGoogleLoading(true);
-    const res = await lovable.auth.signInWithOAuth("google", { redirect_uri: window.location.origin });
-    if (res.error) {
-      toast.error(res.error.message || "Google sign-in failed");
-      setGoogleLoading(false);
-      return;
-    }
-    if (res.redirected) return;
-    navigate({ to: "/dashboard" });
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
-    setLoading(false);
-    if (error) {
-      toast.error(error.message);
-      return;
+    try {
+      await login(email, password);
+      toast.success("লগইন সফল");
+      navigate({ to: "/dashboard" });
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "লগইন ব্যর্থ";
+      toast.error(message);
+    } finally {
+      setLoading(false);
     }
-    toast.success("Login successful");
-    navigate({ to: "/dashboard" });
   };
 
   return (
@@ -132,27 +121,8 @@ function LoginPage() {
                     </p>
                   </div>
 
-                  {/* Google */}
-                  <div className="mt-7">
-                    <button
-                      type="button"
-                      onClick={handleGoogle}
-                      disabled={googleLoading}
-                      className="group inline-flex w-full items-center justify-center gap-2.5 rounded-xl border border-border bg-background/60 px-4 py-3 text-sm font-semibold backdrop-blur transition-all hover:-translate-y-0.5 hover:bg-background/90 hover:shadow-lg disabled:opacity-60"
-                    >
-                      {googleLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <GoogleIcon className="h-4 w-4" />}
-                      Google দিয়ে চালিয়ে যান
-                    </button>
-                  </div>
+                  <div className="mt-7" />
 
-
-                  <div className="my-7 flex items-center gap-3">
-                    <div className="h-px flex-1 bg-border" />
-                    <span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
-                      অথবা ইমেইল দিয়ে
-                    </span>
-                    <div className="h-px flex-1 bg-border" />
-                  </div>
 
                   <form onSubmit={handleSubmit} className="space-y-5" autoComplete="on">
                     <div>
