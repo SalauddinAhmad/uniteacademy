@@ -312,7 +312,12 @@ function CoursesPage() {
                   <span className="text-xs text-muted-foreground">Live</span>
                 </div>
                 <div className="ml-auto flex gap-1">
-                  <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => openEdit(c)}>
+                  <Button variant="ghost" size="icon" className="h-8 w-8" title="Content builder" asChild>
+                    <Link to="/admin/courses/$id/content" params={{ id: c.id }}>
+                      <ListTree className="h-4 w-4" />
+                    </Link>
+                  </Button>
+                  <Button variant="ghost" size="icon" className="h-8 w-8" title="Edit" onClick={() => openEdit(c)}>
                     <Pencil className="h-4 w-4" />
                   </Button>
                   <Button
