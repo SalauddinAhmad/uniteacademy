@@ -23,6 +23,7 @@ import { Route as AuthLoginRouteImport } from './routes/auth.login'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedDashboardIndexRouteImport } from './routes/_authenticated/dashboard.index'
 import { Route as AdminAdminIndexRouteImport } from './routes/_admin.admin.index'
+import { Route as AuthenticatedLearnCourseSlugRouteImport } from './routes/_authenticated/learn.$courseSlug'
 import { Route as AuthenticatedDashboardPaymentsRouteImport } from './routes/_authenticated/dashboard.payments'
 import { Route as AuthenticatedDashboardNotificationsRouteImport } from './routes/_authenticated/dashboard.notifications'
 import { Route as AuthenticatedDashboardNoticeRouteImport } from './routes/_authenticated/dashboard.notice'
@@ -110,6 +111,12 @@ const AdminAdminIndexRoute = AdminAdminIndexRouteImport.update({
   path: '/admin/',
   getParentRoute: () => AdminRoute,
 } as any)
+const AuthenticatedLearnCourseSlugRoute =
+  AuthenticatedLearnCourseSlugRouteImport.update({
+    id: '/learn/$courseSlug',
+    path: '/learn/$courseSlug',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedDashboardPaymentsRoute =
   AuthenticatedDashboardPaymentsRouteImport.update({
     id: '/payments',
@@ -232,6 +239,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/notice': typeof AuthenticatedDashboardNoticeRoute
   '/dashboard/notifications': typeof AuthenticatedDashboardNotificationsRoute
   '/dashboard/payments': typeof AuthenticatedDashboardPaymentsRoute
+  '/learn/$courseSlug': typeof AuthenticatedLearnCourseSlugRoute
   '/admin/': typeof AdminAdminIndexRoute
   '/dashboard/': typeof AuthenticatedDashboardIndexRoute
   '/dashboard/enrollments/$id': typeof AuthenticatedDashboardEnrollmentsIdRoute
@@ -262,6 +270,7 @@ export interface FileRoutesByTo {
   '/dashboard/notice': typeof AuthenticatedDashboardNoticeRoute
   '/dashboard/notifications': typeof AuthenticatedDashboardNotificationsRoute
   '/dashboard/payments': typeof AuthenticatedDashboardPaymentsRoute
+  '/learn/$courseSlug': typeof AuthenticatedLearnCourseSlugRoute
   '/admin': typeof AdminAdminIndexRoute
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
   '/dashboard/enrollments/$id': typeof AuthenticatedDashboardEnrollmentsIdRoute
@@ -296,6 +305,7 @@ export interface FileRoutesById {
   '/_authenticated/dashboard/notice': typeof AuthenticatedDashboardNoticeRoute
   '/_authenticated/dashboard/notifications': typeof AuthenticatedDashboardNotificationsRoute
   '/_authenticated/dashboard/payments': typeof AuthenticatedDashboardPaymentsRoute
+  '/_authenticated/learn/$courseSlug': typeof AuthenticatedLearnCourseSlugRoute
   '/_admin/admin/': typeof AdminAdminIndexRoute
   '/_authenticated/dashboard/': typeof AuthenticatedDashboardIndexRoute
   '/_authenticated/dashboard/enrollments/$id': typeof AuthenticatedDashboardEnrollmentsIdRoute
@@ -329,6 +339,7 @@ export interface FileRouteTypes {
     | '/dashboard/notice'
     | '/dashboard/notifications'
     | '/dashboard/payments'
+    | '/learn/$courseSlug'
     | '/admin/'
     | '/dashboard/'
     | '/dashboard/enrollments/$id'
@@ -359,6 +370,7 @@ export interface FileRouteTypes {
     | '/dashboard/notice'
     | '/dashboard/notifications'
     | '/dashboard/payments'
+    | '/learn/$courseSlug'
     | '/admin'
     | '/dashboard'
     | '/dashboard/enrollments/$id'
@@ -392,6 +404,7 @@ export interface FileRouteTypes {
     | '/_authenticated/dashboard/notice'
     | '/_authenticated/dashboard/notifications'
     | '/_authenticated/dashboard/payments'
+    | '/_authenticated/learn/$courseSlug'
     | '/_admin/admin/'
     | '/_authenticated/dashboard/'
     | '/_authenticated/dashboard/enrollments/$id'
@@ -510,6 +523,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/admin/'
       preLoaderRoute: typeof AdminAdminIndexRouteImport
       parentRoute: typeof AdminRoute
+    }
+    '/_authenticated/learn/$courseSlug': {
+      id: '/_authenticated/learn/$courseSlug'
+      path: '/learn/$courseSlug'
+      fullPath: '/learn/$courseSlug'
+      preLoaderRoute: typeof AuthenticatedLearnCourseSlugRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/dashboard/payments': {
       id: '/_authenticated/dashboard/payments'
@@ -683,10 +703,12 @@ const AuthenticatedDashboardRouteWithChildren =
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRouteWithChildren
+  AuthenticatedLearnCourseSlugRoute: typeof AuthenticatedLearnCourseSlugRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDashboardRoute: AuthenticatedDashboardRouteWithChildren,
+  AuthenticatedLearnCourseSlugRoute: AuthenticatedLearnCourseSlugRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
