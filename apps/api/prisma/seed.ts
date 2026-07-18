@@ -202,6 +202,77 @@ async function main() {
     }
 
     console.log(`✅ Phase 5 sample data (assignments, exams, notices, notifications, payments, events)\n`);
+
+    // ── Phase 7: Course Player content for firstCourse (fiqh-salat) ──
+    const existingModules = await prisma.module.count({ where: { courseId: firstCourse.id } });
+    if (existingModules === 0) {
+      const modulesSpec = [
+        {
+          title: "ভূমিকা ও সালাতের গুরুত্ব",
+          description: "সালাত কেন ফরয, তার তাৎপর্য ও পবিত্রতার শর্তসমূহ।",
+          lessons: [
+            { title: "কোর্স পরিচিতি", kind: "video" as const, contentUrl: "https://cdn.jsdelivr.net/gh/mediaelement/mediaelement-files/big_buck_bunny.mp4", durationMin: 5, isFreePreview: true },
+            { title: "সালাতের গুরুত্ব ও ফযীলত", kind: "text" as const, body: "সালাত ইসলামের দ্বিতীয় স্তম্ভ। এটি একজন মুসলিমের দৈনন্দিন জীবনের ভিত্তি ...", durationMin: 8 },
+            { title: "পবিত্রতা ও অজুর নিয়ম (PDF)", kind: "pdf" as const, contentUrl: "https://www.orimi.com/pdf-test.pdf", durationMin: 10 },
+          ],
+        },
+        {
+          title: "সালাতের ফরযসমূহ",
+          description: "প্রতিটি ফরযের বিস্তারিত ব্যাখ্যা।",
+          lessons: [
+            { title: "কিরাত ও রুকু-সিজদা", kind: "video" as const, contentUrl: "https://cdn.jsdelivr.net/gh/mediaelement/mediaelement-files/big_buck_bunny.mp4", durationMin: 12 },
+            { title: "তাশাহহুদ ও সালাম", kind: "text" as const, body: "তাশাহহুদ পড়ার পদ্ধতি ও তার তাফসীর ...", durationMin: 7 },
+            { title: "মডিউল কুইজ", kind: "quiz" as const, durationMin: 5 },
+          ],
+        },
+        {
+          title: "সাহু সিজদা ও ভুল সংশোধন",
+          description: "সালাতে ভুল হলে কী করবেন।",
+          lessons: [
+            { title: "সাহু সিজদার প্রকারভেদ", kind: "video" as const, contentUrl: "https://cdn.jsdelivr.net/gh/mediaelement/mediaelement-files/big_buck_bunny.mp4", durationMin: 10 },
+            { title: "বাস্তব উদাহরণ", kind: "text" as const, body: "কিছু বাস্তব পরিস্থিতির আলোচনা ...", durationMin: 6 },
+          ],
+        },
+      ];
+
+      for (let mi = 0; mi < modulesSpec.length; mi++) {
+        const m = modulesSpec[mi];
+        const mod = await prisma.module.create({
+          data: {
+            courseId: firstCourse.id, title: m.title,
+            description: m.description, order: mi,
+          },
+        });
+        for (let li = 0; li < m.lessons.length; li++) {
+          const l = m.lessons[li];
+          const lesson = await prisma.lesson.create({
+            data: {
+              moduleId: mod.id, title: l.title, kind: l.kind, order: li,
+              contentUrl: "contentUrl" in l ? l.contentUrl : null,
+              body: "body" in l ? l.body : null,
+              durationMin: l.durationMin,
+              isFreePreview: "isFreePreview" in l ? !!l.isFreePreview : false,
+            },
+          });
+          if (l.kind === "quiz") {
+            await prisma.quiz.create({
+              data: {
+                lessonId: lesson.id, title: "সালাতের ফরযসমূহ — কুইজ", passMarks: 60,
+                questions: {
+                  create: [
+                    { order: 0, prompt: "সালাতের ফরয কয়টি?", options: ["১১", "১৩", "১৪", "১৫"], correctIndex: 1, points: 25 },
+                    { order: 1, prompt: "কিরাত সালাতের কোন অংশ?", options: ["শর্ত", "রুকন", "সুন্নাত", "মুস্তাহাব"], correctIndex: 1, points: 25 },
+                    { order: 2, prompt: "সালাম সালাতের শেষ কাজ?", options: ["হ্যাঁ", "না"], correctIndex: 0, points: 25 },
+                    { order: 3, prompt: "তাশাহহুদ কখন পড়া হয়?", options: ["রুকুতে", "সিজদায়", "বসা অবস্থায়", "দাঁড়ানো অবস্থায়"], correctIndex: 2, points: 25 },
+                  ],
+                },
+              },
+            });
+          }
+        }
+      }
+      console.log(`✅ Phase 7 course player content (3 modules, 8 lessons, 1 quiz)`);
+    }
   }
 }
 

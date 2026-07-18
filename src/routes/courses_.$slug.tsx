@@ -168,9 +168,13 @@ function CourseDetailPage() {
                       <span className="text-2xl font-extrabold text-primary">৳{fmtBn(course.price)}</span>
                     </div>
                   </div>
-                  <button className="mt-4 w-full rounded-xl gradient-primary py-3 text-sm font-semibold text-primary-foreground shadow-md shadow-primary/25 transition-transform hover:-translate-y-0.5">
-                    Enroll Now
-                  </button>
+                  <Link
+                    to="/learn/$courseSlug"
+                    params={{ courseSlug: course.slug }}
+                    className="mt-4 block w-full rounded-xl gradient-primary py-3 text-center text-sm font-semibold text-primary-foreground shadow-md shadow-primary/25 transition-transform hover:-translate-y-0.5"
+                  >
+                    শেখা শুরু করুন
+                  </Link>
                   <p className="mt-3 flex items-center justify-center gap-1.5 text-[11px] text-muted-foreground">
                     <ShieldCheck className="h-3.5 w-3.5" /> নিরাপদ পেমেন্ট · আজীবন অ্যাক্সেস
                   </p>

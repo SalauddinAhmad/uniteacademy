@@ -1,56 +1,64 @@
+# Phase 7 — Course Player
 
-# Phase 5 — Learning Modules
-
-লক্ষ্য: Dashboard-এর যে subroutes এখনো empty placeholder আছে (এসাইনমেন্ট, এক্সাম, নোটিশ, নোটিফিকেশন, পেমেন্ট, ইভেন্ট, ক্যালেন্ডার), সেগুলো Node API-তে real data দিয়ে চালু করা। সাথে Admin panel থেকে এদের manage করা যাবে।
+লক্ষ্য: enrolled student একটা course-এ ঢুকে module → lesson দেখতে পারবে, video/PDF চালাতে পারবে, progress auto-save হবে, lesson শেষে quiz দিতে পারবে। Admin/teacher content upload/CRUD করতে পারবে।
 
 ## Scope
 
-1. **Prisma schema extension** (`apps/api/prisma/schema.prisma`)
-   - `Assignment` (courseId, title, description, dueAt, points)
-   - `AssignmentSubmission` (assignmentId, userId, submittedAt, score, status)
-   - `Exam` (courseId, title, scheduledAt, durationMin, totalMarks)
-   - `ExamAttempt` (examId, userId, score, status, submittedAt)
-   - `Notice` (title, body, publishedAt, audience: all|students|teachers)
-   - `Notification` (userId, title, body, link, readAt, createdAt)
-   - `Payment` (userId, courseId?, programId?, amountCents, method, status, txnId, createdAt)
-   - `Event` (title, description, startAt, endAt, courseId?, kind: class|exam|holiday|other)
+### 1. Prisma schema (`apps/api/prisma/schema.prisma`)
+- `Module` — courseId, title, order, description
+- `Lesson` — moduleId, title, order, kind (`video|pdf|text|quiz`), contentUrl, durationMin, body (text/markdown)
+- `LessonProgress` — userId, lessonId, status (`not_started|in_progress|completed`), watchedSeconds, completedAt
+- `Quiz` — lessonId, title, passMarks
+- `QuizQuestion` — quizId, order, prompt, options (JSON array), correctIndex, points
+- `QuizAttempt` — quizId, userId, score, passed, submittedAt, answers (JSON)
 
-2. **Course model gap-fill** — add `category`, `type` (live/recorded), `durationMinutes`, `longDescription` কলাম যাতে Admin edit dialog-এর সব field persist হয়।
+Migration SQL + seed: 2-3 modules per flagship course with 3-4 lessons each, 1 sample quiz.
 
-3. **Migration + seed** — একটি নতুন migration SQL, plus seed.ts-এ 5-10 sample row per model (dev-only)।
+### 2. Backend routes (`apps/api/src/routes/`)
+- `modules.ts` — GET `/api/courses/:courseId/modules` (nested lessons), Admin CRUD
+- `lessons.ts` — GET `/api/lessons/:id` (enrollment-gated), Admin CRUD
+- `progress.ts` — GET `/api/progress/course/:courseId`, POST `/api/progress/lesson/:id` (upsert watchedSeconds/status)
+- `quiz.ts` — GET `/api/quiz/:lessonId` (questions without answers), POST `/api/quiz/:lessonId/submit` (grade + record attempt)
 
-4. **API routes** (`apps/api/src/routes/`)
-   - `assignments.ts` — GET /api/assignments (student: own courses only; teacher/admin: all)
-   - `exams.ts` — GET /api/exams
-   - `notices.ts` — GET /api/notices (public read for authenticated), Admin CRUD
-   - `notifications.ts` — GET/POST/PATCH /api/notifications
-   - `payments.ts` — GET /api/payments (own), Admin list-all
-   - `events.ts` — GET /api/events
-   - `admin.ts`-এ এদের CRUD endpoints যোগ
+Enrollment gate: middleware checks user has active enrollment for the course before serving lesson/quiz content.
 
-5. **Frontend REST bindings** (`src/lib/api/`)
-   - `assignments.ts`, `exams.ts`, `notices.ts`, `notifications.ts`, `payments.ts`, `events.ts`
-   - প্রতিটির queryOptions export
+### 3. Frontend API (`src/lib/api/`)
+- `player.ts` — modules, lesson, progress upsert, quiz fetch/submit
+- queryOptions exports for each
 
-6. **Dashboard subroute rewire** — প্রতিটি placeholder route-কে useSuspenseQuery দিয়ে list render করানো, empty-state fallback রাখা।
+### 4. Player route
+- `src/routes/_authenticated/learn.$courseSlug.tsx` — layout with left sidebar (modules/lessons tree + progress bar) and right content pane
+- `src/routes/_authenticated/learn.$courseSlug.$lessonId.tsx` — lesson viewer
+  - Video: HTML5 `<video>` with `timeupdate` throttled progress save (every 10s)
+  - PDF: `<iframe>` or react-pdf viewer
+  - Text: markdown render
+  - Quiz: question-by-question UI, submit → score card, retry button
+- "Mark complete" button, prev/next nav, breadcrumb
 
-7. **Admin subroute rewire** — `_admin.admin.notices.tsx`, `_admin.admin.notifications.tsx`, `_admin.admin.payments.tsx`, `_admin.admin.enrollments.tsx` কে নতুন API-তে connect।
+### 5. Admin UI (`src/routes/_admin.admin.courses.$id.content.tsx`)
+- Course content builder: drag-free simple list — add module, add lesson (kind selector), upload URL, quiz question editor
+- Reachable from existing Admin Courses table via "Content" action button
 
-## Out of scope (later phases)
+### 6. Course detail page
+- Update `src/routes/courses_.$slug.tsx` — enrolled users get "Continue learning" CTA → `/learn/:slug`
+- Show real module/lesson count from API
 
-- Video/lesson player, quiz taking flow, file uploads (assignment submission), payment gateway integration। এখন শুধু read + admin manage।
-- Frontend UI redesign — শুধু existing placeholder-এর জায়গায় list render।
-
-## Approach note
-
-Backend schema change breaking — user-কে `apps/api`-এ `npx prisma migrate dev && npm run seed` চালাতে হবে (README-এ instruction যোগ করব)। Frontend fallback থাকবে: API 404/network fail হলে UI empty-state দেখাবে (crash হবে না)।
+## Out of scope (later)
+- File upload to disk (use URL for now — admin pastes video/PDF URL)
+- Certificate generation on course complete
+- Discussion/comments per lesson
+- Live class integration (Zoom/Meet)
+- Drag-and-drop reorder in admin (use up/down buttons)
 
 ## Execution order
+1. Prisma schema + migration + seed
+2. Backend routes + enrollment middleware helper
+3. Frontend API bindings
+4. Player routes (sidebar + viewer + quiz)
+5. Admin content builder
+6. Course detail "Continue learning" wire-up
+7. Typecheck + smoke test
 
-Step A: schema + migration + seed
-Step B: API routes + admin CRUD
-Step C: frontend api/ bindings + dashboard rewire
-Step D: admin subroute rewire
-Step E: typecheck + doc update
+User-এর কাছে migration চালাতে হবে: `cd apps/api && npx prisma migrate dev && npm run seed`।
 
-চাইলে ধাপে ধাপে confirmation নিয়ে যাব, নয়তো টানা A→E একবারেই শেষ করব।
+সব একবারে টানা শেষ করব — approve করলে শুরু।

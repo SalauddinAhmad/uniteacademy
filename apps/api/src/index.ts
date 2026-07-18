@@ -18,6 +18,7 @@ import noticesRouter from "./routes/notices.js";
 import notificationsRouter from "./routes/notifications.js";
 import paymentsRouter from "./routes/payments.js";
 import eventsRouter from "./routes/events.js";
+import playerRouter from "./routes/player.js";
 
 const app = express();
 const PORT = Number(process.env.PORT ?? 4000);
@@ -47,6 +48,7 @@ app.use("/api/notices", noticesRouter);
 app.use("/api/notifications", notificationsRouter);
 app.use("/api/payments", paymentsRouter);
 app.use("/api/events", eventsRouter);
+app.use("/api/player", playerRouter);
 
 app.get("/api/health", (_req, res) => res.json({ ok: true, ts: Date.now() }));
 
