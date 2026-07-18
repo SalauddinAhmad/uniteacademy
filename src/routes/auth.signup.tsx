@@ -129,27 +129,8 @@ function SignupPage() {
                     </p>
                   </div>
 
-                  <div className="mt-7">
-                    <button
-                      type="button"
-                      onClick={handleGoogle}
-                      disabled={googleLoading}
-                      className="group inline-flex w-full items-center justify-center gap-2.5 rounded-xl border border-border bg-background/60 px-4 py-3 text-sm font-semibold backdrop-blur transition-all hover:-translate-y-0.5 hover:bg-background/90 hover:shadow-lg disabled:opacity-60"
-                    >
-                      {googleLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <GoogleIcon className="h-4 w-4" />}
-                      Google দিয়ে চালিয়ে যান
-                    </button>
-                  </div>
+                  <div className="mt-6" />
 
-
-
-                  <div className="my-7 flex items-center gap-3">
-                    <div className="h-px flex-1 bg-border" />
-                    <span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
-                      অথবা ইমেইল দিয়ে
-                    </span>
-                    <div className="h-px flex-1 bg-border" />
-                  </div>
 
                   <form onSubmit={handleSubmit} className="space-y-5" autoComplete="on">
                     <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
