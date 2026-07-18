@@ -18,6 +18,7 @@ import noticesRouter from "./routes/notices.js";
 import notificationsRouter from "./routes/notifications.js";
 import paymentsRouter from "./routes/payments.js";
 import eventsRouter from "./routes/events.js";
+import playerRouter from "./routes/player.js";
 
 const app = express();
 const PORT = Number(process.env.PORT ?? 4000);
