@@ -1,3 +1,15 @@
+## Progress
+
+- ✅ **Phase 1 — Backend bootstrap** (complete): `apps/api/` scaffold with Express + Prisma + JWT auth, MySQL schema (User/Course/Program/Enrollment), `/api/auth/*` + `/api/courses/*` endpoints, `.env.example`, README with cPanel notes.
+- ⏭️ **Phase 2 — Data layer**: seed script (11 courses + DIS program), enrollments/programs endpoints, admin CRUD.
+- ⏳ Phase 3 — Frontend rewire to REST API
+- ⏳ Phase 4 — File uploads (multer → local disk / cPanel)
+- ⏳ Phase 5 — Email (Gmail SMTP: verification, password reset)
+- ⏳ Phase 6 — Google OAuth (optional)
+- ⏳ Phase 7 — cPanel deployment (IT Host BD Regular-Pro)
+
+---
+
 ## লক্ষ্য
 
 বর্তমান Uniteacademy সাইটের **frontend অপরিবর্তিত** রেখে backend পুরোপুরি নিজস্ব **Node.js API server + MySQL database**-এ সরিয়ে আনা। Lovable Cloud / Supabase-এর উপর কোনো নির্ভরতা থাকবে না, নিজের VPS-এ deploy করা যাবে।
