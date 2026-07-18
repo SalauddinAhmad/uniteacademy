@@ -119,3 +119,22 @@ export const upsertQuiz = (input: AdminQuizInput) =>
   api.post<{ quiz: any }>("/api/player/admin/quizzes", input);
 export const fetchAdminQuiz = (lessonId: string) =>
   api.get<{ quiz: any }>(`/api/player/admin/lessons/${lessonId}/quiz`);
+
+export type AdminOutlineLesson = {
+  id: string; title: string; kind: PlayerLesson["kind"]; order: number;
+  contentUrl: string | null; body: string | null; durationMin: number | null;
+  isFreePreview: boolean;
+  quiz: { id: string; passMarks: number; _count: { questions: number } } | null;
+};
+export type AdminOutline = {
+  course: { id: string; slug: string; title: string };
+  modules: {
+    id: string; title: string; description: string | null; order: number;
+    lessons: AdminOutlineLesson[];
+  }[];
+};
+export const fetchAdminOutline = (courseId: string) =>
+  api.get<AdminOutline>(`/api/player/admin/courses/${courseId}/outline`);
+
+export const adminOutlineQuery = (courseId: string) =>
+  queryOptions({ queryKey: ["admin", "outline", courseId], queryFn: () => fetchAdminOutline(courseId) });
