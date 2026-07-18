@@ -216,3 +216,13 @@ Approve করলে আমরা **Phase 1 + 2** দিয়ে শুরু �
 
 **হারাবেন**: Cloud-এর auto-scaling, auto-backup, built-in auth UI, realtime subscriptions (এখন ব্যবহার হচ্ছে না), one-click publish।
 **পাবেন**: পূর্ণ নিয়ন্ত্রণ, MySQL চেনা database, নিজের VPS-এ চালানোর স্বাধীনতা, vendor lock-in নেই।
+
+---
+
+## ✅ Phase 3c — Student Dashboard wired to Node API (done)
+
+- `src/lib/api/dashboard.ts` — DTOs + REST fetchers (`fetchOverview`, `fetchMyCourses`, `fetchCourseDetail`) + `queryOptions`।
+- `src/lib/dashboard-queries.ts` এখন pure re-export (backwards compat)।
+- `dashboard.functions.ts` (Supabase) সরানো হয়েছে।
+- Routes untouched: `/dashboard/`, `/dashboard/enrollments`, `/dashboard/enrollments/$id` — একই DTO shape, শুধু data source আলাদা।
+- Limitations (backend schema-এর কারণে): lessons/semesters/quiz stats এখন 0/empty — Phase 5-এ schema extend করলে ফিরে আসবে।

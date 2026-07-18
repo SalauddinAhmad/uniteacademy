@@ -3,7 +3,7 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { ArrowRight, Radio, PlayCircle } from "lucide-react";
 import { myCoursesQuery } from "@/lib/dashboard-queries";
 import { CoverThumb, GlassCard, MiniProgress } from "@/components/dashboard/primitives";
-import type { CourseCardDto } from "@/lib/dashboard.functions";
+import type { CourseCardDto } from "@/lib/dashboard-queries";
 
 export const Route = createFileRoute("/_authenticated/dashboard/enrollments")({
   head: () => ({ meta: [{ title: "আমার কোর্স — Uniteacademy" }] }),
