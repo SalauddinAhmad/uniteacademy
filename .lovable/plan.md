@@ -226,3 +226,13 @@ Approve করলে আমরা **Phase 1 + 2** দিয়ে শুরু �
 - `dashboard.functions.ts` (Supabase) সরানো হয়েছে।
 - Routes untouched: `/dashboard/`, `/dashboard/enrollments`, `/dashboard/enrollments/$id` — একই DTO shape, শুধু data source আলাদা।
 - Limitations (backend schema-এর কারণে): lessons/semesters/quiz stats এখন 0/empty — Phase 5-এ schema extend করলে ফিরে আসবে।
+
+## ✅ Phase 3d — Admin Console wired to Node API (done)
+
+- `src/lib/api/admin.ts` — REST bindings for admin stats, users, and courses; keeps legacy `AdminUserDto`/`AdminCourseDto`/`AdminStatsDto` shapes intact.
+- `src/lib/admin.functions.ts` এখন pure re-export shim (backwards compat)।
+- `src/routes/_admin.tsx` — Supabase auth guard replaced with JWT + `me().role === "admin"` check।
+- Stats computed client-side from `/api/admin/users`, `/api/admin/courses`, `/api/admin/programs`।
+- Course CRUD maps to backend `Course` model (title↔titleBn, subtitle↔titleEn, priceCents↔price×100, curriculum↔modules, learningPoints↔learnPoints)।
+- setUserRole: backend single-role; grant sets to that role, revoke falls back to `student` (self-admin-revoke blocked)।
+- Limitations: `type`/`category`/`categoryLabel`/`durationMinutes`/`longDescription` UI fields are not persisted (no backend column); phase 5 schema extension covers this।
