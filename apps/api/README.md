@@ -24,19 +24,50 @@ API runs at `http://localhost:4000`.
 
 Health check: `GET http://localhost:4000/api/health`
 
-## Available Endpoints (Phase 1)
+## Available Endpoints
 
-| Method | Path                 | Auth  | Description              |
-| ------ | -------------------- | ----- | ------------------------ |
-| POST   | `/api/auth/register` | No    | Create student account   |
-| POST   | `/api/auth/login`    | No    | Email/username + password |
-| GET    | `/api/auth/me`       | Bearer | Current user profile     |
-| GET    | `/api/courses`       | No    | List published courses   |
-| GET    | `/api/courses/:slug` | No    | Course detail            |
-| GET    | `/api/health`        | No    | Liveness check           |
+### Public
+| Method | Path                 | Description              |
+| ------ | -------------------- | ------------------------ |
+| GET    | `/api/health`        | Liveness check           |
+| POST   | `/api/auth/register` | Create student account   |
+| POST   | `/api/auth/login`    | Email/username + password |
+| GET    | `/api/courses`       | List published courses   |
+| GET    | `/api/courses/:slug` | Course detail            |
+| GET    | `/api/programs`      | List programs            |
+| GET    | `/api/programs/:slug`| Program detail           |
 
-More endpoints (enrollments, programs, admin CRUD, uploads, email) arrive in
-Phase 2–6 per `.lovable/plan.md`.
+### Authenticated (Bearer token)
+| Method | Path                              | Description                    |
+| ------ | --------------------------------- | ------------------------------ |
+| GET    | `/api/auth/me`                    | Current user profile           |
+| GET    | `/api/enrollments`                | My enrollments                 |
+| POST   | `/api/enrollments`                | Enroll in course/program       |
+| PATCH  | `/api/enrollments/:id/progress`   | Update progress 0-100          |
+
+### Admin (Bearer token, role=admin)
+| Method | Path                          | Description        |
+| ------ | ----------------------------- | ------------------ |
+| GET/POST/PATCH/DELETE | `/api/admin/courses[/:id]`   | Course CRUD  |
+| GET/POST/PATCH/DELETE | `/api/admin/programs[/:id]`  | Program CRUD |
+| GET    | `/api/admin/users`            | List users         |
+| PATCH  | `/api/admin/users/:id/role`   | Change role        |
+| DELETE | `/api/admin/users/:id`        | Delete user        |
+
+## Seed the database
+
+After `prisma migrate dev`, run:
+
+```bash
+npm run seed
+```
+
+Creates:
+- Admin: `admin@uniteacademy.com` / `Admin@12345`
+- Student: `student@uniteacademy.com` / `Student@12345`
+- 11 courses + DIS program + teacher accounts (password: `Teacher@12345`)
+
+More features (uploads, email, Google OAuth) arrive in Phase 4–6 per `.lovable/plan.md`.
 
 ## Deploying to cPanel (IT Host BD — Regular-Pro)
 

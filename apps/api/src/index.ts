@@ -9,6 +9,9 @@ import path from "node:path";
 
 import authRouter from "./routes/auth.js";
 import coursesRouter from "./routes/courses.js";
+import programsRouter from "./routes/programs.js";
+import enrollmentsRouter from "./routes/enrollments.js";
+import adminRouter from "./routes/admin.js";
 
 const app = express();
 const PORT = Number(process.env.PORT ?? 4000);
@@ -29,6 +32,9 @@ app.use("/uploads", express.static(UPLOAD_DIR, { maxAge: "7d", immutable: true }
 const authLimiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 30 });
 app.use("/api/auth", authLimiter, authRouter);
 app.use("/api/courses", coursesRouter);
+app.use("/api/programs", programsRouter);
+app.use("/api/enrollments", enrollmentsRouter);
+app.use("/api/admin", adminRouter);
 
 app.get("/api/health", (_req, res) => res.json({ ok: true, ts: Date.now() }));
 
