@@ -1,106 +1,202 @@
-## Ki toiri hobe
+## লক্ষ্য
 
-Taibah-style student portal er **puro core journey** — login kore student `/dashboard` e dhukbe, sidebar theke navigate korbe, nijer enrolled course dekhbe, ekta course open kore semester + curriculum dekhbe. Backend real (Lovable Cloud) — user sign up korle profile toiri hobe, seed kora demo course/enrollment/progress data dashboard e dekhabe.
+বর্তমান Uniteacademy সাইটের **frontend অপরিবর্তিত** রেখে backend পুরোপুরি নিজস্ব **Node.js API server + MySQL database**-এ সরিয়ে আনা। Lovable Cloud / Supabase-এর উপর কোনো নির্ভরতা থাকবে না, নিজের VPS-এ deploy করা যাবে।
 
-## Backend (Lovable Cloud) — schema
-
-Tables (RLS enabled, `has_role` pattern for admin/student):
+## Final Architecture
 
 ```text
-profiles(id=auth.users.id, full_name, avatar_url, phone, joined_at)
-user_roles(user_id, role: 'admin'|'student')
-courses(id, slug, title_bn, title_en, description, cover_url,
-        category: 'diploma'|'talimul_quran'|'free'|'teacher_training',
-        type: 'live'|'recorded', duration_minutes, is_published)
-course_teachers(course_id, name, initials, avatar_url, sort)
-programs(id, slug, title_bn, cover_url, batch_label)        -- e.g. DIS Batch-11
-program_courses(program_id, course_id, semester, sort)
-semesters(id, program_id, label, starts_at, ends_at, is_locked)
-enrollments(id, user_id, program_id?, course_id?, enrolled_at, is_behind)
-lessons(id, course_id, title_bn, sort, duration_minutes, video_url)
-lesson_progress(user_id, lesson_id, completed, watched_seconds, updated_at)
-quiz_attempts(user_id, course_id, score, total, completed_at)
-assignments(id, course_id, title, due_at, published_at, status)
-assignment_submissions(user_id, assignment_id, submitted_at, grade)
+┌─────────────────────────┐        ┌──────────────────────────┐
+│  Frontend (TanStack)    │  HTTPS │  Node.js API (Express)   │
+│  Static build → Nginx   │ ─────► │  /api/*  JWT auth        │
+│  Vite output: dist/     │        │  Prisma ORM              │
+└─────────────────────────┘        └────────────┬─────────────┘
+                                                │
+                                        ┌───────▼────────┐
+                                        │  MySQL 8.x     │
+                                        │  (VPS/managed) │
+                                        └────────────────┘
+                                        ┌────────────────┐
+                                        │ S3/local disk  │
+                                        │ course covers  │
+                                        └────────────────┘
 ```
 
-Trigger: `on_auth_user_created` → insert into `profiles` + default role `student`.
-Seed migration: 1 program (DIS Batch-11 + 2 semesters), 6 courses (matching Taibah), teachers, lessons per course, and — for the demo student we seed — enrollment + mock progress so the dashboard looks alive on first login.
-
-## Routes toiri hobe
+## Repository Layout (migration শেষে)
 
 ```text
-src/routes/
-  _authenticated/
-    dashboard.tsx                          → Overview
-    dashboard.enrollments.tsx              → My Courses
-    dashboard.enrollments.$id.tsx          → Course detail
-    dashboard.enrollments.view-all.tsx     → "আরও দেখুন" (recommended list)
-    (placeholders for assignments/exams/calendar/events/notice/notifications/payment-history — shell only, "Coming soon" empty state)
+uniteacademy/
+├── apps/
+│   ├── web/          ← বর্তমান TanStack Start project (SSR বাদ, SPA build)
+│   └── api/          ← নতুন Node.js + Express + Prisma server
+├── packages/
+│   └── shared-types/ ← DTO types দুই side শেয়ার করবে
+└── docker-compose.yml (MySQL + api + nginx)
 ```
 
-`_authenticated/route.tsx` — integration-managed gate (auto-created by Cloud).
-Existing `/auth/login`, `/auth/signup` — Google button ke `lovable.auth.signInWithOAuth("google", ...)` er sathe wire kora hobe.
+---
 
-## Layout shell — `src/components/dashboard/*`
+## Phase 1 — Node.js API server bootstrap
 
-- `DashboardShell` — `SidebarProvider` + sidebar + topbar + `<Outlet />`, `w-full` root
-- `DashboardSidebar` — brand top, 3 group (main/notice-notifications/payment), active state via `useRouterState`, `collapsible="icon"`, footer e language switcher + light/dark toggle
-- `DashboardTopbar` — sidebar trigger + breadcrumb (route-driven) + avatar dropdown (name, logout)
-- `AvatarInitials`, `ProgressRing`, `StatCard`, `StreakStrip`, `CourseCoverCard`, `ProgramWideCard`, `SemesterAccordion`, `CurriculumItem` — reusable primitives
+- `apps/api/` তে নতুন Express (বা Fastify) app: TypeScript, Prisma, Zod, bcrypt, jsonwebtoken, passport-google-oauth20, multer/S3, cors, helmet, express-rate-limit, pino logger।
+- Folder: `src/routes/`, `src/middleware/`, `src/services/`, `src/lib/prisma.ts`।
+- Config: `.env` (DATABASE_URL, JWT_SECRET, JWT_REFRESH_SECRET, GOOGLE_CLIENT_ID/SECRET, S3_*, CORS_ORIGIN)।
+- Health check: `GET /api/health`।
 
-## Overview page composition
+## Phase 2 — MySQL schema (Prisma)
 
-- Green welcome banner: "আসসালামু আলাইকুম, {profile.full_name}!" + subtitle + "কোর্সগুলো দেখুন" link (`/dashboard/enrollments`) + dismiss (localStorage)
-- Grid (3 col desktop / 1 col mobile):
-  1. **Performance** — big `ProgressRing` (avg progress across enrollments)
-  2. **Course stats** — মোট চলমান, শেষ হয়েছে, সময় ব্যয় (rows with icon + count chip)
-  3. **Activity** — লাইভ ক্লাস, কুইজ সম্পন্ন, অ্যাসাইনমেন্ট সম্পন্ন
-- **আপকামিং ক্লাস** card — empty state icon (calendar) + message
-- **Streak** card — gold star + day count + Wed–Tue weekday strip (star per completed day)
+বর্তমান ১১টি Postgres table → Prisma schema-তে convert:
 
-## My Courses page
+```text
+User            (id, email, username, password_hash, google_id, created_at)
+Profile         (user_id PK, full_name, avatar_url, phone, joined_at)
+UserRole        (user_id, role ENUM['admin','teacher','student'])
+Course          (id, slug, title_bn, title_en, description, long_description,
+                 cover_url, category, type, level, instructor,
+                 duration_minutes, duration_text, lessons_count, price,
+                 original_price, rating, students, is_published,
+                 learn_points JSON, requirements JSON, modules JSON)
+CourseTeacher   (course_id, name, initials, avatar_url, sort)
+Program         (id, slug, title_bn, title_en, batch_label, cover_url,
+                 starts_at, ends_at)
+ProgramCourse   (program_id, course_id, semester_id, sort)
+Semester        (id, program_id, label, sort, starts_on, ends_on, is_locked)
+Enrollment      (id, user_id, program_id?, course_id?, enrolled_at, is_behind)
+Lesson          (id, course_id, title_bn, sort, duration_minutes, video_url)
+LessonProgress  (user_id, lesson_id, completed, watched_seconds, updated_at)
+QuizAttempt     (user_id, course_id, score, total, completed_at)
+Assignment      (id, course_id, title, due_at, published_at, status)
+```
 
-- **ডিপ্লোমা প্রোগ্রাম** section (if user enrolled in a program): wide card w/ cover, batch chip, title, progress bar, "কোর্স চালিয়ে যান →" → `/dashboard/enrollments/:programEnrollmentId`
-- **কোর্সসমূহ** — 2-col grid of course cards w/ progress
-- **আপনার জন্য আরও কোর্স** — 3-col grid (recommended, unenrolled), category badge (Free/Talimul Quran/Teacher's Training) + status badge (Live/Recorded), footer "আরও দেখুন →"
-- Section title row includes "আরও দেখুন →" link to view-all page
+মূল conversion rules:
+- Postgres `uuid` → MySQL `CHAR(36)` + application-generated UUIDv4।
+- `JSONB` → MySQL `JSON`।
+- `TIMESTAMPTZ` → `DATETIME(3)` (UTC store)।
+- `has_role()` DB function → API middleware (`requireRole('admin')`)।
+- **RLS policies → application-layer authorization** (প্রতিটি query-তে `WHERE user_id = req.user.id` middleware দিয়ে enforce)।
 
-## Course detail page
+Deliverable: `prisma/schema.prisma` + প্রথম migration + seed script (১১টা course + Diploma program + demo admin/student user)।
 
-- Breadcrumb: আমার কোর্স › {batch_label}
-- Header block: cover thumb + title + batch subline + tag pills (category, duration) + teacher grid (avatar-initial + name, wrap) + date range
-- Right rail: `ProgressRing` (19%), CTA "শেখা চালিয়ে যান" (primary) + "রিভিউ" (outline), "পিছিয়ে আছেন" pill (conditional), "ভর্তি {date}"
-- Info banner: "আপনি এই প্রোগ্রামের একটি অংশে অ্যাক্সেস পেয়েছেন..."
-- 4-stat row: Lessons X/Y, Quiz X/Y, Avg %, Best % (each with tiny inline progress bar)
-- Semester accordion:
-  - Open semester: table of curriculum items — cover thumb, item name w/ "U" batch chip, progress bar + %, "কোর্স" pill, chevron
-  - Locked semester: lock icon + "Access restricted" + date range, no children
+## Phase 3 — Auth system (Supabase Auth replacement)
 
-## Data flow
+- `POST /api/auth/signup` — email + password + username, bcrypt hash (cost 12), profile auto-create, default role `student`।
+- `POST /api/auth/login` — issue access token (JWT, 15min) + refresh token (httpOnly cookie, 30d)।
+- `POST /api/auth/refresh` — rotate refresh token।
+- `POST /api/auth/logout` — clear cookie, blacklist।
+- `GET /api/auth/me` — current user।
+- `GET /api/auth/google` + `/api/auth/google/callback` — Passport Google OAuth strategy।
+- `POST /api/auth/forgot-password` + `POST /api/auth/reset-password` — token via email (Resend/SMTP)।
+- Middleware: `requireAuth`, `requireRole('admin' | 'teacher')`।
 
-- Server functions in `src/lib/dashboard.functions.ts` — `getDashboardOverview`, `getMyEnrollments`, `getCourseDetail(programEnrollmentId)`, all with `.middleware([requireSupabaseAuth])`
-- Loader pattern: `ensureQueryData(queryOptions)` in loader → `useSuspenseQuery` in component
-- Public route (login/signup) untouched — no auth-required loader on public routes
-- Root `onAuthStateChange` → `router.invalidate()` (already exists in Cloud template)
+## Phase 4 — REST endpoint mapping (server functions → HTTP)
 
-## Visual tokens (already in project)
+বর্তমান `createServerFn` → REST routes:
 
-Reuse existing green/teal `--primary` + gradient utilities, glass-strong cards, `gradient-primary`. Bangla font (Hind Siliguri / Noto Sans Bengali) already loaded via signup styling. No new global CSS needed — new components use semantic tokens only.
+```text
+Public (no auth)
+  GET  /api/courses                     ← courses list page
+  GET  /api/courses/:slug               ← course detail page
+  GET  /api/programs/:slug
 
-## Delivery order (single turn)
+Student (requireAuth)
+  GET  /api/dashboard/overview          ← getOverview
+  GET  /api/dashboard/my-courses        ← getMyCourses
+  GET  /api/dashboard/enrollments/:id   ← getCourseDetail
+  POST /api/enrollments                 ← enroll in course/program
+  POST /api/lessons/:id/progress
+  POST /api/quiz-attempts
 
-1. Enable Lovable Cloud
-2. Migration: schema + RLS + `has_role` + trigger + seed (program, courses, teachers, lessons, admin/student enrollment sample)
-3. Server functions + query options
-4. Shell + primitives
-5. Overview page
-6. My Courses page
-7. Course detail page
-8. Placeholder stubs for the other 6 sidebar routes (so nav doesn't 404)
-9. Wire signup/login Google OAuth via `lovable.auth.signInWithOAuth`
-10. Verify: build + Playwright login flow to `/dashboard`
+Admin (requireRole 'admin')
+  GET/POST/PUT/DELETE  /api/admin/courses
+  GET/POST/PUT/DELETE  /api/admin/users
+  GET/POST/PUT/DELETE  /api/admin/programs
+  ...                  /api/admin/enrollments|notices|payments|settings
 
-## Out of scope (next turns)
+Uploads
+  POST /api/uploads/course-cover        ← multipart, returns URL
+```
 
-- Actual lesson video player, quiz/exam engine, calendar events, notifications inbox, payment history, admin panel — will build after this foundation ships and you approve the look & feel.
+প্রতিটি endpoint-এ Zod validation + Prisma query + typed response।
+
+## Phase 5 — Frontend rewire
+
+- `apps/web/` থেকে **সরানো হবে**: `src/integrations/supabase/*`, `src/lib/*.functions.ts`, `src/routes/_authenticated/route.tsx`-এর Supabase gate, `src/start.ts`-এর `attachSupabaseAuth`।
+- **নতুন `src/lib/api.ts`** — একটি typed fetch client (`fetch` wrapper), automatic bearer token attachment (memory + refresh cookie), 401 হলে refresh retry।
+- **নতুন `src/lib/auth-context.tsx`** — React Context: `user`, `login`, `logout`, `signup`, `loginWithGoogle`।
+- `_authenticated/route.tsx` gate — `useAuth()` দিয়ে check, না থাকলে `/auth/login`-এ redirect।
+- সব `createServerFn` call site (dashboard pages, admin pages, course detail) → `api.get()/post()` calls (TanStack Query দিয়ে wrap)।
+- **SSR বাদ** — TanStack Start-কে SPA mode-এ build (`vite build`), অথবা আলাদা করে Vite + React Router-এ port করা (optional; SPA-only অনেক সহজ)।
+- `head()` metadata → static SPA route-level meta (react-helmet-async দিয়ে replace)।
+
+## Phase 6 — File storage (course covers)
+
+বর্তমান `public/course-covers/*.jpg` files:
+- **Option A (simple)**: API server-এ `apps/api/uploads/` folder + Express static serve `/uploads/*`।
+- **Option B (production)**: S3-compatible (AWS S3 / Cloudflare R2 / MinIO), API returns signed URL।
+
+Recommendation: শুরুতে Option A, traffic বাড়লে B।
+
+## Phase 7 — Deployment
+
+VPS setup (Ubuntu 22.04, 2GB RAM যথেষ্ট):
+
+```text
+Nginx (reverse proxy + SSL via certbot)
+  ├── /            → serve apps/web/dist/ (static)
+  └── /api/*       → proxy to http://localhost:4000
+
+PM2 (process manager)
+  └── apps/api (Node.js, cluster mode)
+
+MySQL 8.x (systemd service, daily mysqldump cron → /backups)
+```
+
+Docker option: `docker-compose.yml` — mysql, api, nginx তিনটি service। এক command-এ dev/prod up।
+
+CI: GitHub Actions → SSH deploy → `git pull && bun install && prisma migrate deploy && pm2 reload api && web build`।
+
+---
+
+## Migration Order (এক phase শেষ করে পরের-টা)
+
+1. **Phase 1 + 2** (একসাথে) — API skeleton + Prisma schema + seed। Postman দিয়ে test।
+2. **Phase 3** — Auth endpoints। Postman/Insomnia collection দিয়ে verify।
+3. **Phase 4** — Public course endpoints, তারপর student, তারপর admin। প্রতিটার পর manual test।
+4. **Phase 5** — Frontend rewire (একটা section-এ একটা: auth → dashboard → admin → public pages)। এই phase-এ dual-run — Cloud এখনো live, নতুন API side-by-side test।
+5. **Phase 6** — Upload endpoint + existing images migrate (script যা Cloud storage থেকে download করে API server-এ upload করে)।
+6. **Phase 7** — VPS provision → deploy → DNS cutover → Lovable Cloud disconnect।
+
+## Technical Details (developer-facing)
+
+- **UUID strategy**: MySQL 8-এ `CHAR(36)` + Prisma `@default(uuid())` — Postgres থেকে data migrate করলে existing UUIDs preserve হবে।
+- **JSON columns**: MySQL 8-এর JSON type native, Prisma `Json` scalar কাজ করবে।
+- **Full-text search**: প্রয়োজন হলে MySQL FULLTEXT index (`title_bn`, `description`) — বর্তমানে দরকার নেই।
+- **Enum**: Prisma-তে native enum (`Role`, `CourseCategory`, `CourseType`)।
+- **Data migration script**: `scripts/migrate-from-cloud.ts` — Cloud থেকে REST দিয়ে সব table dump → MySQL-এ Prisma দিয়ে insert।
+- **Testing**: Vitest (api) + Playwright (e2e), অন্তত auth flow + course enrollment cover।
+
+## Timeline Estimate (আপনি single dev হিসেবে)
+
+| Phase | সময় |
+|-------|-----|
+| 1 + 2 | ১ দিন |
+| 3     | ১ দিন |
+| 4     | ২ দিন |
+| 5     | ২-৩ দিন (সবচেয়ে বড় phase) |
+| 6     | আধা দিন |
+| 7     | ১ দিন |
+| **মোট** | **৭-৮ কার্যদিবস** |
+
+## এখন যা লাগবে (আপনার কাছ থেকে confirm)
+
+1. **Repo structure** — monorepo (`apps/web` + `apps/api`) নাকি সম্পূর্ণ আলাদা দুটো repo?
+2. **ORM** — Prisma (recommended) নাকি Drizzle/TypeORM/Sequelize?
+3. **Hosting** — নিজের VPS (DigitalOcean/Hetzner) নাকি managed (Railway/Render)? MySQL managed (PlanetScale/AWS RDS) নাকি VPS-এ self-hosted?
+4. **File storage** — Option A (local disk) নাকি Option B (S3/R2) দিয়ে শুরু?
+5. **Email** — password reset ইত্যাদির জন্য SMTP (Gmail) নাকি Resend/SendGrid?
+
+Approve করলে আমরা **Phase 1 + 2** দিয়ে শুরু করব — `apps/api` folder তৈরি হবে, Prisma schema লেখা হবে, seed script চলবে।
+
+## এই migration-এর trade-off (স্পষ্ট করে)
+
+**হারাবেন**: Cloud-এর auto-scaling, auto-backup, built-in auth UI, realtime subscriptions (এখন ব্যবহার হচ্ছে না), one-click publish।
+**পাবেন**: পূর্ণ নিয়ন্ত্রণ, MySQL চেনা database, নিজের VPS-এ চালানোর স্বাধীনতা, vendor lock-in নেই।
