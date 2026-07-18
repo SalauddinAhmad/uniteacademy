@@ -38,7 +38,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { supabase } from "@/integrations/supabase/client";
+import { logout as apiLogout } from "@/lib/api/auth";
 import { useQueryClient } from "@tanstack/react-query";
 
 const navPlatform = [
@@ -165,7 +165,7 @@ function AdminTopbar({ userName, email }: { userName: string; email: string }) {
   async function signOut() {
     await queryClient.cancelQueries();
     queryClient.clear();
-    await supabase.auth.signOut();
+    apiLogout();
     navigate({ to: "/auth/login", replace: true });
   }
 
