@@ -12,6 +12,12 @@ import coursesRouter from "./routes/courses.js";
 import programsRouter from "./routes/programs.js";
 import enrollmentsRouter from "./routes/enrollments.js";
 import adminRouter from "./routes/admin.js";
+import assignmentsRouter from "./routes/assignments.js";
+import examsRouter from "./routes/exams.js";
+import noticesRouter from "./routes/notices.js";
+import notificationsRouter from "./routes/notifications.js";
+import paymentsRouter from "./routes/payments.js";
+import eventsRouter from "./routes/events.js";
 
 const app = express();
 const PORT = Number(process.env.PORT ?? 4000);
@@ -35,6 +41,12 @@ app.use("/api/courses", coursesRouter);
 app.use("/api/programs", programsRouter);
 app.use("/api/enrollments", enrollmentsRouter);
 app.use("/api/admin", adminRouter);
+app.use("/api/assignments", assignmentsRouter);
+app.use("/api/exams", examsRouter);
+app.use("/api/notices", noticesRouter);
+app.use("/api/notifications", notificationsRouter);
+app.use("/api/payments", paymentsRouter);
+app.use("/api/events", eventsRouter);
 
 app.get("/api/health", (_req, res) => res.json({ ok: true, ts: Date.now() }));
 
