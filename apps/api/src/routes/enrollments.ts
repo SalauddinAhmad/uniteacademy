@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { z } from "zod";
 import { prisma } from "../lib/prisma.js";
-import { requireAuth } from "../middleware/auth.js";
+import { requireAuth, requireRole } from "../middleware/auth.js";
 
 const router = Router();
 router.use(requireAuth);
@@ -66,6 +66,25 @@ router.patch("/:id/progress", async (req, res) => {
     data: { progress: parsed.data.progress },
   });
   res.json({ enrollment: updated });
+});
+
+// Admin: list every enrollment across users
+router.get("/all", requireRole("admin"), async (_req, res) => {
+  const rows = await prisma.enrollment.findMany({
+    orderBy: { createdAt: "desc" },
+    take: 500,
+    include: {
+      user: { select: { id: true, email: true, fullName: true } },
+      course: { select: { id: true, slug: true, title: true, coverUrl: true } },
+      program: { select: { id: true, slug: true, title: true } },
+    },
+  });
+  res.json({ enrollments: rows });
+});
+
+router.delete("/:id", requireRole("admin"), async (req, res) => {
+  await prisma.enrollment.delete({ where: { id: req.params.id } }).catch(() => null);
+  res.json({ ok: true });
 });
 
 export default router;
