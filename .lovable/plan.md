@@ -2,8 +2,11 @@
 
 - ✅ **Phase 1 — Backend bootstrap** (complete): `apps/api/` scaffold with Express + Prisma + JWT auth, MySQL schema, `/api/auth/*` + `/api/courses/*`, `.env.example`, README.
 - ✅ **Phase 2 — Data layer** (complete): seed script (11 courses + DIS + admin/teacher/student accounts), `/api/enrollments`, `/api/programs`, full `/api/admin/*` CRUD.
-- ⏭️ **Phase 3** — Frontend rewire to REST API
-- ⏳ Phase 3 — Frontend rewire to REST API
+- 🟡 **Phase 3 — Frontend rewire** (in progress)
+  - ✅ 3a: REST API client (`src/lib/api/client.ts`), `AuthUser` types, `useAuth()` context, login/signup pages rewired, `_authenticated` gate uses JWT.
+  - ⏳ 3b: Public routes (courses list, `/courses/$slug`, home)
+  - ⏳ 3c: Student dashboard (`/dashboard/*`)
+  - ⏳ 3d: Admin console (`/admin/*`)
 - ⏳ Phase 4 — File uploads (multer → local disk / cPanel)
 - ⏳ Phase 5 — Email (Gmail SMTP: verification, password reset)
 - ⏳ Phase 6 — Google OAuth (optional)
