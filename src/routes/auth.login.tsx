@@ -9,6 +9,7 @@ import {
   ShieldCheck,
   GraduationCap,
   Loader2,
+  BookOpen,
 } from "lucide-react";
 import { Logo } from "@/components/logo";
 import { useAuth } from "@/hooks/use-auth";
