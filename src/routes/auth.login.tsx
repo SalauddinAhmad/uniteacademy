@@ -1,7 +1,6 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import {
-  BookOpen,
   Mail,
   Lock,
   Eye,
@@ -11,6 +10,7 @@ import {
   GraduationCap,
   Loader2,
 } from "lucide-react";
+import { Logo } from "@/components/logo";
 import { useAuth } from "@/hooks/use-auth";
 import { toast } from "sonner";
 
@@ -83,15 +83,7 @@ function LoginPage() {
           <div className="w-full max-w-xl">
             {/* Brand */}
             <div className="mb-6 flex items-center justify-center">
-              <Link to="/" className="flex items-center gap-2.5">
-                <div className="grid h-11 w-11 place-items-center rounded-xl gradient-primary text-primary-foreground shadow-lg shadow-primary/25">
-                  <BookOpen className="h-5 w-5" strokeWidth={2.5} />
-                </div>
-                <div className="flex flex-col leading-none">
-                  <span className="text-lg font-bold tracking-tight">Uniteacademy</span>
-                  <span className="text-[10px] font-medium text-muted-foreground">ইউনাইট একাডেমি</span>
-                </div>
-              </Link>
+              <Logo size="lg" asLink={true} showSubtitle={true} />
             </div>
 
             {/* Premium glass card with gradient border */}

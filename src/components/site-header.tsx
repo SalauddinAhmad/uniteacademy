@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { Menu, X, BookOpen } from "lucide-react";
+import { Menu, X } from "lucide-react";
+import { Logo } from "@/components/logo";
 
 const nav = [
   { to: "/", label: "হোম" },
@@ -14,15 +15,7 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-50 border-b border-border/60 bg-background/80 backdrop-blur-xl">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <Link to="/" className="flex items-center gap-2.5 group">
-          <div className="grid h-9 w-9 place-items-center rounded-xl gradient-primary text-primary-foreground shadow-lg shadow-primary/25 transition-transform group-hover:scale-105">
-            <BookOpen className="h-5 w-5" strokeWidth={2.5} />
-          </div>
-          <div className="flex flex-col leading-none">
-            <span className="text-lg font-bold tracking-tight">Uniteacademy</span>
-            <span className="text-[10px] font-medium text-muted-foreground">ইউনাইট একাডেমি</span>
-          </div>
-        </Link>
+        <Logo size="sm" asLink={true} />
 
         <nav className="hidden items-center gap-1 md:flex">
           {nav.map((n) => (

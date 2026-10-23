@@ -1,4 +1,5 @@
 import { useEffect, useState, type ReactNode } from "react";
+import { Logo } from "@/components/logo";
 import {
   Link,
   useRouterState,
@@ -99,16 +100,10 @@ function AppSidebar({ initials, fullName }: { initials: string; fullName: string
     <Sidebar collapsible="icon">
       <SidebarHeader className="border-b border-border/60 p-3">
         <Link to="/" className="flex items-center gap-2.5">
-          <div className="grid h-10 w-10 shrink-0 place-items-center rounded-xl gradient-primary text-primary-foreground shadow-lg shadow-primary/25">
-            <BookOpen className="h-5 w-5" strokeWidth={2.4} />
-          </div>
-          {!collapsed && (
-            <div className="flex min-w-0 flex-col leading-none">
-              <span className="truncate text-sm font-bold tracking-tight">Uniteacademy</span>
-              <span className="truncate text-[10px] font-medium text-muted-foreground">
-                ইউনাইট একাডেমি
-              </span>
-            </div>
+          {collapsed ? (
+            <Logo variant="mark" size="sm" asLink={false} />
+          ) : (
+            <Logo size="sm" asLink={false} />
           )}
         </Link>
       </SidebarHeader>

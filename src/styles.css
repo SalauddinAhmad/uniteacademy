@@ -10,6 +10,22 @@
 @import "@fontsource/noto-sans-bengali/600.css";
 @import "@fontsource/noto-sans-bengali/700.css";
 
+@font-face {
+  font-family: "Bornomala";
+  src: url("/fonts/Bornomala-Regular.woff2") format("woff2");
+  font-weight: 100 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Bornomala";
+  src: url("/fonts/Bornomala-Bold.woff2") format("woff2");
+  font-weight: 600 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -19,8 +35,8 @@
   --radius-xl: calc(var(--radius) + 4px);
   --radius-2xl: calc(var(--radius) + 8px);
   --radius-3xl: calc(var(--radius) + 12px);
-  --font-sans: "Noto Sans Bengali", "Poppins", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Poppins", "Noto Sans Bengali", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Bornomala", "Noto Sans Bengali", "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-display: "Bornomala", "Poppins", "Noto Sans Bengali", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -45,52 +61,51 @@
 
 :root {
   --radius: 1rem;
-  /* Premium Midnight Indigo — LIGHT version, gold accent, glass surfaces */
-  --background: oklch(0.985 0.006 265);
-  --foreground: oklch(0.16 0.05 275);
-  --card: oklch(1 0 0 / 0.7);
-  --card-foreground: oklch(0.16 0.05 275);
-  --popover: oklch(1 0 0 / 0.96);
-  --popover-foreground: oklch(0.16 0.05 275);
-  --primary: oklch(0.42 0.18 275);
-  --primary-foreground: oklch(0.99 0.005 265);
-  --primary-glow: oklch(0.62 0.22 275);
-  --secondary: oklch(0.96 0.01 265 / 0.7);
-  --secondary-foreground: oklch(0.24 0.08 275);
-  --muted: oklch(0.96 0.01 265 / 0.6);
-  --muted-foreground: oklch(0.42 0.04 265);
-  --accent: oklch(0.72 0.15 78);
-  --accent-foreground: oklch(0.16 0.05 275);
-  --destructive: oklch(0.6 0.24 27);
-  --destructive-foreground: oklch(0.99 0.005 265);
-  --border: oklch(0.16 0.05 275 / 0.1);
-  --input: oklch(0.16 0.05 275 / 0.08);
-  --ring: oklch(0.62 0.22 275);
+  /* Unite Academy Official Brand — Flame Vermilion, Charcoal Text, Clean Warm Light */
+  --background: oklch(0.992 0.003 40);
+  --foreground: oklch(0.24 0.005 20);
+  --card: oklch(1 0 0 / 0.85);
+  --card-foreground: oklch(0.24 0.005 20);
+  --popover: oklch(1 0 0 / 0.98);
+  --popover-foreground: oklch(0.24 0.005 20);
+  --primary: oklch(0.62 0.21 34.0);
+  --primary-foreground: oklch(0.995 0 0);
+  --primary-glow: oklch(0.69 0.20 36.0);
+  --secondary: oklch(0.97 0.01 40 / 0.85);
+  --secondary-foreground: oklch(0.28 0.02 25);
+  --muted: oklch(0.96 0.008 40 / 0.7);
+  --muted-foreground: oklch(0.46 0.015 30);
+  --accent: oklch(0.77 0.165 70.0);
+  --accent-foreground: oklch(0.22 0.02 30);
+  --destructive: oklch(0.58 0.22 28);
+  --destructive-foreground: oklch(0.995 0 0);
+  --border: oklch(0.24 0.005 20 / 0.09);
+  --input: oklch(0.24 0.005 20 / 0.07);
+  --ring: oklch(0.62 0.21 34.0);
 }
 
-
-
 .dark {
-  --background: oklch(0.14 0.03 265);
-  --foreground: oklch(0.97 0.005 265);
-  --card: oklch(0.22 0.06 270 / 0.45);
-  --card-foreground: oklch(0.97 0.005 265);
-  --popover: oklch(0.19 0.05 270 / 0.92);
-  --popover-foreground: oklch(0.97 0.005 265);
-  --primary: oklch(0.62 0.22 275);
-  --primary-foreground: oklch(0.14 0.03 265);
-  --primary-glow: oklch(0.7 0.2 275);
-  --secondary: oklch(0.24 0.05 270 / 0.5);
-  --secondary-foreground: oklch(0.97 0.005 265);
-  --muted: oklch(0.24 0.05 270 / 0.45);
-  --muted-foreground: oklch(0.78 0.03 265);
-  --accent: oklch(0.78 0.16 75);
-  --accent-foreground: oklch(0.16 0.03 265);
-  --destructive: oklch(0.65 0.22 25);
-  --destructive-foreground: oklch(0.985 0.005 265);
-  --border: oklch(1 0 0 / 0.14);
-  --input: oklch(1 0 0 / 0.18);
-  --ring: oklch(0.62 0.22 275);
+  /* Unite Academy Official Brand — Dark Charcoal, Radiant Vermilion Glow */
+  --background: oklch(0.145 0.008 25);
+  --foreground: oklch(0.98 0.003 40);
+  --card: oklch(0.19 0.01 25 / 0.65);
+  --card-foreground: oklch(0.98 0.003 40);
+  --popover: oklch(0.18 0.01 25 / 0.95);
+  --popover-foreground: oklch(0.98 0.003 40);
+  --primary: oklch(0.64 0.21 34.0);
+  --primary-foreground: oklch(0.995 0 0);
+  --primary-glow: oklch(0.71 0.20 36.0);
+  --secondary: oklch(0.23 0.012 25 / 0.6);
+  --secondary-foreground: oklch(0.98 0.003 40);
+  --muted: oklch(0.22 0.01 25 / 0.55);
+  --muted-foreground: oklch(0.72 0.015 35);
+  --accent: oklch(0.78 0.16 68);
+  --accent-foreground: oklch(0.18 0.02 30);
+  --destructive: oklch(0.62 0.21 28);
+  --destructive-foreground: oklch(0.995 0 0);
+  --border: oklch(1 0 0 / 0.12);
+  --input: oklch(1 0 0 / 0.14);
+  --ring: oklch(0.64 0.21 34.0);
 }
 
 @layer base {
@@ -107,7 +122,7 @@
     position: relative;
     background: transparent;
   }
-  /* Fixed premium backdrop — deep midnight with subtle indigo/gold ambient glows */
+  /* Fixed premium backdrop — clean warm tone with subtle brand vermilion/amber ambient glows */
   body::before {
     content: "";
     position: fixed;
@@ -115,11 +130,19 @@
     z-index: -1;
     pointer-events: none;
     background:
-      radial-gradient(45% 40% at 8% 6%, color-mix(in oklab, var(--primary-glow) 22%, transparent), transparent 65%),
-      radial-gradient(40% 35% at 92% 12%, color-mix(in oklab, var(--accent) 18%, transparent), transparent 65%),
-      radial-gradient(50% 40% at 85% 88%, color-mix(in oklab, var(--primary-glow) 18%, transparent), transparent 65%),
-      radial-gradient(55% 45% at 15% 96%, color-mix(in oklab, var(--primary) 15%, transparent), transparent 65%),
-      linear-gradient(180deg, oklch(0.985 0.008 265), oklch(0.96 0.02 275));
+      radial-gradient(45% 40% at 8% 6%, color-mix(in oklab, var(--primary-glow) 12%, transparent), transparent 65%),
+      radial-gradient(40% 35% at 92% 12%, color-mix(in oklab, var(--accent) 10%, transparent), transparent 65%),
+      radial-gradient(50% 40% at 85% 88%, color-mix(in oklab, var(--primary-glow) 10%, transparent), transparent 65%),
+      radial-gradient(55% 45% at 15% 96%, color-mix(in oklab, var(--primary) 8%, transparent), transparent 65%),
+      linear-gradient(180deg, oklch(0.992 0.003 40), oklch(0.978 0.006 35));
+  }
+  .dark body::before {
+    background:
+      radial-gradient(45% 40% at 8% 6%, color-mix(in oklab, var(--primary-glow) 15%, transparent), transparent 65%),
+      radial-gradient(40% 35% at 92% 12%, color-mix(in oklab, var(--accent) 10%, transparent), transparent 65%),
+      radial-gradient(50% 40% at 85% 88%, color-mix(in oklab, var(--primary-glow) 12%, transparent), transparent 65%),
+      radial-gradient(55% 45% at 15% 96%, color-mix(in oklab, var(--primary) 10%, transparent), transparent 65%),
+      linear-gradient(180deg, oklch(0.145 0.008 25), oklch(0.125 0.01 25));
   }
 
   h1, h2, h3, h4, h5, h6 {

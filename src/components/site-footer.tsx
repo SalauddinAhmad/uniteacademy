@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
-import { BookOpen, Mail, Phone, Send } from "lucide-react";
+import { Mail, Phone, Send } from "lucide-react";
+import { Logo } from "@/components/logo";
 
 export function SiteFooter() {
   return (
@@ -7,12 +8,7 @@ export function SiteFooter() {
       <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
         <div className="grid gap-10 md:grid-cols-4">
           <div className="md:col-span-1">
-            <Link to="/" className="flex items-center gap-2.5">
-              <div className="grid h-9 w-9 place-items-center rounded-xl gradient-primary text-primary-foreground">
-                <BookOpen className="h-5 w-5" strokeWidth={2.5} />
-              </div>
-              <span className="text-lg font-bold">Uniteacademy</span>
-            </Link>
+            <Logo size="md" asLink={true} showSubtitle={true} />
             <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
               ইসলামী জ্ঞানের অনলাইন একাডেমি — কুরআন, হাদীস, ফিকহ ও সীরাত শিখুন
               অভিজ্ঞ উস্তাদদের কাছ থেকে।

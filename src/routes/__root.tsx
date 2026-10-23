@@ -90,10 +90,26 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     ],
     links: [
       {
+        rel: "preload",
+        href: "/fonts/Bornomala-Regular.woff2",
+        as: "font",
+        type: "font/woff2",
+        crossOrigin: "anonymous",
+      },
+      {
+        rel: "preload",
+        href: "/fonts/Bornomala-Bold.woff2",
+        as: "font",
+        type: "font/woff2",
+        crossOrigin: "anonymous",
+      },
+      {
         rel: "stylesheet",
         href: appCss,
       },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "icon", href: "/favicon.ico", sizes: "32x32" },
+      { rel: "icon", href: "/favicon.png", type: "image/png", sizes: "64x64" },
+      { rel: "apple-touch-icon", href: "/logo-mark.png" },
     ],
   }),
   shellComponent: RootShell,

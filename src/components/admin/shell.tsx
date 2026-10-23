@@ -1,5 +1,6 @@
 import { type ReactNode } from "react";
 import { Link, useRouterState, useNavigate } from "@tanstack/react-router";
+import { Logo } from "@/components/logo";
 import {
   LayoutDashboard,
   Users,
@@ -107,13 +108,14 @@ function AdminSidebar({ userName }: { userName: string }) {
     <Sidebar collapsible="icon" className="border-r border-sidebar-border">
       <SidebarHeader className="border-b border-sidebar-border">
         <Link to="/admin" className="flex items-center gap-3 px-2 py-3">
-          <div className="grid h-9 w-9 place-items-center rounded-lg bg-gradient-to-br from-primary to-primary/70 text-primary-foreground shadow-md">
-            <Shield className="h-5 w-5" />
-          </div>
-          {!collapsed && (
-            <div className="min-w-0">
-              <div className="text-sm font-bold leading-tight">Admin Console</div>
-              <div className="text-[11px] text-sidebar-foreground/60">Uniteacademy</div>
+          {collapsed ? (
+            <Logo variant="mark" size="sm" asLink={false} />
+          ) : (
+            <div className="flex items-center justify-between w-full">
+              <Logo size="xs" asLink={false} />
+              <Badge variant="secondary" className="text-[10px] uppercase font-bold tracking-wider text-primary border-primary/20">
+                Admin
+              </Badge>
             </div>
           )}
         </Link>
