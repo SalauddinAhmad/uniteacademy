@@ -52,9 +52,13 @@ function SignupPage() {
     if (!agree) return;
     setLoading(true);
     try {
-      await register({ email, password, name: fullName });
+      const u = await register({ email, password, name: fullName });
       toast.success("অ্যাকাউন্ট তৈরি হয়েছে");
-      navigate({ to: "/dashboard" });
+      if (u.role === "admin") {
+        navigate({ to: "/admin" });
+      } else {
+        navigate({ to: "/dashboard" });
+      }
     } catch (err) {
       const message = err instanceof Error ? err.message : "সাইনআপ ব্যর্থ";
       toast.error(message);

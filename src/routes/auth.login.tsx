@@ -50,12 +50,28 @@ function LoginPage() {
     e.preventDefault();
     setLoading(true);
     try {
-      await login(email, password);
+      const u = await login(email, password);
       toast.success("লগইন সফল");
-      navigate({ to: "/dashboard" });
+      if (u.role === "admin") {
+        navigate({ to: "/admin" });
+      } else {
+        navigate({ to: "/dashboard" });
+      }
     } catch (err) {
       const message = err instanceof Error ? err.message : "লগইন ব্যর্থ";
       toast.error(message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleQuickDemo = async (role: "student" | "admin") => {
+    setLoading(true);
+    try {
+      const demoEmail = role === "admin" ? "admin@uniteacademy.com" : "student@uniteacademy.com";
+      const u = await login(demoEmail, "demo123");
+      toast.success(`${role === "admin" ? "অ্যাডমিন" : "শিক্ষার্থী"} হিসেবে লগইন সফল`);
+      navigate({ to: role === "admin" ? "/admin" : "/dashboard" });
     } finally {
       setLoading(false);
     }
@@ -186,13 +202,44 @@ function LoginPage() {
                     <button
                       type="submit"
                       disabled={loading}
-                      className="group relative inline-flex w-full items-center justify-center gap-2 overflow-hidden rounded-xl gradient-primary px-4 py-3.5 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/30 transition-all hover:-translate-y-0.5 hover:shadow-xl hover:shadow-primary/40 disabled:opacity-60"
+                      className="group relative inline-flex w-full items-center justify-center gap-2 overflow-hidden rounded-xl gradient-primary px-4 py-3.5 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/30 transition-all hover:-translate-y-0.5 hover:shadow-xl hover:shadow-primary/40 disabled:opacity-60 cursor-pointer"
                     >
                       <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
                       {loading ? <Loader2 className="relative h-4 w-4 animate-spin" /> : <span className="relative">লগইন করুন</span>}
                       {!loading && <ArrowRight className="relative h-4 w-4 transition-transform group-hover:translate-x-0.5" />}
                     </button>
 
+                    <div className="pt-2 text-center">
+                      <div className="relative my-3">
+                        <div className="absolute inset-0 flex items-center">
+                          <span className="w-full border-t border-border" />
+                        </div>
+                        <div className="relative flex justify-center text-xs uppercase">
+                          <span className="bg-card px-2 text-muted-foreground font-semibold">
+                            অথবা এক ক্লিকে ডেমো প্রবেশ করুন
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-2.5">
+                        <button
+                          type="button"
+                          onClick={() => handleQuickDemo("student")}
+                          disabled={loading}
+                          className="flex items-center justify-center gap-1.5 rounded-xl border border-border bg-card/80 py-2.5 px-3 text-xs font-semibold hover:border-primary/50 hover:bg-muted transition-all cursor-pointer"
+                        >
+                          <span>🎓 শিক্ষার্থী ড্যাশবোর্ড</span>
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => handleQuickDemo("admin")}
+                          disabled={loading}
+                          className="flex items-center justify-center gap-1.5 rounded-xl border border-border bg-card/80 py-2.5 px-3 text-xs font-semibold hover:border-primary/50 hover:bg-muted transition-all cursor-pointer"
+                        >
+                          <span>⚡ অ্যাডমিন প্যানেল</span>
+                        </button>
+                      </div>
+                    </div>
                   </form>
 
                   <div className="mt-7 grid grid-cols-3 gap-3 border-t border-border pt-5">
