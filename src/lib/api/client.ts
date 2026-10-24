@@ -1,9 +1,18 @@
 // REST API client for the standalone Node.js/Express backend (apps/api).
 // Uses JWT stored in localStorage. Base URL from VITE_API_URL env.
 
-const API_URL =
-  (import.meta.env.VITE_API_URL as string | undefined)?.replace(/\/$/, "") ||
-  "http://localhost:4000";
+function resolveApiUrl(): string {
+  const envUrl = (import.meta.env.VITE_API_URL as string | undefined)?.replace(/\/$/, "");
+  if (envUrl) return envUrl;
+  if (typeof window !== "undefined") {
+    const host = window.location.hostname;
+    const isLocal = host === "localhost" || host === "127.0.0.1" || host.startsWith("192.168.");
+    if (!isLocal) return ""; // In hosted production (e.g. Vercel), route /api through current origin
+  }
+  return "http://localhost:4000";
+}
+
+const API_URL = resolveApiUrl();
 
 const TOKEN_KEY = "ua_token";
 

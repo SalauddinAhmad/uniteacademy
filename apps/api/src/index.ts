@@ -61,6 +61,10 @@ app.use((err: any, _req: express.Request, res: express.Response, _next: express.
   res.status(err.status ?? 500).json({ error: err.message ?? "Internal server error" });
 });
 
-app.listen(PORT, () => {
-  console.log(`🚀 Uniteacademy API listening on http://localhost:${PORT}`);
-});
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`🚀 Uniteacademy API listening on http://localhost:${PORT}`);
+  });
+}
+
+export default app;
