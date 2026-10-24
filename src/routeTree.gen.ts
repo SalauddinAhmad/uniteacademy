@@ -9,64 +9,44 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as TermsRouteImport } from './routes/terms'
-import { Route as PrivacyRouteImport } from './routes/privacy'
-import { Route as CoursesRouteImport } from './routes/courses'
-import { Route as ContactRouteImport } from './routes/contact'
-import { Route as AboutRouteImport } from './routes/about'
+import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminRouteImport } from './routes/_admin'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as CoursesSlugRouteImport } from './routes/courses_.$slug'
-import { Route as AuthSignupRouteImport } from './routes/auth.signup'
-import { Route as AuthLoginRouteImport } from './routes/auth.login'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as CoursesRouteImport } from './routes/courses'
+import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as TermsRouteImport } from './routes/terms'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
-import { Route as AuthenticatedDashboardIndexRouteImport } from './routes/_authenticated/dashboard.index'
+import { Route as AuthLoginRouteImport } from './routes/auth.login'
+import { Route as AuthSignupRouteImport } from './routes/auth.signup'
+import { Route as CoursesSlugRouteImport } from './routes/courses_.$slug'
 import { Route as AdminAdminIndexRouteImport } from './routes/_admin.admin.index'
-import { Route as AuthenticatedLearnCourseSlugRouteImport } from './routes/_authenticated/learn.$courseSlug'
-import { Route as AuthenticatedDashboardPaymentsRouteImport } from './routes/_authenticated/dashboard.payments'
-import { Route as AuthenticatedDashboardNotificationsRouteImport } from './routes/_authenticated/dashboard.notifications'
-import { Route as AuthenticatedDashboardNoticeRouteImport } from './routes/_authenticated/dashboard.notice'
-import { Route as AuthenticatedDashboardExamsRouteImport } from './routes/_authenticated/dashboard.exams'
-import { Route as AuthenticatedDashboardEventsRouteImport } from './routes/_authenticated/dashboard.events'
-import { Route as AuthenticatedDashboardEnrollmentsRouteImport } from './routes/_authenticated/dashboard.enrollments'
-import { Route as AuthenticatedDashboardCalendarRouteImport } from './routes/_authenticated/dashboard.calendar'
-import { Route as AuthenticatedDashboardAssignmentsRouteImport } from './routes/_authenticated/dashboard.assignments'
-import { Route as AdminAdminUsersRouteImport } from './routes/_admin.admin.users'
-import { Route as AdminAdminSettingsRouteImport } from './routes/_admin.admin.settings'
-import { Route as AdminAdminProgramsRouteImport } from './routes/_admin.admin.programs'
-import { Route as AdminAdminPaymentsRouteImport } from './routes/_admin.admin.payments'
-import { Route as AdminAdminNotificationsRouteImport } from './routes/_admin.admin.notifications'
-import { Route as AdminAdminNoticesRouteImport } from './routes/_admin.admin.notices'
-import { Route as AdminAdminEnrollmentsRouteImport } from './routes/_admin.admin.enrollments'
 import { Route as AdminAdminCoursesRouteImport } from './routes/_admin.admin.courses'
-import { Route as AuthenticatedLearnCourseSlugLessonIdRouteImport } from './routes/_authenticated/learn.$courseSlug.$lessonId'
+import { Route as AdminAdminEnrollmentsRouteImport } from './routes/_admin.admin.enrollments'
+import { Route as AdminAdminNoticesRouteImport } from './routes/_admin.admin.notices'
+import { Route as AdminAdminNotificationsRouteImport } from './routes/_admin.admin.notifications'
+import { Route as AdminAdminPaymentsRouteImport } from './routes/_admin.admin.payments'
+import { Route as AdminAdminProgramsRouteImport } from './routes/_admin.admin.programs'
+import { Route as AdminAdminSettingsRouteImport } from './routes/_admin.admin.settings'
+import { Route as AdminAdminUsersRouteImport } from './routes/_admin.admin.users'
+import { Route as AuthenticatedDashboardIndexRouteImport } from './routes/_authenticated/dashboard.index'
+import { Route as AuthenticatedDashboardAssignmentsRouteImport } from './routes/_authenticated/dashboard.assignments'
+import { Route as AuthenticatedDashboardCalendarRouteImport } from './routes/_authenticated/dashboard.calendar'
+import { Route as AuthenticatedDashboardEnrollmentsRouteImport } from './routes/_authenticated/dashboard.enrollments'
+import { Route as AuthenticatedDashboardEventsRouteImport } from './routes/_authenticated/dashboard.events'
+import { Route as AuthenticatedDashboardExamsRouteImport } from './routes/_authenticated/dashboard.exams'
+import { Route as AuthenticatedDashboardNoticeRouteImport } from './routes/_authenticated/dashboard.notice'
+import { Route as AuthenticatedDashboardNotificationsRouteImport } from './routes/_authenticated/dashboard.notifications'
+import { Route as AuthenticatedDashboardPaymentsRouteImport } from './routes/_authenticated/dashboard.payments'
+import { Route as AuthenticatedLearnCourseSlugRouteImport } from './routes/_authenticated/learn.$courseSlug'
 import { Route as AuthenticatedDashboardEnrollmentsIdRouteImport } from './routes/_authenticated/dashboard.enrollments.$id'
+import { Route as AuthenticatedLearnCourseSlugLessonIdRouteImport } from './routes/_authenticated/learn.$courseSlug.$lessonId'
 import { Route as AdminAdminCoursesIdContentRouteImport } from './routes/_admin.admin.courses.$id.content'
 
-const TermsRoute = TermsRouteImport.update({
-  id: '/terms',
-  path: '/terms',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PrivacyRoute = PrivacyRouteImport.update({
-  id: '/privacy',
-  path: '/privacy',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CoursesRoute = CoursesRouteImport.update({
-  id: '/courses',
-  path: '/courses',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ContactRoute = ContactRouteImport.update({
-  id: '/contact',
-  path: '/contact',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AboutRoute = AboutRouteImport.update({
-  id: '/about',
-  path: '/about',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminRoute = AdminRouteImport.update({
@@ -77,24 +57,29 @@ const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
   id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CoursesSlugRoute = CoursesSlugRouteImport.update({
-  id: '/courses_/$slug',
-  path: '/courses/$slug',
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthSignupRoute = AuthSignupRouteImport.update({
-  id: '/auth/signup',
-  path: '/auth/signup',
+const CoursesRoute = CoursesRouteImport.update({
+  id: '/courses',
+  path: '/courses',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthLoginRoute = AuthLoginRouteImport.update({
-  id: '/auth/login',
-  path: '/auth/login',
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
@@ -102,63 +87,70 @@ const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const AuthenticatedDashboardIndexRoute =
-  AuthenticatedDashboardIndexRouteImport.update({
-    id: '/',
-    path: '/',
-    getParentRoute: () => AuthenticatedDashboardRoute,
-  } as any)
+const AuthLoginRoute = AuthLoginRouteImport.update({
+  id: '/auth/login',
+  path: '/auth/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthSignupRoute = AuthSignupRouteImport.update({
+  id: '/auth/signup',
+  path: '/auth/signup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CoursesSlugRoute = CoursesSlugRouteImport.update({
+  id: '/courses_/$slug',
+  path: '/courses/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminAdminIndexRoute = AdminAdminIndexRouteImport.update({
   id: '/admin/',
   path: '/admin/',
   getParentRoute: () => AdminRoute,
 } as any)
-const AuthenticatedLearnCourseSlugRoute =
-  AuthenticatedLearnCourseSlugRouteImport.update({
-    id: '/learn/$courseSlug',
-    path: '/learn/$courseSlug',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
-const AuthenticatedDashboardPaymentsRoute =
-  AuthenticatedDashboardPaymentsRouteImport.update({
-    id: '/payments',
-    path: '/payments',
-    getParentRoute: () => AuthenticatedDashboardRoute,
-  } as any)
-const AuthenticatedDashboardNotificationsRoute =
-  AuthenticatedDashboardNotificationsRouteImport.update({
-    id: '/notifications',
-    path: '/notifications',
-    getParentRoute: () => AuthenticatedDashboardRoute,
-  } as any)
-const AuthenticatedDashboardNoticeRoute =
-  AuthenticatedDashboardNoticeRouteImport.update({
-    id: '/notice',
-    path: '/notice',
-    getParentRoute: () => AuthenticatedDashboardRoute,
-  } as any)
-const AuthenticatedDashboardExamsRoute =
-  AuthenticatedDashboardExamsRouteImport.update({
-    id: '/exams',
-    path: '/exams',
-    getParentRoute: () => AuthenticatedDashboardRoute,
-  } as any)
-const AuthenticatedDashboardEventsRoute =
-  AuthenticatedDashboardEventsRouteImport.update({
-    id: '/events',
-    path: '/events',
-    getParentRoute: () => AuthenticatedDashboardRoute,
-  } as any)
-const AuthenticatedDashboardEnrollmentsRoute =
-  AuthenticatedDashboardEnrollmentsRouteImport.update({
-    id: '/enrollments',
-    path: '/enrollments',
-    getParentRoute: () => AuthenticatedDashboardRoute,
-  } as any)
-const AuthenticatedDashboardCalendarRoute =
-  AuthenticatedDashboardCalendarRouteImport.update({
-    id: '/calendar',
-    path: '/calendar',
+const AdminAdminCoursesRoute = AdminAdminCoursesRouteImport.update({
+  id: '/admin/courses',
+  path: '/admin/courses',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminAdminEnrollmentsRoute = AdminAdminEnrollmentsRouteImport.update({
+  id: '/admin/enrollments',
+  path: '/admin/enrollments',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminAdminNoticesRoute = AdminAdminNoticesRouteImport.update({
+  id: '/admin/notices',
+  path: '/admin/notices',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminAdminNotificationsRoute = AdminAdminNotificationsRouteImport.update({
+  id: '/admin/notifications',
+  path: '/admin/notifications',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminAdminPaymentsRoute = AdminAdminPaymentsRouteImport.update({
+  id: '/admin/payments',
+  path: '/admin/payments',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminAdminProgramsRoute = AdminAdminProgramsRouteImport.update({
+  id: '/admin/programs',
+  path: '/admin/programs',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminAdminSettingsRoute = AdminAdminSettingsRouteImport.update({
+  id: '/admin/settings',
+  path: '/admin/settings',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminAdminUsersRoute = AdminAdminUsersRouteImport.update({
+  id: '/admin/users',
+  path: '/admin/users',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AuthenticatedDashboardIndexRoute =
+  AuthenticatedDashboardIndexRouteImport.update({
+    id: '/',
+    path: '/',
     getParentRoute: () => AuthenticatedDashboardRoute,
   } as any)
 const AuthenticatedDashboardAssignmentsRoute =
@@ -167,57 +159,65 @@ const AuthenticatedDashboardAssignmentsRoute =
     path: '/assignments',
     getParentRoute: () => AuthenticatedDashboardRoute,
   } as any)
-const AdminAdminUsersRoute = AdminAdminUsersRouteImport.update({
-  id: '/admin/users',
-  path: '/admin/users',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminAdminSettingsRoute = AdminAdminSettingsRouteImport.update({
-  id: '/admin/settings',
-  path: '/admin/settings',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminAdminProgramsRoute = AdminAdminProgramsRouteImport.update({
-  id: '/admin/programs',
-  path: '/admin/programs',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminAdminPaymentsRoute = AdminAdminPaymentsRouteImport.update({
-  id: '/admin/payments',
-  path: '/admin/payments',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminAdminNotificationsRoute = AdminAdminNotificationsRouteImport.update({
-  id: '/admin/notifications',
-  path: '/admin/notifications',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminAdminNoticesRoute = AdminAdminNoticesRouteImport.update({
-  id: '/admin/notices',
-  path: '/admin/notices',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminAdminEnrollmentsRoute = AdminAdminEnrollmentsRouteImport.update({
-  id: '/admin/enrollments',
-  path: '/admin/enrollments',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminAdminCoursesRoute = AdminAdminCoursesRouteImport.update({
-  id: '/admin/courses',
-  path: '/admin/courses',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AuthenticatedLearnCourseSlugLessonIdRoute =
-  AuthenticatedLearnCourseSlugLessonIdRouteImport.update({
-    id: '/$lessonId',
-    path: '/$lessonId',
-    getParentRoute: () => AuthenticatedLearnCourseSlugRoute,
+const AuthenticatedDashboardCalendarRoute =
+  AuthenticatedDashboardCalendarRouteImport.update({
+    id: '/calendar',
+    path: '/calendar',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardEnrollmentsRoute =
+  AuthenticatedDashboardEnrollmentsRouteImport.update({
+    id: '/enrollments',
+    path: '/enrollments',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardEventsRoute =
+  AuthenticatedDashboardEventsRouteImport.update({
+    id: '/events',
+    path: '/events',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardExamsRoute =
+  AuthenticatedDashboardExamsRouteImport.update({
+    id: '/exams',
+    path: '/exams',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardNoticeRoute =
+  AuthenticatedDashboardNoticeRouteImport.update({
+    id: '/notice',
+    path: '/notice',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardNotificationsRoute =
+  AuthenticatedDashboardNotificationsRouteImport.update({
+    id: '/notifications',
+    path: '/notifications',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardPaymentsRoute =
+  AuthenticatedDashboardPaymentsRouteImport.update({
+    id: '/payments',
+    path: '/payments',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedLearnCourseSlugRoute =
+  AuthenticatedLearnCourseSlugRouteImport.update({
+    id: '/learn/$courseSlug',
+    path: '/learn/$courseSlug',
+    getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedDashboardEnrollmentsIdRoute =
   AuthenticatedDashboardEnrollmentsIdRouteImport.update({
     id: '/$id',
     path: '/$id',
     getParentRoute: () => AuthenticatedDashboardEnrollmentsRoute,
+  } as any)
+const AuthenticatedLearnCourseSlugLessonIdRoute =
+  AuthenticatedLearnCourseSlugLessonIdRouteImport.update({
+    id: '/$lessonId',
+    path: '/$lessonId',
+    getParentRoute: () => AuthenticatedLearnCourseSlugRoute,
   } as any)
 const AdminAdminCoursesIdContentRoute =
   AdminAdminCoursesIdContentRouteImport.update({
@@ -452,39 +452,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/terms': {
-      id: '/terms'
-      path: '/terms'
-      fullPath: '/terms'
-      preLoaderRoute: typeof TermsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/privacy': {
-      id: '/privacy'
-      path: '/privacy'
-      fullPath: '/privacy'
-      preLoaderRoute: typeof PrivacyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/courses': {
-      id: '/courses'
-      path: '/courses'
-      fullPath: '/courses'
-      preLoaderRoute: typeof CoursesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/contact': {
-      id: '/contact'
-      path: '/contact'
-      fullPath: '/contact'
-      preLoaderRoute: typeof ContactRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_admin': {
@@ -501,32 +473,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/courses_/$slug': {
-      id: '/courses_/$slug'
-      path: '/courses/$slug'
-      fullPath: '/courses/$slug'
-      preLoaderRoute: typeof CoursesSlugRouteImport
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/auth/signup': {
-      id: '/auth/signup'
-      path: '/auth/signup'
-      fullPath: '/auth/signup'
-      preLoaderRoute: typeof AuthSignupRouteImport
+    '/courses': {
+      id: '/courses'
+      path: '/courses'
+      fullPath: '/courses'
+      preLoaderRoute: typeof CoursesRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/auth/login': {
-      id: '/auth/login'
-      path: '/auth/login'
-      fullPath: '/auth/login'
-      preLoaderRoute: typeof AuthLoginRouteImport
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/dashboard': {
@@ -536,130 +515,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/dashboard/': {
-      id: '/_authenticated/dashboard/'
-      path: '/'
-      fullPath: '/dashboard/'
-      preLoaderRoute: typeof AuthenticatedDashboardIndexRouteImport
-      parentRoute: typeof AuthenticatedDashboardRoute
+    '/auth/login': {
+      id: '/auth/login'
+      path: '/auth/login'
+      fullPath: '/auth/login'
+      preLoaderRoute: typeof AuthLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth/signup': {
+      id: '/auth/signup'
+      path: '/auth/signup'
+      fullPath: '/auth/signup'
+      preLoaderRoute: typeof AuthSignupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/courses_/$slug': {
+      id: '/courses_/$slug'
+      path: '/courses/$slug'
+      fullPath: '/courses/$slug'
+      preLoaderRoute: typeof CoursesSlugRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/_admin/admin/': {
       id: '/_admin/admin/'
       path: '/admin'
       fullPath: '/admin/'
       preLoaderRoute: typeof AdminAdminIndexRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/_authenticated/learn/$courseSlug': {
-      id: '/_authenticated/learn/$courseSlug'
-      path: '/learn/$courseSlug'
-      fullPath: '/learn/$courseSlug'
-      preLoaderRoute: typeof AuthenticatedLearnCourseSlugRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/dashboard/payments': {
-      id: '/_authenticated/dashboard/payments'
-      path: '/payments'
-      fullPath: '/dashboard/payments'
-      preLoaderRoute: typeof AuthenticatedDashboardPaymentsRouteImport
-      parentRoute: typeof AuthenticatedDashboardRoute
-    }
-    '/_authenticated/dashboard/notifications': {
-      id: '/_authenticated/dashboard/notifications'
-      path: '/notifications'
-      fullPath: '/dashboard/notifications'
-      preLoaderRoute: typeof AuthenticatedDashboardNotificationsRouteImport
-      parentRoute: typeof AuthenticatedDashboardRoute
-    }
-    '/_authenticated/dashboard/notice': {
-      id: '/_authenticated/dashboard/notice'
-      path: '/notice'
-      fullPath: '/dashboard/notice'
-      preLoaderRoute: typeof AuthenticatedDashboardNoticeRouteImport
-      parentRoute: typeof AuthenticatedDashboardRoute
-    }
-    '/_authenticated/dashboard/exams': {
-      id: '/_authenticated/dashboard/exams'
-      path: '/exams'
-      fullPath: '/dashboard/exams'
-      preLoaderRoute: typeof AuthenticatedDashboardExamsRouteImport
-      parentRoute: typeof AuthenticatedDashboardRoute
-    }
-    '/_authenticated/dashboard/events': {
-      id: '/_authenticated/dashboard/events'
-      path: '/events'
-      fullPath: '/dashboard/events'
-      preLoaderRoute: typeof AuthenticatedDashboardEventsRouteImport
-      parentRoute: typeof AuthenticatedDashboardRoute
-    }
-    '/_authenticated/dashboard/enrollments': {
-      id: '/_authenticated/dashboard/enrollments'
-      path: '/enrollments'
-      fullPath: '/dashboard/enrollments'
-      preLoaderRoute: typeof AuthenticatedDashboardEnrollmentsRouteImport
-      parentRoute: typeof AuthenticatedDashboardRoute
-    }
-    '/_authenticated/dashboard/calendar': {
-      id: '/_authenticated/dashboard/calendar'
-      path: '/calendar'
-      fullPath: '/dashboard/calendar'
-      preLoaderRoute: typeof AuthenticatedDashboardCalendarRouteImport
-      parentRoute: typeof AuthenticatedDashboardRoute
-    }
-    '/_authenticated/dashboard/assignments': {
-      id: '/_authenticated/dashboard/assignments'
-      path: '/assignments'
-      fullPath: '/dashboard/assignments'
-      preLoaderRoute: typeof AuthenticatedDashboardAssignmentsRouteImport
-      parentRoute: typeof AuthenticatedDashboardRoute
-    }
-    '/_admin/admin/users': {
-      id: '/_admin/admin/users'
-      path: '/admin/users'
-      fullPath: '/admin/users'
-      preLoaderRoute: typeof AdminAdminUsersRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/_admin/admin/settings': {
-      id: '/_admin/admin/settings'
-      path: '/admin/settings'
-      fullPath: '/admin/settings'
-      preLoaderRoute: typeof AdminAdminSettingsRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/_admin/admin/programs': {
-      id: '/_admin/admin/programs'
-      path: '/admin/programs'
-      fullPath: '/admin/programs'
-      preLoaderRoute: typeof AdminAdminProgramsRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/_admin/admin/payments': {
-      id: '/_admin/admin/payments'
-      path: '/admin/payments'
-      fullPath: '/admin/payments'
-      preLoaderRoute: typeof AdminAdminPaymentsRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/_admin/admin/notifications': {
-      id: '/_admin/admin/notifications'
-      path: '/admin/notifications'
-      fullPath: '/admin/notifications'
-      preLoaderRoute: typeof AdminAdminNotificationsRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/_admin/admin/notices': {
-      id: '/_admin/admin/notices'
-      path: '/admin/notices'
-      fullPath: '/admin/notices'
-      preLoaderRoute: typeof AdminAdminNoticesRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/_admin/admin/enrollments': {
-      id: '/_admin/admin/enrollments'
-      path: '/admin/enrollments'
-      fullPath: '/admin/enrollments'
-      preLoaderRoute: typeof AdminAdminEnrollmentsRouteImport
       parentRoute: typeof AdminRoute
     }
     '/_admin/admin/courses': {
@@ -669,12 +550,124 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminAdminCoursesRouteImport
       parentRoute: typeof AdminRoute
     }
-    '/_authenticated/learn/$courseSlug/$lessonId': {
-      id: '/_authenticated/learn/$courseSlug/$lessonId'
-      path: '/$lessonId'
-      fullPath: '/learn/$courseSlug/$lessonId'
-      preLoaderRoute: typeof AuthenticatedLearnCourseSlugLessonIdRouteImport
-      parentRoute: typeof AuthenticatedLearnCourseSlugRoute
+    '/_admin/admin/enrollments': {
+      id: '/_admin/admin/enrollments'
+      path: '/admin/enrollments'
+      fullPath: '/admin/enrollments'
+      preLoaderRoute: typeof AdminAdminEnrollmentsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/admin/notices': {
+      id: '/_admin/admin/notices'
+      path: '/admin/notices'
+      fullPath: '/admin/notices'
+      preLoaderRoute: typeof AdminAdminNoticesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/admin/notifications': {
+      id: '/_admin/admin/notifications'
+      path: '/admin/notifications'
+      fullPath: '/admin/notifications'
+      preLoaderRoute: typeof AdminAdminNotificationsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/admin/payments': {
+      id: '/_admin/admin/payments'
+      path: '/admin/payments'
+      fullPath: '/admin/payments'
+      preLoaderRoute: typeof AdminAdminPaymentsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/admin/programs': {
+      id: '/_admin/admin/programs'
+      path: '/admin/programs'
+      fullPath: '/admin/programs'
+      preLoaderRoute: typeof AdminAdminProgramsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/admin/settings': {
+      id: '/_admin/admin/settings'
+      path: '/admin/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof AdminAdminSettingsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/admin/users': {
+      id: '/_admin/admin/users'
+      path: '/admin/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AdminAdminUsersRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_authenticated/dashboard/': {
+      id: '/_authenticated/dashboard/'
+      path: '/'
+      fullPath: '/dashboard/'
+      preLoaderRoute: typeof AuthenticatedDashboardIndexRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/assignments': {
+      id: '/_authenticated/dashboard/assignments'
+      path: '/assignments'
+      fullPath: '/dashboard/assignments'
+      preLoaderRoute: typeof AuthenticatedDashboardAssignmentsRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/calendar': {
+      id: '/_authenticated/dashboard/calendar'
+      path: '/calendar'
+      fullPath: '/dashboard/calendar'
+      preLoaderRoute: typeof AuthenticatedDashboardCalendarRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/enrollments': {
+      id: '/_authenticated/dashboard/enrollments'
+      path: '/enrollments'
+      fullPath: '/dashboard/enrollments'
+      preLoaderRoute: typeof AuthenticatedDashboardEnrollmentsRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/events': {
+      id: '/_authenticated/dashboard/events'
+      path: '/events'
+      fullPath: '/dashboard/events'
+      preLoaderRoute: typeof AuthenticatedDashboardEventsRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/exams': {
+      id: '/_authenticated/dashboard/exams'
+      path: '/exams'
+      fullPath: '/dashboard/exams'
+      preLoaderRoute: typeof AuthenticatedDashboardExamsRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/notice': {
+      id: '/_authenticated/dashboard/notice'
+      path: '/notice'
+      fullPath: '/dashboard/notice'
+      preLoaderRoute: typeof AuthenticatedDashboardNoticeRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/notifications': {
+      id: '/_authenticated/dashboard/notifications'
+      path: '/notifications'
+      fullPath: '/dashboard/notifications'
+      preLoaderRoute: typeof AuthenticatedDashboardNotificationsRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/payments': {
+      id: '/_authenticated/dashboard/payments'
+      path: '/payments'
+      fullPath: '/dashboard/payments'
+      preLoaderRoute: typeof AuthenticatedDashboardPaymentsRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/learn/$courseSlug': {
+      id: '/_authenticated/learn/$courseSlug'
+      path: '/learn/$courseSlug'
+      fullPath: '/learn/$courseSlug'
+      preLoaderRoute: typeof AuthenticatedLearnCourseSlugRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/dashboard/enrollments/$id': {
       id: '/_authenticated/dashboard/enrollments/$id'
@@ -682,6 +675,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/dashboard/enrollments/$id'
       preLoaderRoute: typeof AuthenticatedDashboardEnrollmentsIdRouteImport
       parentRoute: typeof AuthenticatedDashboardEnrollmentsRoute
+    }
+    '/_authenticated/learn/$courseSlug/$lessonId': {
+      id: '/_authenticated/learn/$courseSlug/$lessonId'
+      path: '/$lessonId'
+      fullPath: '/learn/$courseSlug/$lessonId'
+      preLoaderRoute: typeof AuthenticatedLearnCourseSlugLessonIdRouteImport
+      parentRoute: typeof AuthenticatedLearnCourseSlugRoute
     }
     '/_admin/admin/courses/$id/content': {
       id: '/_admin/admin/courses/$id/content'
